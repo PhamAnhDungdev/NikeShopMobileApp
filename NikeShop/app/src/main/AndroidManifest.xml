@@ -12,9 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NikeShop"
         tools:targetApi="31">
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBCqZyysnd3-_fAxBbdL88tgge3mkWfAQw" />
+        <activity
+            android:name=".activity_address"
+            android:exported="true"/>
         <activity
             android:name=".activity_help"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#00000000" />
+        </shape>
+    </item>
+
+    <!-- Street Pattern Lines -->
+    <item>
+        <vector android:width="400dp"
+            android:height="300dp"
+            android:viewportWidth="400"
+            android:viewportHeight="300">
+
+            <!-- Horizontal streets -->
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="3"
+                android:strokeAlpha="0.8"
+                android:pathData="M0,50 L400,50" />
+
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeAlpha="0.6"
+                android:pathData="M0,120 L400,120" />
+
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="3"
+                android:strokeAlpha="0.8"
+                android:pathData="M0,200 L400,200" />
+
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeAlpha="0.6"
+                android:pathData="M0,250 L400,250" />
+
+            <!-- Vertical streets -->
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeAlpha="0.7"
+                android:pathData="M80,0 L80,300" />
+
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="3"
+                android:strokeAlpha="0.8"
+                android:pathData="M180,0 L180,300" />
+
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeAlpha="0.6"
+                android:pathData="M280,0 L280,300" />
+
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeAlpha="0.7"
+                android:pathData="M350,0 L350,300" />
+
+            <!-- Diagonal streets -->
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeAlpha="0.5"
+                android:pathData="M0,0 L200,150" />
+
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeAlpha="0.5"
+                android:pathData="M200,0 L400,100" />
+
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeAlpha="0.5"
+                android:pathData="M100,300 L300,150" />
+
+            <!-- Curved streets -->
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeAlpha="0.6"
+                android:pathData="M0,150 Q100,100 200,150 T400,150" />
+
+            <path android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeAlpha="0.4"
+                android:pathData="M50,0 Q150,80 250,0" />
+
+        </vector>
+    </item>
+
+</layer-list>
