@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">NikeShop</string>
+    <string name="skip_now"><u>Skip now&gt;&gt;</u></string>
+    <string name="sign_up"><u>Sign up</u></string>
+    <string name="sign_in"><u>Sign in</u></string>
 </resources>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,6 +19,15 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="" />
         <activity
+            android:name=".SignUp"
+            android:exported="false" />
+        <activity
+            android:name=".AccountRecovery"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+       <activity
             android:name=".activity_address"
             android:exported="false"/>
         <activity
@@ -43,7 +54,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="false" />
+
     </application>
 
 </manifest>

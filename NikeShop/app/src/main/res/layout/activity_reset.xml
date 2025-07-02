@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/doubleCircle"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/double_circle" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="24dp">
+
+            <!-- Logo -->
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="60dp"
+                android:src="@drawable/nike_logo" />
+
+            <!-- Title "Reset" -->
+            <TextView
+                android:id="@+id/resetTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset"
+                android:textSize="36sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp" />
+
+            <!-- Subtitle Text -->
+            <TextView
+                android:id="@+id/subtitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter your name and password"
+                android:textSize="16sp"
+                android:textColor="@color/grey"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="8dp" />
+
+            <!-- "Enter new password" Label -->
+            <TextView
+                android:id="@+id/newPasswordLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter new password"
+                android:textSize="14sp"
+                android:textColor="@color/grey"
+                android:layout_marginTop="1dp" />
+
+            <!-- New Password Input -->
+            <EditText
+                android:id="@+id/newPasswordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#CCCCCC"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <!-- Confirm Password Section -->
+            <LinearLayout
+                android:id="@+id/confirmPasswordSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:id="@+id/confirmPasswordLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirm password"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey"/>
+
+                <EditText
+                    android:id="@+id/confirmPasswordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#CCCCCC"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </LinearLayout>
+
+            <!-- Empty LinearLayout for any future use -->
+            <LinearLayout
+                android:id="@+id/emptyLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp">
+            </LinearLayout>
+
+            <!-- Reset Button -->
+            <Button
+                android:id="@+id/resetButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rounded_button"
+                android:text="RESET"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Empty Horizontal LinearLayout for any future use -->
+            <LinearLayout
+                android:id="@+id/emptyHorizontalLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

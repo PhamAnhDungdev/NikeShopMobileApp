@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Double Circle Background -->
+    <ImageView
+        android:id="@+id/doubleCircle"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/double_circle" />
+
+    <!-- Main Content with Scroll -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="24dp">
+
+            <!-- Logo -->
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="60dp"
+                android:src="@drawable/nike_logo" />
+
+            <!-- Title Text: "Sign Up" -->
+            <TextView
+                android:id="@+id/signUpTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:textSize="36sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp" />
+
+            <!-- Subtitle Text -->
+            <TextView
+                android:id="@+id/enterAccountInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="First create an account"
+                android:textSize="16sp"
+                android:textColor="@color/grey"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="8dp" />
+
+            <!-- "Enter your name" Label -->
+            <TextView
+                android:id="@+id/nameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter your name"
+                android:textSize="14sp"
+                android:textColor="@color/grey"
+                android:layout_marginTop="1dp" />
+
+            <!-- Name Input Field -->
+            <EditText
+                android:id="@+id/nameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#CCCCCC"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <!-- Email Label and Input -->
+            <LinearLayout
+                android:id="@+id/emailSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:id="@+id/emailLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey"/>
+
+                <EditText
+                    android:id="@+id/emailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#CCCCCC"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="48dp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </LinearLayout>
+
+            <!-- Password Section with Eye Icon -->
+            <LinearLayout
+                android:id="@+id/passwordSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp">
+
+                <!-- Password Label -->
+                <TextView
+                    android:id="@+id/passwordLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- Password Input Field -->
+                    <EditText
+                        android:id="@+id/passwordInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#CCCCCC"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <!-- Eye Icon for Password -->
+                    <ImageView
+                        android:id="@+id/eyeIconPassword"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_eye"
+                        android:layout_marginEnd="8dp" />
+                </RelativeLayout>
+
+                <!-- Confirm Password Section with Eye Icon -->
+                <TextView
+                    android:id="@+id/confirmPasswordLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirm new password"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- Confirm Password Input -->
+                    <EditText
+                        android:id="@+id/confirmPasswordInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#CCCCCC"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <!-- Eye Icon for Confirm Password -->
+                    <ImageView
+                        android:id="@+id/eyeIconConfirmPassword"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_eye"
+                        android:layout_marginEnd="8dp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- Sign Up Button -->
+            <Button
+                android:id="@+id/signUpButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rounded_button"
+                android:text="SIGN UP"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
+
+            <!-- Already have an account? Prompt -->
+            <LinearLayout
+                android:id="@+id/accountPrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/accountPromptText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Already have an account? "
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/signInLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign_in"
+                    android:textSize="16sp"
+                    android:textColor="@color/yellow"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
