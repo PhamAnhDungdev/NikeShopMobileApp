@@ -12,7 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NikeShop"
         tools:targetApi="31">
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="" />
         <activity
+            android:name=".activity_address"
+            android:exported="false"/>
+        <activity
+            android:name=".activity_help"
+            android:exported="false" />
+       <activity
             android:name=".CartActivity"
             android:exported="false" />
         <activity
