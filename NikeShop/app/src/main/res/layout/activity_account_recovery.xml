@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Double Circle Background -->
+    <ImageView
+        android:id="@+id/doubleCircle"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/double_circle" />
+
+    <!-- Main Content with Scroll -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="24dp">
+
+            <!-- Logo -->
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="60dp"
+                android:src="@drawable/nike_logo" />
+
+            <!-- Title Text "Account Recovery" -->
+            <TextView
+                android:id="@+id/accountRecoveryTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Account Recovery"
+                android:textSize="36sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp" />
+
+            <!-- Subtitle Text -->
+            <TextView
+                android:id="@+id/subtitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A reset link will be sent to your email"
+                android:textSize="16sp"
+                android:textColor="@color/grey"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="8dp" />
+
+            <!-- Email Label -->
+            <TextView
+                android:id="@+id/emailLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter your email"
+                android:textSize="14sp"
+                android:textColor="@color/grey"
+                android:paddingTop="30dp"
+                android:layout_marginTop="1dp" />
+
+            <!-- Email Input Field -->
+            <EditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#CCCCCC"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:layout_marginTop="12dp"
+                tools:ignore="SpeakableTextPresentCheck" /> <!-- Email Input Field -->
+
+            <!-- Send Button -->
+            <Button
+                android:id="@+id/sendButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rounded_button"
+                android:text="SEND"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Empty LinearLayout for any future use -->
+            <LinearLayout
+                android:id="@+id/emptyLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
