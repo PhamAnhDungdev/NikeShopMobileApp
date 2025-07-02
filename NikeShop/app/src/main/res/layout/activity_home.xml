@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HomeActivity"
+    android:background="#FFF">
+
+    <!-- Logo Nike + Cart icon -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/nike_logo"
+            android:layout_width="77dp"
+            android:layout_height="55dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/nike_logo2" />
+        <ImageButton
+            android:id="@+id/btn_cart"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_cart"
+            android:contentDescription="Cart"
+            android:padding="4dp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Catagories Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Catagories"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Categories Horizontal List -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <!-- Sneakers -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="8dp">
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@drawable/category_selected_bg"
+                        android:src="@drawable/ic_sneakers"
+                        android:scaleType="centerInside"
+                        android:padding="8dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sneakers"
+                        android:textSize="13sp"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+                <!-- Runners -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="8dp">
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@drawable/category_unselected_bg"
+                        android:src="@drawable/ic_sneakers"
+                        android:scaleType="centerInside"
+                        android:padding="8dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Runners"
+                        android:textSize="13sp"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+                <!-- Casuals -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="8dp">
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@drawable/category_unselected_bg"
+                        android:src="@drawable/ic_sneakers"
+                        android:scaleType="centerInside"
+                        android:padding="8dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Casuals"
+                        android:textSize="13sp"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+                <!-- Jordans -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@drawable/category_unselected_bg"
+                        android:src="@drawable/ic_sneakers"
+                        android:scaleType="centerInside"
+                        android:padding="8dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jordans"
+                        android:textSize="13sp"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Trending Footwear Title + View Product List Button -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp">
+                <TextView
+                    android:id="@+id/tv_trending_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trending Footwear"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true" />
+                <TextView
+                    android:id="@+id/btn_view_product_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Product List"
+                    android:textColor="#E8772E"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="4dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </RelativeLayout>
+
+            <!-- Shoes Grid -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:alignmentMode="alignMargins"
+                android:rowOrderPreserved="false"
+                android:useDefaultMargins="true"
+                android:horizontalSpacing="12dp"
+                android:verticalSpacing="12dp">
+
+                <!-- Shoe Card 1 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="240dp"
+                    android:layout_columnWeight="1"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="#C4C4C4">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="0dp">
+                        <ImageView
+                            android:id="@+id/shoe_img1"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:scaleType="fitCenter"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/shoes1" />
+                        <ImageView
+                            android:id="@+id/fav1"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_favorite_border"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="4dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nike Air 1"
+                            android:textStyle="bold"
+                            android:textSize="15sp"
+                            android:layout_marginTop="8dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img1"
+                            android:layout_toEndOf="@id/shoe_img1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Basketball shoes"
+                            android:textSize="13sp"
+                            android:textColor="#555"
+                            android:layout_marginTop="28dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$244.99"
+                            android:textStyle="bold"
+                            android:textSize="13sp"
+                            android:layout_marginTop="48dp"
+                            android:textColor="#000"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <ImageButton
+                            android:id="@+id/add1"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_add"
+                            android:backgroundTint="#E8772E"
+                            android:background="@drawable/round_orange_bg"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:contentDescription="Add" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Shoe Card 2 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="240dp"
+                    android:layout_columnWeight="1"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="#C4C4C4">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="0dp">
+                        <ImageView
+                            android:id="@+id/shoe_img2"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:scaleType="fitCenter"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/shoes1" />
+                        <ImageView
+                            android:id="@+id/fav2"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_favorite_border"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="4dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nike Air Jordans"
+                            android:textStyle="bold"
+                            android:textSize="15sp"
+                            android:layout_marginTop="8dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img2"
+                            android:layout_toEndOf="@id/shoe_img2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jordans"
+                            android:textSize="13sp"
+                            android:textColor="#555"
+                            android:layout_marginTop="28dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$244.99"
+                            android:textStyle="bold"
+                            android:textSize="13sp"
+                            android:layout_marginTop="48dp"
+                            android:textColor="#000"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <ImageButton
+                            android:id="@+id/add2"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_add"
+                            android:backgroundTint="#E8772E"
+                            android:background="@drawable/round_orange_bg"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:contentDescription="Add" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Shoe Card 3 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="240dp"
+                    android:layout_columnWeight="1"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="#C4C4C4">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="0dp">
+                        <ImageView
+                            android:id="@+id/shoe_img3"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:scaleType="fitCenter"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/shoes1" />
+                        <ImageView
+                            android:id="@+id/fav3"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_favorite_border"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="4dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nike Air 69"
+                            android:textStyle="bold"
+                            android:textSize="15sp"
+                            android:layout_marginTop="8dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img3"
+                            android:layout_toEndOf="@id/shoe_img3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jogging shoes"
+                            android:textSize="13sp"
+                            android:textColor="#555"
+                            android:layout_marginTop="28dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$44.99"
+                            android:textStyle="bold"
+                            android:textSize="13sp"
+                            android:layout_marginTop="48dp"
+                            android:textColor="#000"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <ImageButton
+                            android:id="@+id/add3"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_add"
+                            android:backgroundTint="#E8772E"
+                            android:background="@drawable/round_orange_bg"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:contentDescription="Add" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Shoe Card 4 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="240dp"
+                    android:layout_columnWeight="1"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="#C4C4C4">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="0dp">
+                        <ImageView
+                            android:id="@+id/shoe_img4"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:scaleType="fitCenter"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/shoes1" />
+                        <ImageView
+                            android:id="@+id/fav4"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_favorite_border"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="4dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nike Air 44"
+                            android:textStyle="bold"
+                            android:textSize="15sp"
+                            android:layout_marginTop="8dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img4"
+                            android:layout_toEndOf="@id/shoe_img4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Casual Shoes"
+                            android:textSize="13sp"
+                            android:textColor="#555"
+                            android:layout_marginTop="28dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <TextView
+                            android:layout_below="@id/shoe_img4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$244.99"
+                            android:textStyle="bold"
+                            android:textSize="13sp"
+                            android:layout_marginTop="48dp"
+                            android:textColor="#000"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp" />
+                        <ImageButton
+                            android:id="@+id/add4"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_add"
+                            android:backgroundTint="#E8772E"
+                            android:background="@drawable/round_orange_bg"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:contentDescription="Add" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </GridLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        app:itemIconTint="@color/bottom_nav_selector"
+        app:itemTextColor="@color/bottom_nav_selector"
+        app:menu="@menu/bottom_nav_menu" />
+
+</LinearLayout>
