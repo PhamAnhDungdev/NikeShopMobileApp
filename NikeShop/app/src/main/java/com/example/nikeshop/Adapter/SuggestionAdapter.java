@@ -1,4 +1,4 @@
-package com.example.nikeshop.Suggestion;
+package com.example.nikeshop.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

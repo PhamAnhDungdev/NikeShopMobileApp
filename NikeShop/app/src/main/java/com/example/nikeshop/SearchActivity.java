@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nikeshop.Suggestion.SuggestionAdapter;
+import com.example.nikeshop.Adapter.SuggestionAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
