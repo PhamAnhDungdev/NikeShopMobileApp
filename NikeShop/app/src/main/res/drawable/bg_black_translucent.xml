@@ -1,0 +1,13 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Lớp nền đen mờ -->
+    <item>
+        <color android:color="#DD121212" /> <!-- 87% opacity black -->
+    </item>
+
+    <!-- Lớp bokeh glow -->
+    <item>
+        <bitmap
+            android:src="@drawable/bg_bokeh"
+            android:gravity="center" />
+    </item>
+</layer-list>
