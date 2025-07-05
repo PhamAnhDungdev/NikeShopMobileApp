@@ -3,10 +3,4 @@
     <string name="skip_now"><u>Skip now&gt;&gt;</u></string>
     <string name="sign_up"><u>Sign up</u></string>
     <string name="sign_in"><u>Sign in</u></string>
-    <string name="back">Back</string>
-    <string name="nike_logo">Nike logo</string>
-    <string name="cart">Cart</string>
-    <string name="place_holder_search">Search for products here...</string>
-    <string name="favourite">Favourites</string>
-    <string name="payment">Payment Method</string>
 </resources>
