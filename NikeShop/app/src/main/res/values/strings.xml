@@ -8,4 +8,5 @@
     <string name="cart">Cart</string>
     <string name="place_holder_search">Search for products here...</string>
     <string name="favourite">Favourites</string>
+    <string name="payment">Payment Method</string>
 </resources>
