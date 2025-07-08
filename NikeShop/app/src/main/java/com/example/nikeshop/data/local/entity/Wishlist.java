@@ -34,22 +34,103 @@ public class Wishlist {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    public int id;
+    private int id;
 
     @NonNull
     @ColumnInfo(name = "user_id")
-    public int userId;
+    private int userId;
 
     @NonNull
     @ColumnInfo(name = "product_id")
-    public int productId;
+    private int productId;
 
     @ColumnInfo(name = "created_at")
-    public Date createdAt;
+    private Date createdAt;
 
     @ColumnInfo(name = "updated_at")
-    public Date updatedAt;
+    private Date updatedAt;
 
     @ColumnInfo(name = "deleted_at")
-    public Date deletedAt;
+    private Date deletedAt;
+
+    // === Constructor không tham số ===
+    public Wishlist() {}
+
+    // === Constructor đầy đủ ===
+    public Wishlist(@NonNull int userId,
+                    @NonNull int productId,
+                    Date createdAt,
+                    Date updatedAt,
+                    Date deletedAt) {
+        this.userId = userId;
+        this.productId = productId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+    }
+
+    // === Getter & Setter ===
+
+    @NonNull
+    public int getId() {
+        return id;
+    }
+
+    public void setId(@NonNull int id) {
+        this.id = id;
+    }
+
+    @NonNull
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(@NonNull int userId) {
+        this.userId = userId;
+    }
+
+    @NonNull
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(@NonNull int productId) {
+        this.productId = productId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Wishlist{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", productId=" + productId +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 }

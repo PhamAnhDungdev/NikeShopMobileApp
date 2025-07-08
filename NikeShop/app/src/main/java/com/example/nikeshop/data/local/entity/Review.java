@@ -34,32 +34,148 @@ public class Review {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    public int id;
+    private int id;
 
     @NonNull
     @ColumnInfo(name = "user_id")
-    public int userId;
+    private int userId;
 
     @NonNull
     @ColumnInfo(name = "product_id")
-    public int productId;
+    private int productId;
 
     @ColumnInfo(name = "rating")
-    public int rating; // 1-5
+    private int rating; // 1-5
 
     @ColumnInfo(name = "comment")
-    public String comment;
+    private String comment;
 
     @NonNull
     @ColumnInfo(name = "review_date")
-    public Date reviewDate; // Sửa sang Date để dễ xử lý thời gian
+    private Date reviewDate;
 
     @ColumnInfo(name = "created_at")
-    public Date createdAt;
+    private Date createdAt;
 
     @ColumnInfo(name = "updated_at")
-    public Date updatedAt;
+    private Date updatedAt;
 
     @ColumnInfo(name = "deleted_at")
-    public Date deletedAt;
+    private Date deletedAt;
+
+    // === Constructor không tham số (Room yêu cầu) ===
+    public Review() {
+    }
+
+    // === Constructor đầy đủ (trừ id vì autoGenerate) ===
+    public Review(@NonNull int userId,
+                  @NonNull int productId,
+                  int rating,
+                  String comment,
+                  @NonNull Date reviewDate,
+                  Date createdAt,
+                  Date updatedAt,
+                  Date deletedAt) {
+        this.userId = userId;
+        this.productId = productId;
+        this.rating = rating;
+        this.comment = comment;
+        this.reviewDate = reviewDate;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+    }
+
+    // === Getter & Setter ===
+
+    @NonNull
+    public int getId() {
+        return id;
+    }
+
+    public void setId(@NonNull int id) {
+        this.id = id;
+    }
+
+    @NonNull
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(@NonNull int userId) {
+        this.userId = userId;
+    }
+
+    @NonNull
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(@NonNull int productId) {
+        this.productId = productId;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    @NonNull
+    public Date getReviewDate() {
+        return reviewDate;
+    }
+
+    public void setReviewDate(@NonNull Date reviewDate) {
+        this.reviewDate = reviewDate;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", productId=" + productId +
+                ", rating=" + rating +
+                ", comment='" + comment + '\'' +
+                ", reviewDate=" + reviewDate +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 }

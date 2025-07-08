@@ -34,25 +34,117 @@ public class Cart {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    public int id;
+    private int id;
 
     @NonNull
     @ColumnInfo(name = "user_id")
-    public int userId;
+    private int userId;
 
     @NonNull
     @ColumnInfo(name = "product_id")
-    public int productId;
+    private int productId;
 
     @ColumnInfo(name = "quantity")
-    public int quantity;
+    private int quantity;
 
     @ColumnInfo(name = "created_at")
-    public Date createdAt;
+    private Date createdAt;
 
     @ColumnInfo(name = "updated_at")
-    public Date updatedAt;
+    private Date updatedAt;
 
     @ColumnInfo(name = "deleted_at")
-    public Date deletedAt;
+    private Date deletedAt;
+
+    // === Constructor không tham số ===
+    public Cart() {}
+
+    // === Constructor đầy đủ ===
+    public Cart(@NonNull int userId,
+                @NonNull int productId,
+                int quantity,
+                Date createdAt,
+                Date updatedAt,
+                Date deletedAt) {
+        this.userId = userId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+    }
+
+    // === Getter & Setter ===
+
+    @NonNull
+    public int getId() {
+        return id;
+    }
+
+    public void setId(@NonNull int id) {
+        this.id = id;
+    }
+
+    @NonNull
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(@NonNull int userId) {
+        this.userId = userId;
+    }
+
+    @NonNull
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(@NonNull int productId) {
+        this.productId = productId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 }

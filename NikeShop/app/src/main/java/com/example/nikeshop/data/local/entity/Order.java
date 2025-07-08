@@ -23,32 +23,147 @@ public class Order {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    public int id;
+    private int id;
 
     @NonNull
     @ColumnInfo(name = "user_id")
-    public int userId;
+    private int userId;
 
     @NonNull
     @ColumnInfo(name = "order_date")
-    public Date orderDate; // Chuyển sang Date để dễ xử lý, nếu muốn giữ String hãy thông báo mình sửa lại
+    private Date orderDate;
 
     @ColumnInfo(name = "total_price")
-    public double totalPrice;
+    private double totalPrice;
 
     @NonNull
     @ColumnInfo(name = "payment_status")
-    public String status; // pending, completed, canceled
+    private String status; // pending, completed, canceled
 
     @ColumnInfo(name = "payment_method")
-    public String paymentMethod;
+    private String paymentMethod;
 
     @ColumnInfo(name = "created_at")
-    public Date createdAt;
+    private Date createdAt;
 
     @ColumnInfo(name = "updated_at")
-    public Date updatedAt;
+    private Date updatedAt;
 
     @ColumnInfo(name = "deleted_at")
-    public Date deletedAt;
+    private Date deletedAt;
+
+    // === Constructor không tham số (Room yêu cầu) ===
+    public Order() {}
+
+    // === Constructor đầy đủ ===
+    public Order(@NonNull int userId,
+                 @NonNull Date orderDate,
+                 double totalPrice,
+                 @NonNull String status,
+                 String paymentMethod,
+                 Date createdAt,
+                 Date updatedAt,
+                 Date deletedAt) {
+        this.userId = userId;
+        this.orderDate = orderDate;
+        this.totalPrice = totalPrice;
+        this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+    }
+
+    // === Getter & Setter ===
+
+    @NonNull
+    public int getId() {
+        return id;
+    }
+
+    public void setId(@NonNull int id) {
+        this.id = id;
+    }
+
+    @NonNull
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(@NonNull int userId) {
+        this.userId = userId;
+    }
+
+    @NonNull
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(@NonNull Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    @NonNull
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(@NonNull String status) {
+        this.status = status;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", orderDate=" + orderDate +
+                ", totalPrice=" + totalPrice +
+                ", status='" + status + '\'' +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 }
