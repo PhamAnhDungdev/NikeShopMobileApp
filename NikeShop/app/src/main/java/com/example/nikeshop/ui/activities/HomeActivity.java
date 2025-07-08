@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +12,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.nikeshop.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BottomMenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +26,7 @@ public class HomeActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        TextView btnViewProductList = findViewById(R.id.btn_view_product_list);
-        btnViewProductList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, ProductListActivity.class);
-                startActivity(intent);
-            }
-        });
+        setupBottomMenu(R.id.nav_home);
 
         // Product Card Clicks
         ImageView shoeImg1 = findViewById(R.id.shoe_img1);
@@ -68,5 +60,16 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // Sự kiện click cho icon Sneakers chuyển sang ProductListActivity
+        ImageView iconSneakers = findViewById(R.id.icon_sneakers);
+        if (iconSneakers != null) {
+            iconSneakers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HomeActivity.this, ProductListActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }

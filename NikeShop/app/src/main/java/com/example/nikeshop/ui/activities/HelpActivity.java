@@ -2,6 +2,7 @@ package com.example.nikeshop.ui.activities;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +11,7 @@ import com.example.nikeshop.R;
 
 public class HelpActivity extends AppCompatActivity {
 
-    private LinearLayout btnBack;
+    private ImageView btnBack;
     private LinearLayout optionUpdateAccount;
     private LinearLayout optionChangePassword;
     private LinearLayout optionUnsubscribe;

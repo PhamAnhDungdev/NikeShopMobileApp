@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.nikeshop.R;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BottomMenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,24 @@ public class ProfileActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        setupBottomMenu(R.id.nav_profile);
+
+        // Bắt sự kiện click cho các mục
+        findViewById(R.id.btnEditProfile).setOnClickListener(v ->
+            startActivity(new android.content.Intent(this, ContactInfoActivity.class)));
+        findViewById(R.id.llMyOrders).setOnClickListener(v ->
+            startActivity(new android.content.Intent(this, MyOrdersActivity.class)));
+        findViewById(R.id.llMyCards).setOnClickListener(v ->
+            startActivity(new android.content.Intent(this, MyCardsActivity.class)));
+        findViewById(R.id.llAddress).setOnClickListener(v ->
+            startActivity(new android.content.Intent(this, AddressActivity.class)));
+        findViewById(R.id.llHelpCenter).setOnClickListener(v ->
+            startActivity(new android.content.Intent(this, HelpActivity.class)));
+        findViewById(R.id.llLogout).setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(this, LoginActivity.class);
+            intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
     }
 }

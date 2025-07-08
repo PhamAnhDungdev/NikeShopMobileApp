@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.nikeshop.R;
 
-public class ProductListActivity extends AppCompatActivity {
+public class ProductListActivity extends BottomMenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class ProductListActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+      
 
         ImageButton btnBack = findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -53,5 +54,7 @@ public class ProductListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+       
+        setupBottomMenu(R.id.nav_home);
     }
 }

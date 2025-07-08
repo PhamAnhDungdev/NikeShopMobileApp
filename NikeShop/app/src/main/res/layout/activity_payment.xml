@@ -232,7 +232,7 @@
                         android:id="@+id/btn_checkout"
                         android:layout_width="match_parent"
                         android:layout_height="54dp"
-                        android:text="PROCEED TO CHECKOUT"
+                        android:text="PLACE ORDER"
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textSize="18sp"

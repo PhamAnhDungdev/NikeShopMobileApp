@@ -70,6 +70,7 @@
                     android:gravity="center"
                     android:layout_marginEnd="8dp">
                     <ImageView
+                        android:id="@+id/icon_sneakers"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:background="@drawable/category_selected_bg"
@@ -165,20 +166,7 @@
                     android:textSize="18sp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true" />
-                <TextView
-                    android:id="@+id/btn_view_product_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="View Product List"
-                    android:textColor="#E8772E"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="4dp"
-                    android:clickable="true"
-                    android:focusable="true" />
+                
             </RelativeLayout>
 
             <!-- Shoes Grid -->

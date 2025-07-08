@@ -88,9 +88,9 @@
                 android:orientation="vertical"
                 android:elevation="2dp">
 
-                <!-- Single Item Template -->
                 <!-- Orders -->
                 <LinearLayout
+                    android:id="@+id/llMyOrders"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -121,6 +121,7 @@
 
                 <!-- My Cards -->
                 <LinearLayout
+                    android:id="@+id/llMyCards"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -151,6 +152,7 @@
 
                 <!-- Address -->
                 <LinearLayout
+                    android:id="@+id/llAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -181,6 +183,7 @@
 
                 <!-- Help Center -->
                 <LinearLayout
+                    android:id="@+id/llHelpCenter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -211,6 +214,7 @@
 
                 <!-- Logout -->
                 <LinearLayout
+                    android:id="@+id/llLogout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
