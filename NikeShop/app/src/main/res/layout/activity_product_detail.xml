@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F7F7F7"
-    tools:context=".ProductDetailActivity">
+    tools:context=".ui.activities.ProductDetailActivity">
 
     <!-- Header: Back, Logo, Cart -->
     <RelativeLayout

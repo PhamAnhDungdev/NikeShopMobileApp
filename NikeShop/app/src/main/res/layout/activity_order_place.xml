@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_black_translucent"
+    android:padding="24dp">
+
+    <!-- Navbar -->
+    <include
+        android:id="@+id/top_navbar"
+        layout="@layout/top_navbar_white_with_cart" />
+
+    <!-- Check Icon Circle -->
+    <FrameLayout
+        android:id="@+id/circle_check"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp">
+
+        <!-- Nền cam -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/orange_bg" />
+
+        <!-- Icon check -->
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/img_check"
+            app:tint="@android:color/white"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+
+    <!-- Order Placed Text -->
+    <TextView
+        android:id="@+id/tvOrderPlaced"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Placed!"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/circle_check"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"/>
+
+    <!-- Estimated Delivery -->
+    <TextView
+        android:id="@+id/tvEstimatedDelivery"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@drawable/fav_btn_bg"
+        android:gravity="center"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="Estimated delivery 05 April"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/tvOrderPlaced"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+</RelativeLayout>
