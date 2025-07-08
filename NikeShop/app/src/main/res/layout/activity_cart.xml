@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#DCDCDC"
-    tools:context=".CartActivity">
+    tools:context=".ui.activities.CartActivity">
 
     <!-- Header: Back, Logo, Cart -->
     <include layout="@layout/top_navbar_with_cart"/>

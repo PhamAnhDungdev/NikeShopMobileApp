@@ -1,4 +1,4 @@
-package com.example.nikeshop.Models;
+package com.example.nikeshop.models;
 
 public class ProductFavourite {
     private String name;

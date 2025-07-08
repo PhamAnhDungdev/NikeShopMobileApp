@@ -1,4 +1,4 @@
-package com.example.nikeshop.Adapter;
+package com.example.nikeshop.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,8 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nikeshop.Models.ProductFavourite;
-import com.example.nikeshop.Models.ProductFavourite;
+import com.example.nikeshop.models.ProductFavourite;
+import com.example.nikeshop.models.ProductFavourite;
 import com.example.nikeshop.R;
 
 import java.util.List;

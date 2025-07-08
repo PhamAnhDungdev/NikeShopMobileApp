@@ -15,61 +15,60 @@
         android:theme="@style/Theme.NikeShop"
         tools:targetApi="31">
         <activity
-            android:name=".OrderPlaceActivity"
+            android:name=".ui.activities.OrderPlaceActivity"
             android:exported="false" />
         <activity
-            android:name=".PaymentActivity"
+            android:name=".ui.activities.PaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ui.activities.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".FavouriteActivity"
+            android:name=".ui.activities.FavouriteActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchActivity"
-            android:exported="false">      
-        </activity>
+            android:name=".ui.activities.SearchActivity"
+            android:exported="false" />
          <activity
-            android:name=".MyOrdersActivity"
+            android:name=".ui.activities.MyOrdersActivity"
             android:exported="false" />
         <activity
-            android:name=".MyCardsActivity"
+            android:name=".ui.activities.MyCardsActivity"
             android:exported="false" />
         <activity
-            android:name=".CardInputActivity"
-            android:exported="false" /> <!-- Google Maps API Key -->
+            android:name=".ui.activities.CardInputActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="" />
 
         <activity
-            android:name=".SignUp"
+            android:name=".ui.activities.SignUp"
             android:exported="false" />
         <activity
-            android:name=".AccountRecovery"
+            android:name=".ui.activities.AccountRecovery"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_address"
+            android:name=".ui.activities.AddressActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_help"
+            android:name=".ui.activities.HelpActivity"
             android:exported="false" />
         <activity
-            android:name=".CartActivity"
+            android:name=".ui.activities.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".ProductDetailActivity"
+            android:name=".ui.activities.ProductDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ProductListActivity"
+            android:name=".ui.activities.ProductListActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.activities.HomeActivity"
             android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -78,7 +77,7 @@
         </intent-filter>
     </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="false" />
     </application>
 
