@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BottomMenuActivity {
     private RecyclerView rvSuggestions;
     private SuggestionAdapter adapter;
     private List<String> suggestionList, filteredList;
@@ -35,6 +35,7 @@ public class SearchActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        setupBottomMenu(R.id.nav_search);
 
         rvSuggestions = findViewById(R.id.rvSuggestions);
         EditText etSearch = findViewById(R.id.etSearch);

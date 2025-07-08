@@ -14,7 +14,7 @@ import com.example.nikeshop.models.ProductFavourite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouriteActivity extends AppCompatActivity {
+public class FavouriteActivity extends BottomMenuActivity {
     private RecyclerView rvFavourites;
     private FavouriteProductAdapter adapter;
     private List<ProductFavourite> productList;
@@ -23,6 +23,7 @@ public class FavouriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_favourite);
+        setupBottomMenu(R.id.nav_favourites);
 
         rvFavourites = findViewById(R.id.rvFavourites);
 

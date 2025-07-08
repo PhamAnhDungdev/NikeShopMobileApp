@@ -1,7 +1,10 @@
 package com.example.nikeshop.ui.activities;
 
 import android.app.Notification;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +30,36 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Thêm sự kiện chuyển hướng sang SignUp khi click vào signUpLink
+        TextView signUpLink = findViewById(R.id.signUpLink);
+        signUpLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignUp.class);
+                startActivity(intent);
+            }
+        });
+        // Thêm sự kiện chuyển hướng sang AccountRecovery khi click vào forgotPasswordLink
+        TextView forgotPasswordLink = findViewById(R.id.forgotPasswordLink);
+        forgotPasswordLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, AccountRecovery.class);
+                startActivity(intent);
+            }
+        });
         sendTestNotification();
+
+        // Thêm sự kiện chuyển hướng sang ActivityHome khi click vào skipNow
+        TextView skipNow = findViewById(R.id.skipNow);
+        skipNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
