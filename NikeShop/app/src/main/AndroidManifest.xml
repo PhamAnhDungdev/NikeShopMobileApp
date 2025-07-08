@@ -27,6 +27,9 @@
             android:name=".ui.activities.FavouriteActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.activities.ContactInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.SearchActivity"
             android:exported="false" />
          <activity
