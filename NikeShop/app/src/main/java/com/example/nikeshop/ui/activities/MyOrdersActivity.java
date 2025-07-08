@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nikeshop.R;
-import com.example.nikeshop.adapter.OrdersAdapter;
+import com.example.nikeshop.adapters.OrdersAdapter;
 import com.example.nikeshop.data.OrderDataManager;
 import com.example.nikeshop.models.Order;
 

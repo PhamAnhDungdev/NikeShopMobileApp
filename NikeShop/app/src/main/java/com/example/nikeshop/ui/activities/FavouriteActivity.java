@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nikeshop.R;
-import com.example.nikeshop.adapter.FavouriteProductAdapter;
+import com.example.nikeshop.adapters.FavouriteProductAdapter;
 import com.example.nikeshop.models.ProductFavourite;
 
 import java.util.ArrayList;

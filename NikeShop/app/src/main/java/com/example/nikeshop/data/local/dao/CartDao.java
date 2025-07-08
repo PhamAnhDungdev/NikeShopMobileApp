@@ -1,4 +1,4 @@
 package com.example.nikeshop.data.local.dao;
 
-public class CartDao {
+public interface CartDao {
 }

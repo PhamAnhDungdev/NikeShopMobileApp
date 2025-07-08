@@ -1,4 +1,4 @@
-package com.example.nikeshop.adapter;
+package com.example.nikeshop.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

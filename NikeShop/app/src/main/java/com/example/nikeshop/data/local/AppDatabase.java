@@ -5,7 +5,9 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
+import com.example.nikeshop.data.DateConverter;
 import com.example.nikeshop.data.local.dao.CartDao;
 import com.example.nikeshop.data.local.dao.CategoryDao;
 import com.example.nikeshop.data.local.dao.CouponDao;
@@ -36,6 +38,8 @@ import com.example.nikeshop.data.local.entity.OrderDetail;
                 Order.class,
                 OrderDetail.class,
         }, version = 1)
+
+@TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
     public abstract UserDao userDao();
