@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.nikeshop.data.local.AppDatabase;
+import com.example.nikeshop.data.local.dao.UserDao;
+import com.example.nikeshop.data.local.entity.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -20,11 +23,14 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.room.Room;
 
 import android.app.NotificationManager;
 
 import com.example.nikeshop.R;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -74,41 +80,50 @@ public class LoginActivity extends AppCompatActivity {
         EditText passwordInput = findViewById(R.id.passwordInput);
         Button loginButton = findViewById(R.id.loginButton);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "nike_database").allowMainThreadQueries().build();
+        UserDao userDao = db.userDao();
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = emailInput.getText().toString().trim();
-                String password = passwordInput.getText().toString().trim();
+        loginButton.setOnClickListener(v -> {
+            String email = emailInput.getText().toString().trim();
+            String password = passwordInput.getText().toString().trim();
 
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(LoginActivity.this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                if (user != null && user.isEmailVerified()) {
-                                    Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "Please verify your email before logging in.", Toast.LENGTH_LONG).show();
-                                }
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+            String hashedInput = hashPassword(password);
+            User user = userDao.loginUser(email, hashedInput);
+
+            if (user != null) {
+                Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
             }
         });
 
-
     }
 
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : encodedHash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     private void sendTestNotification() {
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
