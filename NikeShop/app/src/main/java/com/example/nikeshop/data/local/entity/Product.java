@@ -22,7 +22,6 @@ import java.util.Date;
 public class Product {
 
     @PrimaryKey(autoGenerate = true)
-    @NonNull
     private int id;
 
     @NonNull
@@ -44,7 +43,6 @@ public class Product {
     @ColumnInfo(name = "image_url")
     private String imageUrl;
 
-    @NonNull
     @ColumnInfo(name = "category_id")
     private int categoryId;
 

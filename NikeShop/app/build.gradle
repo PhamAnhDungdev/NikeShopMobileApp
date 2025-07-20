@@ -37,6 +37,7 @@ dependencies {
     implementation libs.activity
     implementation libs.constraintlayout
     implementation libs.play.services.maps
+    implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
@@ -44,4 +45,5 @@ dependencies {
     def room_version = "2.6.1"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+
 }

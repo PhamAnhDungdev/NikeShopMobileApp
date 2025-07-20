@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.example.nikeshop.data.local.AppDatabase;
+import com.example.nikeshop.data.local.seed.Seeder;
 
 public class NikeShopApp extends Application {
 
@@ -15,22 +16,21 @@ public class NikeShopApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        // Init databse
         database = Room.databaseBuilder(
                 getApplicationContext(),
                 AppDatabase.class,
                 "nike_shop_db"
         ).fallbackToDestructiveMigration().build();
-        // Khởi tạo các thư viện toàn cục ở đây nếu cần
-        // Ví dụ:
-        // Stetho.initializeWithDefaults(this);
-        // FirebaseApp.initializeApp(this);
-        // OneSignal.initWithContext(this);
+
+        // Init seeder gen data
+        Seeder.seed(this);
     }
 
     public static NikeShopApp getInstance() {
         return instance;
     }
-
     public static AppDatabase getDatabase() {
         return database;
     }
