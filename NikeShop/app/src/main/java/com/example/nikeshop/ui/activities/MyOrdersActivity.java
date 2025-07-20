@@ -5,27 +5,29 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nikeshop.R;
 import com.example.nikeshop.adapters.OrdersAdapter;
-import com.example.nikeshop.data.OrderDataManager;
-import com.example.nikeshop.models.Order;
+import com.example.nikeshop.data.local.AppDatabase;
+import com.example.nikeshop.data.local.dao.OrderDao;
+import com.example.nikeshop.data.local.entity.Order;
+import com.example.nikeshop.data.repositories.OrderRepository;
+import com.example.nikeshop.ui.ViewModels.OrderViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter.OnOrderClickListener {
 
     private ImageButton btnBack;
     private RecyclerView rvOrders;
     private LinearLayout navHome, navSearch, navFavourites, navProfile;
-
     private OrdersAdapter ordersAdapter;
-    private OrderDataManager dataManager;
-    private List<Order> orderList;
+    private OrderViewModel orderViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter
         initViews();
         setupRecyclerView();
         setupClickListeners();
-        loadOrders();
+        observeOrders();
     }
 
     private void initViews() {
@@ -46,70 +48,41 @@ public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter
         navFavourites = findViewById(R.id.nav_favourites);
         navProfile = findViewById(R.id.nav_profile);
 
-        dataManager = OrderDataManager.getInstance();
+        // Tạo ViewModel qua Factory (nếu muốn truyền Repository vào ViewModel)
+        OrderDao orderDao = AppDatabase.getInstance(getApplicationContext()).orderDao();
+        OrderRepository repository = new OrderRepository(orderDao);
+        orderViewModel = new ViewModelProvider(
+                this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())
+        ).get(OrderViewModel.class);
+
     }
 
     private void setupRecyclerView() {
         rvOrders.setLayoutManager(new LinearLayoutManager(this));
-        // Initialize with empty list first
         ordersAdapter = new OrdersAdapter(this, new ArrayList<>());
         ordersAdapter.setOnOrderClickListener(this);
         rvOrders.setAdapter(ordersAdapter);
     }
 
     private void setupClickListeners() {
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        // Navigation click listeners
-        navHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyOrdersActivity.this, "Navigate to Home", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        navSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyOrdersActivity.this, "Navigate to Search", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        navFavourites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyOrdersActivity.this, "Navigate to Favourites", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        navProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyOrdersActivity.this, "You're in Profile section", Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnBack.setOnClickListener(v -> onBackPressed());
+        navHome.setOnClickListener(v -> Toast.makeText(this, "Navigate to Home", Toast.LENGTH_SHORT).show());
+        navSearch.setOnClickListener(v -> Toast.makeText(this, "Navigate to Search", Toast.LENGTH_SHORT).show());
+        navFavourites.setOnClickListener(v -> Toast.makeText(this, "Navigate to Favourites", Toast.LENGTH_SHORT).show());
+        navProfile.setOnClickListener(v -> Toast.makeText(this, "You're in Profile section", Toast.LENGTH_SHORT).show());
     }
 
-    private void loadOrders() {
-        // Load orders from data manager (currently sample data)
-        orderList = dataManager.getAllOrders();
-        ordersAdapter.updateOrders(orderList);
+    private void observeOrders() {
+        orderViewModel.getAllOrders().observe(this, orders -> {
+            ordersAdapter.updateOrders(orders);
+        });
     }
 
     @Override
     public void onOrderClick(Order order) {
-        Toast.makeText(this, "Order clicked: " + order.getOrderNumber(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Order clicked: " + order.getId(), Toast.LENGTH_SHORT).show();
         // TODO: Open order details screen
-    }
-
-    // Method to refresh orders (for future use)
-    public void refreshOrders() {
-        loadOrders();
     }
 
     @Override

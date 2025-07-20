@@ -1,6 +1,7 @@
 package com.example.nikeshop.data.local.dao;
 
 import androidx.room.Dao;
+import androidx.room.Insert;
 
 import com.example.nikeshop.data.local.entity.Cart;
 
@@ -9,5 +10,5 @@ import java.util.List;
 @Dao
 public interface CartDao {
     @Insert
-    void insertAll(List<Cart> carts);
+    List<Long> insertAll(List<Cart> carts);
 }

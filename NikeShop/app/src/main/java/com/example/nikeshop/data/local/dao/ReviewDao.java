@@ -10,5 +10,5 @@ import java.util.List;
 @Dao
 public interface ReviewDao {
     @Insert
-    void insertAll(List<Review> reviews);
+    List<Long> insertAll(List<Review> reviews);
 }
