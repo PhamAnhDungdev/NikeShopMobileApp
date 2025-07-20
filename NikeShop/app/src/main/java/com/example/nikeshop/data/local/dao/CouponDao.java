@@ -10,5 +10,5 @@ import java.util.List;
 @Dao
 public interface CouponDao {
     @Insert
-    void insertAll(List<Coupon> coupons);
+    List<Long> insertAll(List<Coupon> coupons);
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public interface ProductDao {
 
     @Insert
-    void insertAll(List<Product> products);
+    List<Long> insertAll(List<Product> products);
     // Thêm sản phẩm
     @Insert
     void insertProduct(Product product);

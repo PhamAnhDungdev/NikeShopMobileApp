@@ -37,7 +37,7 @@ import com.example.nikeshop.data.local.entity.OrderDetail;
                 Wishlist.class,
                 Order.class,
                 OrderDetail.class,
-        }, version = 1)
+        }, version = 2)
 
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
@@ -52,4 +52,13 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract OrderDao orderDao();
     public abstract OrderDetailDao orderDetailDao();
 
+    public static synchronized AppDatabase getInstance(Context context) {
+        if (INSTANCE == null) {
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            AppDatabase.class, "nike_db")
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+        return INSTANCE;
+    }
 }

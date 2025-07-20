@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.nikeshop.R;
-import com.example.nikeshop.models.Order;
+import com.example.nikeshop.data.local.entity.Order;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -91,27 +91,33 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
         }
 
         public void bind(Order order) {
-            tvOrderNumber.setText("Order " + order.getOrderNumber());
-            tvPlacedDate.setText("Placed on " + order.getPlacedDate());
-            tvPaidDate.setText("Paid on " + order.getPaidDate());
-            tvProductName.setText(order.getProductName());
-            tvProductCategory.setText(order.getProductCategory());
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
-            // Format price
-            NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
-            tvProductPrice.setText(formatter.format(order.getProductPrice()));
-            tvTotalPrice.setText(formatter.format(order.getTotalPrice()));
+            // Hiển thị ID đơn hàng
+            tvOrderNumber.setText("Order #" + order.getId());
 
-            tvProductQuantity.setText("X" + order.getQuantity());
+            // Hiển thị ngày đặt hàng
+            tvPlacedDate.setText("Placed on " + order.getOrderDate());
+
+            // Dữ liệu không có => bỏ dòng này
+            tvPaidDate.setVisibility(View.GONE);
+
+            // Không có tên sản phẩm, category => dùng placeholder hoặc ẩn
+            tvProductName.setText("Nike Product");
+            tvProductCategory.setText("Category");
+            tvProductPrice.setText(currencyFormat.format(order.getTotalPrice())); // giả định 1 sản phẩm duy nhất
+
+            tvTotalPrice.setText(currencyFormat.format(order.getTotalPrice()));
+            tvProductQuantity.setText("X1"); // chưa có quantity => giả định 1
             tvOrderStatus.setText(order.getStatus());
-            tvItemCount.setText(order.getQuantity() + " Item , Total:");
+            tvItemCount.setText("1 Item , Total:");
 
-            // Set product image
-            setProductImage(order.getProductImage());
+            // Ảnh sản phẩm không có => placeholder
+            ivProductImage.setImageResource(R.drawable.placeholder_shoe);
 
-            // Set status background color
             setStatusBackground(order.getStatus());
         }
+
 
         private void setProductImage(String imageName) {
             switch (imageName) {

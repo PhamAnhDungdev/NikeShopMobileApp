@@ -14,10 +14,10 @@ import java.util.List;
 public interface OrderDetailDao {
 
     @Insert
-    void insert(OrderDetail orderDetail);
+    Long insert(OrderDetail orderDetail);
 
     @Insert
-    void insertAll(List<OrderDetail> orderDetails);
+    List<Long> insertAll(List<OrderDetail> orderDetails);
 
     @Delete
     void delete(OrderDetail orderDetail);

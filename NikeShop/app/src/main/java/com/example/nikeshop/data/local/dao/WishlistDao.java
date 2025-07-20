@@ -10,5 +10,5 @@ import java.util.List;
 @Dao
 public interface WishlistDao {
     @Insert
-    void insertAll(List<Wishlist> wishlists);
+    List<Long> insertAll(List<Wishlist> wishlists);
 }

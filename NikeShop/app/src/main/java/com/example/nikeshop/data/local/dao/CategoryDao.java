@@ -10,5 +10,5 @@ import java.util.List;
 @Dao
 public interface CategoryDao {
     @Insert
-    void insertAll(List<Category> categories);
+    List<Long> insertAll(List<Category> categories);
 }
