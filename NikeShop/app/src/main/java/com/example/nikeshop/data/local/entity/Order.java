@@ -33,6 +33,7 @@ public class Order {
     @ColumnInfo(name = "order_date")
     private Date orderDate;
 
+
     @ColumnInfo(name = "total_price")
     private double totalPrice;
 
@@ -99,9 +100,7 @@ public class Order {
         return orderDate;
     }
 
-    public void setOrderDate(@NonNull Date orderDate) {
-        this.orderDate = orderDate;
-    }
+
 
     public double getTotalPrice() {
         return totalPrice;
@@ -166,4 +165,9 @@ public class Order {
                 ", deletedAt=" + deletedAt +
                 '}';
     }
+
+    public void setOrderDate(@NonNull Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
 }

@@ -7,6 +7,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(
@@ -19,7 +20,7 @@ import java.util.Date;
         ),
         indices = @Index(value = "category_id", name = "index_product_category_id")
 )
-public class Product {
+public class Product  implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -248,4 +249,6 @@ public class Product {
                 ", deletedAt=" + deletedAt +
                 '}';
     }
+
+
 }

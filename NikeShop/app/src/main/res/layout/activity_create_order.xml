@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Toolbar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/margin_medium"
+            android:background="@color/white"
+            android:elevation="4dp">
+
+            <ImageButton
+                android:id="@+id/btn_back_create"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_arrow_back"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tạo đơn hàng mới"
+                style="@style/TextHeadingSmall"
+                android:layout_marginStart="@dimen/margin_medium" />
+
+            <Button
+                android:id="@+id/btn_save_order"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Lưu"
+                style="@style/ButtonPrimary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_medium">
+
+            <!-- Customer Selection -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_medium"
+                cardCornerRadius="12dp"
+                cardElevation="4dp"
+                cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_medium">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thông tin khách hàng"
+                        style="@style/TextTitleBold"
+                        android:layout_marginBottom="@dimen/margin_medium" />
+
+                    <EditText
+                        android:id="@+id/et_customer_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="Tên khách hàng"
+                        android:background="@drawable/edittext_bg"
+                        android:padding="@dimen/margin_medium"
+                        style="@style/TextBody"
+                        android:layout_marginBottom="@dimen/margin_small" />
+
+                    <EditText
+                        android:id="@+id/et_customer_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="Số điện thoại"
+                        android:background="@drawable/edittext_bg"
+                        android:padding="@dimen/margin_medium"
+                        style="@style/TextBody"
+                        android:inputType="phone"
+                        android:layout_marginBottom="@dimen/margin_small" />
+
+                    <EditText
+                        android:id="@+id/et_customer_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:hint="Địa chỉ giao hàng"
+                        android:background="@drawable/edittext_bg"
+                        android:padding="@dimen/margin_medium"
+                        style="@style/TextBody"
+                        android:gravity="top" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Product Selection -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_medium"
+                cardCornerRadius="12dp"
+                cardElevation="4dp"
+                cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_medium">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Sản phẩm đã chọn"
+                            style="@style/TextTitleBold" />
+
+                        <Button
+                            android:id="@+id/btn_add_product_to_order"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="+ Thêm SP"
+                            style="@style/ButtonPrimary" />
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_selected_products"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_medium" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Order Summary -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/primary_orange">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_medium">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tổng kết đơn hàng"
+                        style="@style/TextTitleBold"
+                        android:textColor="@color/white"
+                        android:layout_marginBottom="@dimen/margin_medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Tổng tiền:"
+                            style="@style/TextBody"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_order_total_create"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 VND"
+                            style="@style/TextHeadingSmall"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

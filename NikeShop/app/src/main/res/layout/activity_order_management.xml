@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_light">
+
+    <!-- Toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_medium"
+        android:background="@color/white"
+        android:elevation="4dp">
+
+
+        <ImageButton
+            android:id="@+id/btn_back_orders"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_arrow_back"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Quản lý Đơn hàng"
+            style="@style/TextHeadingSmall"
+            android:layout_marginStart="@dimen/margin_medium" />
+
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_order_search"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:hint="Tìm kiếm đơn hàng..."
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="8dp"
+        android:background="@drawable/edittext_bg"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"/>
+
+    <!-- Filter Tabs -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <Button
+                android:id="@+id/btn_all_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="All"
+                style="@style/ButtonPrimary"
+                android:layout_marginEnd="@dimen/margin_small" />
+
+            <Button
+                android:id="@+id/btn_pending_orders"
+                style="@style/ButtonSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:text="Pending" />
+
+            <Button
+                android:id="@+id/btn_processing_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Processing"
+                style="@style/ButtonSecondary"
+                android:layout_marginEnd="@dimen/margin_small" />
+
+            <Button
+                android:id="@+id/btn_completed_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Completed"
+                style="@style/ButtonSecondary" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- Orders List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_orders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_small" />
+
+</LinearLayout>

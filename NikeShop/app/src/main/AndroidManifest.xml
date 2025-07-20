@@ -15,6 +15,26 @@
         android:theme="@style/Theme.NikeShop"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.DashboardActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.activities.OrderManagementActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".ui.activities.AddEditCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.CategoryManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.AddEditProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ProductManagementActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activities.OrderPlaceActivity"
             android:exported="false" />
         <activity
@@ -32,7 +52,7 @@
         <activity
             android:name=".ui.activities.SearchActivity"
             android:exported="false" />
-         <activity
+        <activity
             android:name=".ui.activities.MyOrdersActivity"
             android:exported="false" />
         <activity
@@ -57,13 +77,13 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.SplashActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activities.AddressActivity"
             android:exported="false" />
@@ -81,9 +101,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.HomeActivity"
-            android:exported="false">
-
-    </activity>
+            android:exported="false" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="false" />

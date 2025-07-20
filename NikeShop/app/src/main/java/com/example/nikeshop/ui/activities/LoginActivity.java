@@ -3,6 +3,7 @@ package com.example.nikeshop.ui.activities;
 import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 // Thêm vào đầu file
@@ -95,13 +96,22 @@ public class LoginActivity extends AppCompatActivity {
 
             String hashedInput = hashPassword(password);
             User user = userDao.loginUser(email, hashedInput);
+            Log.d("LoginDebug", "Hashed input = " + hashedInput);
 
             if (user != null) {
                 Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+
+                Intent intent;
+                if (user.isAdmin()) {
+                    intent = new Intent(LoginActivity.this, DashboardActivity.class); // activity cho admin
+                } else {
+                    intent = new Intent(LoginActivity.this, HomeActivity.class); // activity cho người dùng thường
+                }
+
                 startActivity(intent);
                 finish();
-            } else {
+            }
+            else {
                 Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
             }
         });

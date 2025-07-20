@@ -72,6 +72,7 @@ public class User {
         this.deletedAt = deletedAt;
     }
 
+
     // === Getter & Setter ===
 
     @NonNull

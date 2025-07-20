@@ -7,48 +7,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nikeshop.R;
-import com.example.nikeshop.data.local.entity.Order;
+import com.example.nikeshop.models.Order;
 
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewHolder> {
+public class OrdersHistoryAdapter extends RecyclerView.Adapter<OrdersHistoryAdapter.OrderViewHolder> {
 
     private Context context;
     private List<Order> orderList;
     private OnOrderClickListener clickListener;
-    private OnOrderActionListener actionListener;
+
+    public interface OnOrderClickListener {
+        void onOrderClick(Order order);
+    }
 
     public void setOnOrderClickListener(OnOrderClickListener listener) {
         this.clickListener = listener;
     }
 
-    public void setOnOrderActionListener(OnOrderActionListener listener) {
-        this.actionListener = listener;
-    }
-
-    public interface OnOrderClickListener {
-        void onOrderClick(com.example.nikeshop.models.Order order);
-
-        void onOrderClick(Order order);
-    }
-
-    public interface OnOrderActionListener {
-        void onView(Order order);
-        void onDelete(Order order);
-
-        void onView(com.example.nikeshop.models.Order order);
-
-        void onDelete(com.example.nikeshop.models.Order order);
-    }
-
-    public OrdersAdapter(Context context, List<Order> orderList) {
+    public OrdersHistoryAdapter(Context context, List<Order> orderList) {
         this.context = context;
         this.orderList = orderList;
     }
@@ -101,73 +84,54 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
             btnUpdate = itemView.findViewById(R.id.btn_update_status);
 
             itemView.setOnClickListener(v -> {
-                if (clickListener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        clickListener.onOrderClick(orderList.get(position));
-                    }
+                int position = getAdapterPosition();
+                if (clickListener != null && position != RecyclerView.NO_POSITION) {
+                    clickListener.onOrderClick(orderList.get(position));
                 }
             });
-
-            btnView.setOnClickListener(v -> {
-                if (actionListener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        actionListener.onView(orderList.get(position));
-                    }
-                }
-            });
-
-            btnUpdate.setOnClickListener(v -> {
-                if (actionListener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        actionListener.onDelete(orderList.get(position));
-                    }
-                }
-            });
-
-            btnView.setOnClickListener(v -> {
-                if (actionListener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        actionListener.onView(orderList.get(position));
-                    }
-                }
-            });
-
         }
 
         public void bind(Order order) {
-            tvOrderNumber.setText("Order #" + order.getId());
-            tvPlacedDate.setText("Placed on " + order.getOrderDate());
-            tvPaidDate.setText("Status: " + order.getStatus());
-            tvProductName.setText("..."); // Placeholder
-            tvProductCategory.setText("..."); // Placeholder
+            tvOrderNumber.setText("Order " + order.getOrderNumber());
+            tvPlacedDate.setText("Placed on " + order.getPlacedDate());
+            tvPaidDate.setText("Paid on " + order.getPaidDate());
+            tvProductName.setText(order.getProductName());
+            tvProductCategory.setText(order.getProductCategory());
 
-            NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-            tvProductPrice.setText(formatter.format(order.getTotalPrice()));
+            NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+            tvProductPrice.setText(formatter.format(order.getProductPrice()));
             tvTotalPrice.setText(formatter.format(order.getTotalPrice()));
-            tvProductQuantity.setText("..."); // Placeholder
+
+            tvProductQuantity.setText("X" + order.getQuantity());
             tvOrderStatus.setText(order.getStatus());
-            tvItemCount.setText("1 Item , Total:");
+            tvItemCount.setText(order.getQuantity() + " Item , Total:");
 
-            ivProductImage.setImageResource(R.drawable.placeholder_shoe);
-
+            setProductImage(order.getProductImage());
             setStatusBackground(order.getStatus());
         }
 
+        private void setProductImage(String imageName) {
+            switch (imageName) {
+                case "nike_air_1":
+                case "nike_air_444":
+                    ivProductImage.setImageResource(R.drawable.nike_air_444);
+                    break;
+                default:
+                    ivProductImage.setImageResource(R.drawable.placeholder_shoe);
+                    break;
+            }
+        }
 
         private void setStatusBackground(String status) {
             switch (status.toLowerCase()) {
-                case "completed":
+                case "delivered":
                     tvOrderStatus.setBackgroundResource(R.drawable.status_delivered_bg);
+                    break;
+                case "shipped":
+                    tvOrderStatus.setBackgroundResource(R.drawable.status_shipped_bg);
                     break;
                 case "processing":
                     tvOrderStatus.setBackgroundResource(R.drawable.status_processing_bg);
-                    break;
-                case "pending":
-                    tvOrderStatus.setBackgroundResource(R.drawable.status_shipped_bg);
                     break;
                 default:
                     tvOrderStatus.setBackgroundResource(R.drawable.status_delivered_bg);

@@ -11,21 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nikeshop.R;
 import com.example.nikeshop.adapters.OrdersAdapter;
+import com.example.nikeshop.adapters.OrdersHistoryAdapter;
 import com.example.nikeshop.data.OrderDataManager;
 import com.example.nikeshop.models.Order;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter.OnOrderClickListener {
+public class MyOrdersActivity extends AppCompatActivity implements OrdersHistoryAdapter.OnOrderClickListener
+ {
 
     private ImageButton btnBack;
     private RecyclerView rvOrders;
     private LinearLayout navHome, navSearch, navFavourites, navProfile;
 
-    private OrdersAdapter ordersAdapter;
     private OrderDataManager dataManager;
     private List<Order> orderList;
+    private OrdersHistoryAdapter ordersAdapter; // THAY OrdersAdapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +54,12 @@ public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter
     private void setupRecyclerView() {
         rvOrders.setLayoutManager(new LinearLayoutManager(this));
         // Initialize with empty list first
-        ordersAdapter = new OrdersAdapter(this, new ArrayList<>());
+        ordersAdapter = new OrdersHistoryAdapter(this, new ArrayList<>());
         ordersAdapter.setOnOrderClickListener(this);
         rvOrders.setAdapter(ordersAdapter);
+        ordersAdapter.updateOrders(orderList); // Không còn lỗi kiểu dữ liệu
+
+
     }
 
     private void setupClickListeners() {
@@ -117,4 +122,6 @@ public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter
         super.onBackPressed();
         finish();
     }
+
+
 }
