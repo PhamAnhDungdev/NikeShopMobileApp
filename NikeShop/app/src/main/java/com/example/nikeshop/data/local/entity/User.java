@@ -11,7 +11,6 @@ import java.util.Date;
 public class User {
 
     @PrimaryKey(autoGenerate = true)
-    @NonNull
     private int id;
 
     @NonNull
