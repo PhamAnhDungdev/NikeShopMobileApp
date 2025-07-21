@@ -46,7 +46,7 @@ public class SignUp extends AppCompatActivity {
 
         // DB
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "nike_db").allowMainThreadQueries().build();
+                AppDatabase.class, "nike_shop_db").allowMainThreadQueries().build();
         UserDao userDao = db.userDao();
 
         // Icon hiện/ẩn mật khẩu
