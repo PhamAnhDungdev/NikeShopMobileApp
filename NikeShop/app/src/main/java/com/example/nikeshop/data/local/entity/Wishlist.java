@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -57,6 +58,7 @@ public class Wishlist {
     public Wishlist() {}
 
     // === Constructor đầy đủ ===
+    @Ignore
     public Wishlist(@NonNull int userId,
                     @NonNull int productId,
                     Date createdAt,

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -22,7 +23,6 @@ import java.util.Date;
 public class Product {
 
     @PrimaryKey(autoGenerate = true)
-    @NonNull
     private int id;
 
     @NonNull
@@ -44,7 +44,6 @@ public class Product {
     @ColumnInfo(name = "image_url")
     private String imageUrl;
 
-    @NonNull
     @ColumnInfo(name = "category_id")
     private int categoryId;
 
@@ -73,6 +72,7 @@ public class Product {
     public Product() {}
 
     // === Constructor đầy đủ ===
+    @Ignore
     public Product(@NonNull String name,
                    String description,
                    double price,

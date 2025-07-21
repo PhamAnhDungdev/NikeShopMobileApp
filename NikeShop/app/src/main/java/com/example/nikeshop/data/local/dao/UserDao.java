@@ -14,6 +14,8 @@ import java.util.List;
 @Dao
 public interface UserDao {
     @Insert
+    List<Long> insertAll(List<User> users);
+    @Insert
     void insertUser(User user);
 
     @Query("SELECT * FROM users WHERE email = :email AND password_hash = :password LIMIT 1")
@@ -31,4 +33,7 @@ public interface UserDao {
     @Update
     void updateUser(User user);
 
+
+    @Query("SELECT COUNT(*) FROM users")
+    int countUsers();
 }
