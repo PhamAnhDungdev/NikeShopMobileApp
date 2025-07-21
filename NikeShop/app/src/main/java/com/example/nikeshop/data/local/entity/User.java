@@ -3,6 +3,7 @@ package com.example.nikeshop.data.local.entity;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -49,6 +50,7 @@ public class User {
     public User() {}
 
     // === Constructor đầy đủ ===
+    @Ignore
     public User(@NonNull String username,
                 @NonNull String email,
                 String passwordHash,

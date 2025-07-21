@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -56,6 +57,7 @@ public class Order {
     public Order() {}
 
     // === Constructor đầy đủ ===
+    @Ignore
     public Order(@NonNull int userId,
                  @NonNull Date orderDate,
                  double totalPrice,

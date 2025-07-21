@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -63,6 +64,7 @@ public class OrderDetail {
     public OrderDetail() {}
 
     // === Constructor đầy đủ ===
+    @Ignore
     public OrderDetail(@NonNull int orderId,
                        @NonNull int productId,
                        int quantity,
