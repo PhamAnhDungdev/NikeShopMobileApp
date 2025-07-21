@@ -22,7 +22,8 @@ import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class Seeder {
-    private static final boolean FORCE_RESEED = false;
+    private static final boolean FORCE_RESEED = false; // False khong reset // True reset
+
     // Custom Date Deserializer
     private static class DateDeserializer implements JsonDeserializer<Date> {
         private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault());
