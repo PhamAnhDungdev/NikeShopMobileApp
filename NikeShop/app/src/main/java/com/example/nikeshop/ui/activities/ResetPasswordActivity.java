@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
+
+import com.example.nikeshop.NikeShopApp;
 import com.example.nikeshop.R;
 import com.example.nikeshop.data.local.AppDatabase;
 import com.example.nikeshop.data.local.dao.UserDao;
@@ -32,7 +34,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         email = getIntent().getStringExtra("email");
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "nike_db").allowMainThreadQueries().build();
+                AppDatabase.class, "nike_shop_db").allowMainThreadQueries().build();
         UserDao userDao = db.userDao();
 
         resetButton.setOnClickListener(v -> {

@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 // Thêm vào đầu file
@@ -79,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.loginButton);
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "nike_db").allowMainThreadQueries().build();
+                AppDatabase.class, "nike_shop_db").allowMainThreadQueries().build();
         UserDao userDao = db.userDao();
 
         loginButton.setOnClickListener(v -> {
@@ -91,8 +92,8 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            String hashedInput = hashPassword(password);
-            User user = userDao.loginUser(email, hashedInput);
+            //String hashedInput = hashPassword(password);
+            User user = userDao.loginUser(email, password);
 
             if (user != null) {
                 SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
