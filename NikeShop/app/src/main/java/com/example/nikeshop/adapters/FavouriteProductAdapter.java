@@ -12,19 +12,29 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nikeshop.models.ProductFavourite;
+import com.bumptech.glide.Glide;
 import com.example.nikeshop.R;
+import com.example.nikeshop.data.local.entity.Product;
+import com.example.nikeshop.ui.ViewModels.CartViewModel;
 
 import java.util.List;
 
 public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProductAdapter.FavouriteViewHolder> {
 
-    private List<ProductFavourite> productList;
-    private Context context;
+    private List<Product> productList;
+    private final Context context;
 
-    public FavouriteProductAdapter(List<ProductFavourite> productList, Context context) {
+    private final CartViewModel cartViewModel;
+    private static final int CURRENT_USER_ID = 2;
+    public FavouriteProductAdapter(List<Product> productList, Context context, CartViewModel cartViewModel) {
         this.productList = productList;
         this.context = context;
+        this.cartViewModel = cartViewModel;
+    }
+
+    public void setProducts(List<Product> newList) {
+        this.productList = newList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -36,25 +46,34 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
 
     @Override
     public void onBindViewHolder(@NonNull FavouriteViewHolder holder, int position) {
-        ProductFavourite product = productList.get(position);
+        Product product = productList.get(position);
 
         holder.tvProductName.setText(product.getName());
-        holder.tvProductType.setText(product.getType());
-        holder.tvProductPrice.setText(product.getPrice());
-        holder.imgProduct.setImageResource(product.getImageResId());
+        holder.tvProductType.setText(product.getDescription());
+        holder.tvProductPrice.setText("$" + product.getPrice());
+
+        // Load image (URL hoặc local resource tạm)
+        if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
+            Glide.with(context)
+                    .load(product.getImageUrl())
+                    .placeholder(R.drawable.shoes1)
+                    .into(holder.imgProduct);
+        } else {
+            holder.imgProduct.setImageResource(R.drawable.shoes1);
+        }
 
         holder.btnAddToCart.setOnClickListener(v -> {
+            cartViewModel.addToCart(CURRENT_USER_ID, product.getId(), 1);
             Toast.makeText(context, product.getName() + " added to cart!", Toast.LENGTH_SHORT).show();
-            // TODO: Add your cart logic here
         });
     }
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return productList != null ? productList.size() : 0;
     }
 
-    public static class FavouriteViewHolder extends RecyclerView.ViewHolder {
+    static class FavouriteViewHolder extends RecyclerView.ViewHolder {
         ImageView imgProduct;
         TextView tvProductName, tvProductType, tvProductPrice;
         ImageButton btnAddToCart;

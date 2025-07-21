@@ -2,6 +2,7 @@ package com.example.nikeshop;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Room;
 
@@ -23,7 +24,7 @@ public class NikeShopApp extends Application {
                 AppDatabase.class,
                 "nike_shop_db"
         ).fallbackToDestructiveMigration().build();
-
+        Log.d("DEBUG_DB", getDatabasePath("nike_shop_db.db").getAbsolutePath());
         // Init seeder gen data
         Seeder.seed(this);
     }
