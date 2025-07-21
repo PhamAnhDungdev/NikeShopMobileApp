@@ -37,6 +37,8 @@ public interface ProductDao {
 
     @Query("SELECT * FROM products WHERE name LIKE '%' || :query || '%' OR description LIKE '%' || :query || '%'")
     LiveData<List<Product>> getProductsByNameOrDescription(String query);
+    @Query("SELECT * FROM products WHERE id = :id LIMIT 1")
+    Product getProductById(int id);
 
     @Delete
     void deleteProduct(Product product);

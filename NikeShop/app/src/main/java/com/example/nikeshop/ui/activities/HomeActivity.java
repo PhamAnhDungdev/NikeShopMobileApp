@@ -2,19 +2,22 @@ package com.example.nikeshop.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.nikeshop.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.nikeshop.adapters.CategoryAdapter;
 
 public class HomeActivity extends BottomMenuActivity {
+    private CategoryAdapter categoryAdapter;
+    private com.example.nikeshop.ui.ViewModels.CategoryViewModel categoryViewModel;
+
+    private com.example.nikeshop.ui.ViewModels.ProductViewModel productViewModel;
+    private com.example.nikeshop.ui.adapters.ProductAdapter productAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,48 +31,49 @@ public class HomeActivity extends BottomMenuActivity {
         });
         setupBottomMenu(R.id.nav_home);
 
-        // Product Card Clicks
-        ImageView shoeImg1 = findViewById(R.id.shoe_img1);
-
-        View.OnClickListener detailListener = v -> {
-            Intent intent = new Intent(HomeActivity.this, ProductDetailActivity.class);
+        // Setup RecyclerView cho danh sách category
+        androidx.recyclerview.widget.RecyclerView rvCategories = findViewById(R.id.rv_categories);
+        categoryAdapter = new CategoryAdapter(this, null, category -> {
+            Intent intent = new Intent(HomeActivity.this, ProductListActivity.class);
+            intent.putExtra("category_id", category.getId());
+            intent.putExtra("category_name", category.getName());
             startActivity(intent);
-        };
-        if (shoeImg1 != null) shoeImg1.setOnClickListener(detailListener);
+        });
+        rvCategories.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false));
+        rvCategories.setAdapter(categoryAdapter);
 
-        ImageView shoeImg2 = findViewById(R.id.shoe_img2);
-
-        if (shoeImg2 != null) shoeImg2.setOnClickListener(detailListener);
-
-
-        ImageView shoeImg3 = findViewById(R.id.shoe_img3);
-
-        if (shoeImg3 != null) shoeImg3.setOnClickListener(detailListener);
-
-
-        ImageView shoeImg4 = findViewById(R.id.shoe_img4);
-
-        if (shoeImg4 != null) shoeImg4.setOnClickListener(detailListener);
-
-        ImageView btnCart = findViewById(R.id.btn_cart);
-        btnCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
+        // Lấy dữ liệu từ ViewModel
+        categoryViewModel = new androidx.lifecycle.ViewModelProvider(this).get(com.example.nikeshop.ui.ViewModels.CategoryViewModel.class);
+        categoryViewModel.getAllCategories().observe(this, categories -> {
+            categoryAdapter.setCategories(categories);
         });
 
-        // Sự kiện click cho icon Sneakers chuyển sang ProductListActivity
-        ImageView iconSneakers = findViewById(R.id.icon_sneakers);
-        if (iconSneakers != null) {
-            iconSneakers.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(HomeActivity.this, ProductListActivity.class);
-                    startActivity(intent);
-                }
+        // Setup RecyclerView cho danh sách sản phẩm
+        androidx.recyclerview.widget.RecyclerView rvProducts = findViewById(R.id.rv_products);
+        productAdapter = new com.example.nikeshop.ui.adapters.ProductAdapter(this, null, product -> {
+            openProductDetail(product.getId());
+        });
+        rvProducts.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(this, 2));
+        rvProducts.setAdapter(productAdapter);
+
+        // Lấy dữ liệu từ ViewModel
+        productViewModel = new androidx.lifecycle.ViewModelProvider(this).get(com.example.nikeshop.ui.ViewModels.ProductViewModel.class);
+        productViewModel.getAllProducts().observe(this, products -> {
+            productAdapter.setProducts(products);
+        });
+        // Sự kiện click cho icon Cart
+        ImageView btnCart = findViewById(R.id.btn_cart);
+        if (btnCart != null) {
+            btnCart.setOnClickListener(v -> {
+                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intent);
             });
         }
+    }
+
+    private void openProductDetail(int productId) {
+        Intent intent = new Intent(HomeActivity.this, ProductDetailActivity.class);
+        intent.putExtra("product_id", productId);
+        startActivity(intent);
     }
 }

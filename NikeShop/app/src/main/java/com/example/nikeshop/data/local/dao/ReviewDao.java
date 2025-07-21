@@ -14,4 +14,12 @@ public interface ReviewDao {
     List<Long> insertAll(List<Review> reviews);
     @Query("SELECT COUNT(*) FROM reviews")
     int countReviews();
+
+    @Query("SELECT * FROM reviews WHERE product_id = :productId ORDER BY review_date DESC")
+    androidx.lifecycle.LiveData<List<Review>> getReviewsByProductId(int productId);
+
+    @androidx.room.Query("SELECT * FROM reviews WHERE product_id = :productId")
+    java.util.List<Review> getReviewsListByProductId(int productId);
+    @Query("SELECT * FROM reviews")
+List<Review> getAllReviews();
 }
