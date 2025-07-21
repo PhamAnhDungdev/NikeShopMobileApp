@@ -29,6 +29,8 @@ public class OrderDetailViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Order> currentOrder = new MutableLiveData<>();
     private final MutableLiveData<List<OrderDetailAdapter.OrderDetailWithProduct>> orderDetailsWithProducts = new MutableLiveData<>();
+    private final MutableLiveData<Double> totalAmount = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
 
     public OrderDetailViewModel(@NonNull Application application) {
         super(application);
@@ -50,22 +52,60 @@ public class OrderDetailViewModel extends AndroidViewModel {
         return orderDetailsWithProducts;
     }
 
+    public LiveData<Double> getTotalAmount() {
+        return totalAmount;
+    }
+
+    public LiveData<Boolean> getIsLoading() {
+        return isLoading;
+    }
+
     public void loadOrderDetails(int orderId) {
+        // Hiển thị loading
+        isLoading.postValue(true);
+
+        // Thực hiện database operations trên background thread
         executor.execute(() -> {
-            // Load order
-            Order order = orderRepository.getOrderById(orderId);
-            currentOrder.postValue(order);
+            try {
+                // Load thông tin order
+                Order order = orderRepository.getOrderById(orderId);
+                currentOrder.postValue(order);
 
-            // Load order details with products
-            List<OrderDetail> orderDetails = orderDetailRepository.getByOrderIdSync(orderId);
-            List<OrderDetailAdapter.OrderDetailWithProduct> detailsWithProducts = new ArrayList<>();
+                // Load order details với products
+                List<OrderDetail> orderDetails = orderDetailRepository.getByOrderIdSync(orderId);
+                List<OrderDetailAdapter.OrderDetailWithProduct> detailsWithProducts = new ArrayList<>();
+                double total = 0.0;
 
-            for (OrderDetail detail : orderDetails) {
-                Product product = productRepository.getProductById(detail.getProductId());
-                detailsWithProducts.add(new OrderDetailAdapter.OrderDetailWithProduct(detail, product));
+                if (orderDetails != null && !orderDetails.isEmpty()) {
+                    for (OrderDetail detail : orderDetails) {
+                        Product product = productRepository.getProductById(detail.getProductId());
+                        if (product != null) {
+                            detailsWithProducts.add(new OrderDetailAdapter.OrderDetailWithProduct(detail, product));
+                            total += detail.getPrice() * detail.getQuantity();
+                        }
+                    }
+                }
+
+                // Gửi kết quả về main thread
+                orderDetailsWithProducts.postValue(detailsWithProducts);
+                totalAmount.postValue(total);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Xử lý lỗi - gửi danh sách rỗng
+                orderDetailsWithProducts.postValue(new ArrayList<>());
+            } finally {
+                // Ẩn loading
+                isLoading.postValue(false);
             }
-
-            orderDetailsWithProducts.postValue(detailsWithProducts);
         });
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (executor != null && !executor.isShutdown()) {
+            executor.shutdown();
+        }
     }
 }

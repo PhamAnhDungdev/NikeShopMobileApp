@@ -39,7 +39,7 @@ public interface ProductDao {
     LiveData<List<Product>> getProductsByNameAndCategory(String keyword, int categoryId);
 
     // Synchronous method for ViewModel
-    @Query("SELECT * FROM products WHERE id = :productId AND deleted_at IS NULL")
+    @Query("SELECT * FROM products WHERE id = :productId")
     Product getProductById(int productId);
 
     @Query("SELECT * FROM products WHERE name LIKE '%' || :query || '%' OR description LIKE '%' || :query || '%'")
