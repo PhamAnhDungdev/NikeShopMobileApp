@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Typography Scale -->
+    <dimen name="text_headline">49sp</dimen>
+    <dimen name="text_heading_medium">22sp</dimen>
+    <dimen name="text_heading_small">18sp</dimen>
+    <dimen name="text_title_bold">16sp</dimen>
+    <dimen name="text_body">14sp</dimen>
+    <dimen name="text_body_2">12sp</dimen>
+    <dimen name="text_body_3">10sp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_xlarge">32dp</dimen>
+</resources>

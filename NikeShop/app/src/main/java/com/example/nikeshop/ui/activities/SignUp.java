@@ -3,17 +3,13 @@ package com.example.nikeshop.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.activity.EdgeToEdge;
+import androidx.core.graphics.Insets;
 import androidx.room.Room;
 
 import com.example.nikeshop.R;
@@ -23,10 +19,6 @@ import com.example.nikeshop.data.local.entity.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 
 public class SignUp extends AppCompatActivity {
 
@@ -42,15 +34,7 @@ public class SignUp extends AppCompatActivity {
             return insets;
         });
 
-        // Chuyển về LoginActivity khi click "Sign In"
-        TextView signInLink = findViewById(R.id.signInLink);
-        signInLink.setOnClickListener(v -> {
-            Intent intent = new Intent(SignUp.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        });
-
-        // Ánh xạ view
+        // Ánh xạ View
         EditText nameInput = findViewById(R.id.nameInput);
         EditText emailInput = findViewById(R.id.emailInput);
         EditText passwordInput = findViewById(R.id.passwordInput);
@@ -58,45 +42,24 @@ public class SignUp extends AppCompatActivity {
         Button signUpButton = findViewById(R.id.signUpButton);
         ImageView eyeIconPassword = findViewById(R.id.eyeIconPassword);
         ImageView eyeIconConfirmPassword = findViewById(R.id.eyeIconConfirmPassword);
+        TextView signInLink = findViewById(R.id.signInLink);
 
-        // Khởi tạo DB
+        // DB
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "nike_database").allowMainThreadQueries().build();
+                AppDatabase.class, "nike_db").allowMainThreadQueries().build();
         UserDao userDao = db.userDao();
 
-        // Xử lý icon mắt - Password
-        eyeIconPassword.setOnClickListener(new View.OnClickListener() {
-            boolean isVisible = false;
-            @Override
-            public void onClick(View v) {
-                isVisible = !isVisible;
-                if (isVisible) {
-                    passwordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                } else {
-                    passwordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
-                passwordInput.setSelection(passwordInput.length());
-            }
+        // Icon hiện/ẩn mật khẩu
+        setupEyeToggle(eyeIconPassword, passwordInput);
+        setupEyeToggle(eyeIconConfirmPassword, confirmPasswordInput);
+
+        // Chuyển về Login
+        signInLink.setOnClickListener(v -> {
+            startActivity(new Intent(SignUp.this, LoginActivity.class));
+            finish();
         });
 
-        // Xử lý icon mắt - Confirm Password
-        eyeIconConfirmPassword.setOnClickListener(new View.OnClickListener() {
-            boolean isVisible = false;
-            @Override
-            public void onClick(View v) {
-                isVisible = !isVisible;
-                if (isVisible) {
-                    confirmPasswordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                } else {
-                    confirmPasswordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
-                confirmPasswordInput.setSelection(confirmPasswordInput.length());
-            }
-        });
-
-        // Xử lý nút Đăng ký
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+        // Nút Đăng ký
         signUpButton.setOnClickListener(v -> {
             String name = nameInput.getText().toString().trim();
             String email = emailInput.getText().toString().trim();
@@ -104,51 +67,59 @@ public class SignUp extends AppCompatActivity {
             String confirmPassword = confirmPasswordInput.getText().toString().trim();
 
             if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(SignUp.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                showToast("Please fill in all fields");
                 return;
             }
 
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(SignUp.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+                showToast("Please enter a valid email address");
                 return;
             }
 
             if (!password.equals(confirmPassword)) {
-                Toast.makeText(SignUp.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                showToast("Passwords do not match");
                 return;
             }
 
-            // Đăng ký tài khoản trên Firebase
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            if (user != null) {
-                                user.sendEmailVerification()
-                                        .addOnCompleteListener(verifyTask -> {
-                                            if (verifyTask.isSuccessful()) {
-                                                Toast.makeText(SignUp.this,
-                                                        "Check your email to verify your account.",
-                                                        Toast.LENGTH_LONG).show();
-                                                startActivity(new Intent(SignUp.this, LoginActivity.class));
-                                                finish();
-                                            } else {
-                                                Toast.makeText(SignUp.this,
-                                                        "Failed to send verification email.",
-                                                        Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                            }
-                        } else {
-                            Toast.makeText(SignUp.this,
-                                    "Sign up failed: " + task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            if (userDao.getUserByEmail(email) != null) {
+                showToast("Email is already registered");
+                return;
+            }
+
+            // Lưu user
+            User user = new User();
+            user.setName(name);
+            user.setEmail(email);
+            user.setPasswordHash(hashPassword(password));
+
+            userDao.insertUser(user);
+
+            showToast("Account created successfully!");
+            startActivity(new Intent(SignUp.this, LoginActivity.class));
+            finish();
         });
     }
 
-    // Mã hóa SHA-256 (nếu muốn dùng riêng, còn hiện tại dùng bên trong User.setPassword())
+    private void setupEyeToggle(ImageView eyeIcon, EditText passwordField) {
+        eyeIcon.setOnClickListener(new View.OnClickListener() {
+            boolean isVisible = false;
+            @Override
+            public void onClick(View v) {
+                isVisible = !isVisible;
+                if (isVisible) {
+                    passwordField.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    passwordField.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+                passwordField.setSelection(passwordField.length());
+            }
+        });
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(SignUp.this, msg, Toast.LENGTH_SHORT).show();
+    }
+
     private String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
