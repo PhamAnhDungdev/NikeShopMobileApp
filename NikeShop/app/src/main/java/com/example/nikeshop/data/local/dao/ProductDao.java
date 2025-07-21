@@ -20,25 +20,29 @@ public interface ProductDao {
     @Insert
     void insertProduct(Product product);
 
-    @Query("SELECT COUNT(*) FROM products")
+    @Delete
+    void deleteProduct(Product product);
+
+    @Query("SELECT * FROM products WHERE deleted_at IS NULL")
     int countProducts();
 
     @Query("SELECT * FROM products")
     LiveData<List<Product>> getAllProducts();
 
-    @Query("SELECT * FROM products WHERE name LIKE '%' || :keyword || '%'")
+    @Query("SELECT * FROM products WHERE name LIKE '%' || :keyword || '%' AND deleted_at IS NULL")
     LiveData<List<Product>> getProductsByName(String keyword);
 
-    @Query("SELECT * FROM products WHERE category_id = :categoryId")
+    @Query("SELECT * FROM products WHERE category_id = :categoryId AND deleted_at IS NULL")
     LiveData<List<Product>> getProductsByCategory(int categoryId);
 
-    @Query("SELECT * FROM products WHERE name LIKE '%' || :keyword || '%' AND category_id = :categoryId")
+    @Query("SELECT * FROM products WHERE name LIKE '%' || :keyword || '%' AND category_id = :categoryId AND deleted_at IS NULL")
     LiveData<List<Product>> getProductsByNameAndCategory(String keyword, int categoryId);
+
+    // Synchronous method for ViewModel
+    @Query("SELECT * FROM products WHERE id = :productId AND deleted_at IS NULL")
+    Product getProductById(int productId);
 
     @Query("SELECT * FROM products WHERE name LIKE '%' || :query || '%' OR description LIKE '%' || :query || '%'")
     LiveData<List<Product>> getProductsByNameOrDescription(String query);
-
-    @Delete
-    void deleteProduct(Product product);
 
 }

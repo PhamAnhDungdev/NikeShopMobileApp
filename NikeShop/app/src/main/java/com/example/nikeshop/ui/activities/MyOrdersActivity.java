@@ -1,16 +1,15 @@
 package com.example.nikeshop.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.nikeshop.R;
 import com.example.nikeshop.adapters.OrdersAdapter;
 import com.example.nikeshop.data.local.AppDatabase;
@@ -18,11 +17,9 @@ import com.example.nikeshop.data.local.dao.OrderDao;
 import com.example.nikeshop.data.local.entity.Order;
 import com.example.nikeshop.data.repositories.OrderRepository;
 import com.example.nikeshop.ui.ViewModels.OrderViewModel;
-
 import java.util.ArrayList;
 
 public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter.OnOrderClickListener {
-
     private ImageButton btnBack;
     private RecyclerView rvOrders;
     private LinearLayout navHome, navSearch, navFavourites, navProfile;
@@ -55,7 +52,6 @@ public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter
                 this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())
         ).get(OrderViewModel.class);
-
     }
 
     private void setupRecyclerView() {
@@ -81,8 +77,10 @@ public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter
 
     @Override
     public void onOrderClick(Order order) {
-        Toast.makeText(this, "Order clicked: " + order.getId(), Toast.LENGTH_SHORT).show();
-        // TODO: Open order details screen
+        // Navigate to OrderDetailActivity with order ID
+        Intent intent = new Intent(this, OrderDetailActivity.class);
+        intent.putExtra("ORDER_ID", order.getId());
+        startActivity(intent);
     }
 
     @Override
