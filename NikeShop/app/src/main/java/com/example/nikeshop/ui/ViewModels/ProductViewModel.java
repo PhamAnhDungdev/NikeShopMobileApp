@@ -5,6 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import com.example.nikeshop.NikeShopApp;
 import com.example.nikeshop.data.local.AppDatabase;
@@ -18,11 +20,23 @@ public class ProductViewModel extends AndroidViewModel {
     private final ProductRepository productRepository;
     private final LiveData<List<Product>> allProducts;
 
+    private final MutableLiveData<String> searchQuery = new MutableLiveData<>();
+    public LiveData<List<Product>> searchResults;
+
     public ProductViewModel(@NonNull Application application) {
         super(application);
         AppDatabase db = NikeShopApp.getDatabase();
         productRepository = new ProductRepository(db.productDao());
         allProducts = productRepository.getAllProducts();
+
+        // ✅ Bây giờ mới an toàn để dùng productRepository
+        searchResults = Transformations.switchMap(searchQuery, query ->
+                productRepository.getProductsByNameOrDescription(query)
+        );
+    }
+
+    public void setSearchQuery(String query) {
+        searchQuery.setValue(query);
     }
 
     public LiveData<List<Product>> getAllProducts() {
@@ -41,6 +55,10 @@ public class ProductViewModel extends AndroidViewModel {
         return productRepository.getProductsByNameAndCategory(keyword, categoryId);
     }
 
+    public LiveData<List<Product>> getProductsByNameOrDescription(String query) {
+        return productRepository.getProductsByNameOrDescription(query);
+    }
+
     public void insertProduct(Product product) {
         productRepository.insertProduct(product);
     }
@@ -49,3 +67,4 @@ public class ProductViewModel extends AndroidViewModel {
         productRepository.deleteProduct(product);
     }
 }
+

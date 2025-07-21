@@ -35,6 +35,10 @@ public class ProductRepository {
         return productDao.getProductsByNameAndCategory(keyword, categoryId);
     }
 
+    public LiveData<List<Product>> getProductsByNameOrDescription(String query) {
+        return productDao.getProductsByNameOrDescription(query);
+    }
+
     public void insertProduct(Product product) {
         executorService.execute(() -> productDao.insertProduct(product));
     }

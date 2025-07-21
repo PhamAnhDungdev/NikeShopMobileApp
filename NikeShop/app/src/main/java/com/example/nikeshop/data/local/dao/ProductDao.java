@@ -16,27 +16,28 @@ public interface ProductDao {
 
     @Insert
     List<Long> insertAll(List<Product> products);
-    // Thêm sản phẩm
+
     @Insert
     void insertProduct(Product product);
 
-    // Lấy tất cả sản phẩm
+    @Query("SELECT COUNT(*) FROM products")
+    int countProducts();
+
     @Query("SELECT * FROM products")
     LiveData<List<Product>> getAllProducts();
 
-    // Tìm sản phẩm theo tên gần đúng (LIKE %keyword%)
     @Query("SELECT * FROM products WHERE name LIKE '%' || :keyword || '%'")
     LiveData<List<Product>> getProductsByName(String keyword);
 
-    // Lọc sản phẩm theo category id
     @Query("SELECT * FROM products WHERE category_id = :categoryId")
     LiveData<List<Product>> getProductsByCategory(int categoryId);
 
-    // (Tuỳ chọn) Kết hợp cả tên và thể loại
     @Query("SELECT * FROM products WHERE name LIKE '%' || :keyword || '%' AND category_id = :categoryId")
     LiveData<List<Product>> getProductsByNameAndCategory(String keyword, int categoryId);
 
-    // Xóa sản phẩm
+    @Query("SELECT * FROM products WHERE name LIKE '%' || :query || '%' OR description LIKE '%' || :query || '%'")
+    LiveData<List<Product>> getProductsByNameOrDescription(String query);
+
     @Delete
     void deleteProduct(Product product);
 

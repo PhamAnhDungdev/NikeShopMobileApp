@@ -22,4 +22,7 @@ public interface UserDao {
 
     @Delete
     void deleteUser(User user);
+
+    @Query("SELECT COUNT(*) FROM users")
+    int countUsers();
 }
