@@ -1,16 +1,13 @@
 package com.example.nikeshop.data.repositories;
 
 import androidx.lifecycle.LiveData;
-
 import com.example.nikeshop.data.local.dao.OrderDao;
 import com.example.nikeshop.data.local.entity.Order;
-
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class OrderRepository {
-
     private final OrderDao orderDao;
     private final ExecutorService executorService;
 
@@ -29,6 +26,11 @@ public class OrderRepository {
 
     public LiveData<List<Order>> getOrdersByStatus(String status) {
         return orderDao.getOrdersByStatus(status);
+    }
+
+    // Synchronous method for ViewModel
+    public Order getOrderById(int orderId) {
+        return orderDao.getOrderById(orderId);
     }
 
     public void insertOrder(Order order) {

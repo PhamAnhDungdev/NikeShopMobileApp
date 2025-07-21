@@ -23,6 +23,18 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.ProfileActivity"
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+        <activity
+            android:name=".ui.activities.OrderDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.RatingActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.FavouriteActivity"

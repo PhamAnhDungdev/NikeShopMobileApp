@@ -25,11 +25,15 @@ public interface OrderDetailDao {
     @Query("SELECT COUNT(*) FROM order_details")
     int countOrderDetails();
 
-    @Query("SELECT * FROM order_details")
+    @Query("SELECT * FROM order_details WHERE deleted_at IS NULL")
     LiveData<List<OrderDetail>> getAll();
 
-    @Query("SELECT * FROM order_details WHERE order_id = :orderId")
+    @Query("SELECT * FROM order_details WHERE order_id = :orderId AND deleted_at IS NULL")
     LiveData<List<OrderDetail>> getByOrderId(int orderId);
+
+    // Synchronous method for ViewModel
+    @Query("SELECT * FROM order_details WHERE order_id = :orderId AND deleted_at IS NULL")
+    List<OrderDetail> getByOrderIdSync(int orderId);
 
     @Query("DELETE FROM order_details")
     void deleteAll();
