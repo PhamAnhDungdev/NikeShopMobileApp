@@ -22,6 +22,9 @@ public interface OrderDetailDao {
     @Delete
     void delete(OrderDetail orderDetail);
 
+    @Query("SELECT COUNT(*) FROM order_details")
+    int countOrderDetails();
+
     @Query("SELECT * FROM order_details")
     LiveData<List<OrderDetail>> getAll();
 

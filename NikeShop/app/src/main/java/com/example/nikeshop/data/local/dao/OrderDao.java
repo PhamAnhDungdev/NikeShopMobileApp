@@ -20,6 +20,8 @@ public interface OrderDao {
 
     @Delete
     void deleteOrder(Order order);
+    @Query("SELECT COUNT(*) FROM orders")
+    int countOrders();
 
     @Query("SELECT * FROM orders")
     LiveData<List<Order>> getAllOrders();
