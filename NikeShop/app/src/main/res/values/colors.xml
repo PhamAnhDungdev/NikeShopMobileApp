@@ -5,4 +5,16 @@
     <color name="grey">#1E1F22</color>
     <color name="yellow">#FAA500</color>
 
+    <!-- Main Color Palette -->
+    <color name="primary_dark">#222222</color>
+    <color name="primary_orange">#D87234</color>
+    <color name="gray_medium">#A8A6A7</color>
+    <color name="gray_light">#C6C6C6</color>
+
+    <!-- Additional colors -->
+    <color name="background_light">#F8F8F8</color>
+
+    <!-- Status colors -->
+    <color name="success">#4CAF50</color>
+    <color name="error">#F44336</color>
 </resources>
