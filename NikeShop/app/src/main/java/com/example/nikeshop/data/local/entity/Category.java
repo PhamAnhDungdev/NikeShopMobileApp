@@ -3,6 +3,7 @@ package com.example.nikeshop.data.local.entity;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -31,6 +32,7 @@ public class Category {
     public Category() {}
 
     // === Constructor đầy đủ ===
+    @Ignore
     public Category(@NonNull String name,
                     Date createdAt,
                     Date updatedAt,

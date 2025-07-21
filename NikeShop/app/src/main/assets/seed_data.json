@@ -1,0 +1,393 @@
+{
+  "categories": [
+    {
+      "name": "Giày Sneaker",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "name": "Giày Chạy Bộ",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "name": "Giày Bóng Rổ",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "name": "Giày Dép",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "name": "Giày Sandal",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@example.com",
+      "passwordHash": "admin123",
+      "address": "HCM",
+      "phone": "0911111111",
+      "admin": true,
+      "birthday": "2000-07-26T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "username": "nguyen",
+      "email": "nguyen@example.com",
+      "passwordHash": "user123",
+      "address": "HN",
+      "phone": "0922222222",
+      "admin": false,
+      "birthday": "2000-07-26T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "username": "tran",
+      "email": "tran@example.com",
+      "passwordHash": "pass456",
+      "address": "DN",
+      "phone": "0933333333",
+      "admin": false,
+      "birthday": "2000-07-26T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "username": "le",
+      "email": "le@example.com",
+      "passwordHash": "secret",
+      "address": "CT",
+      "phone": "0944444444",
+      "admin": false,
+      "birthday": "2000-07-26T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    }
+  ],
+  "products": [
+    {
+      "name": "Nike Air Max 97",
+      "description": "Sneaker thời trang",
+      "price": 300.0,
+      "size": "42",
+      "stockQuantity": 12,
+      "imageUrl": "https://img.com/max97",
+      "categoryId": 1,
+      "brand": "Nike",
+      "color": "White",
+      "material": "Leather",
+      "sku": "NAM97-001",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "name": "Nike ZoomX",
+      "description": "Giày chạy nhẹ",
+      "price": 250.0,
+      "size": "41",
+      "stockQuantity": 20,
+      "imageUrl": "https://img.com/zoomx",
+      "categoryId": 2,
+      "brand": "Nike",
+      "color": "Black",
+      "material": "Mesh",
+      "sku": "NZX-002",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "name": "Nike LeBron",
+      "description": "Giày bóng rổ chuyên nghiệp",
+      "price": 350.0,
+      "size": "44",
+      "stockQuantity": 5,
+      "imageUrl": "https://img.com/lebron",
+      "categoryId": 3,
+      "brand": "Nike",
+      "color": "Red",
+      "material": "Synthetic",
+      "sku": "NLB-003",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "name": "Nike Slide",
+      "description": "Dép đi trong nhà",
+      "price": 50.0,
+      "size": "40",
+      "stockQuantity": 30,
+      "imageUrl": "https://img.com/slide",
+      "categoryId": 4,
+      "brand": "Nike",
+      "color": "Blue",
+      "material": "Rubber",
+      "sku": "NSL-004",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "name": "Nike Sandal",
+      "description": "Sandal mùa hè",
+      "price": 80.0,
+      "size": "41",
+      "stockQuantity": 25,
+      "imageUrl": "https://img.com/sandal",
+      "categoryId": 5,
+      "brand": "Nike",
+      "color": "Brown",
+      "material": "Leather",
+      "sku": "NSA-005",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    }
+  ],
+  "orders": [
+    {
+      "userId": 2,
+      "orderDate": "2025-07-20T10:10:28.312734",
+      "totalPrice": 300.0,
+      "status": "pending",
+      "paymentMethod": "COD",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 2,
+      "orderDate": "2025-07-20T10:10:28.312734",
+      "totalPrice": 600.0,
+      "status": "completed",
+      "paymentMethod": "Credit Card",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 3,
+      "orderDate": "2025-07-20T10:10:28.312734",
+      "totalPrice": 250.0,
+      "status": "canceled",
+      "paymentMethod": "COD",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 4,
+      "orderDate": "2025-07-20T10:10:28.312734",
+      "totalPrice": 80.0,
+      "status": "completed",
+      "paymentMethod": "Momo",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    }
+  ],
+  "orderDetails": [
+    {
+      "orderId": 1,
+      "productId": 1,
+      "quantity": 1,
+      "price": 300.0,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "orderId": 2,
+      "productId": 2,
+      "quantity": 2,
+      "price": 250.0,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "orderId": 2,
+      "productId": 3,
+      "quantity": 1,
+      "price": 350.0,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "orderId": 3,
+      "productId": 2,
+      "quantity": 1,
+      "price": 250.0,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "orderId": 4,
+      "productId": 5,
+      "quantity": 1,
+      "price": 80.0,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    }
+  ],
+  "carts": [
+    {
+      "userId": 2,
+      "productId": 3,
+      "quantity": 1,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 3,
+      "productId": 1,
+      "quantity": 2,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 3,
+      "productId": 4,
+      "quantity": 1,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 4,
+      "productId": 5,
+      "quantity": 1,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    }
+  ],
+  "reviews": [
+    {
+      "userId": 2,
+      "productId": 1,
+      "rating": 5,
+      "comment": "Tuyệt vời!",
+      "reviewDate": "2025-07-20T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 3,
+      "productId": 2,
+      "rating": 4,
+      "comment": "Rất tốt",
+      "reviewDate": "2025-07-20T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 4,
+      "productId": 3,
+      "rating": 3,
+      "comment": "Ổn",
+      "reviewDate": "2025-07-20T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 4,
+      "productId": 5,
+      "rating": 4,
+      "comment": "Hài lòng",
+      "reviewDate": "2025-07-20T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    }
+  ],
+  "wishlists": [
+    {
+      "userId": 2,
+      "productId": 1,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 2,
+      "productId": 5,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 3,
+      "productId": 3,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "userId": 4,
+      "productId": 2,
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    }
+  ],
+  "coupons": [
+    {
+      "code": "SUMMER2025",
+      "discount": 10.0,
+      "maxDiscount": 100000.0,
+      "active": true,
+      "expiryDate": "2026-01-16T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "code": "WELCOME",
+      "discount": 15.0,
+      "maxDiscount": 150000.0,
+      "active": true,
+      "expiryDate": "2026-01-16T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    },
+    {
+      "code": "NIKEVIP",
+      "discount": 20.0,
+      "maxDiscount": 200000.0,
+      "active": false,
+      "expiryDate": "2026-01-16T10:10:28.312734",
+      "createdAt": "2025-07-20T10:10:28.312734",
+      "updatedAt": "2025-07-20T10:10:28.312734",
+      "deletedAt": null
+    }
+  ]
+}
