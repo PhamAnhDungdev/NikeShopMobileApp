@@ -32,9 +32,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.SearchActivity"
-            android:exported="true" />
-
-
+            android:exported="false" />
          <activity
             android:name=".ui.activities.MyOrdersActivity"
             android:exported="false" />
