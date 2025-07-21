@@ -33,7 +33,7 @@ public class AccountRecovery extends AppCompatActivity {
         sendButton = findViewById(R.id.sendButton);
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "nike_database").allowMainThreadQueries().build();
+                AppDatabase.class, "nike_db").allowMainThreadQueries().build();
         UserDao userDao = db.userDao();
 
         sendButton.setOnClickListener(v -> {

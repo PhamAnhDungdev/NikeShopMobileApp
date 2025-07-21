@@ -13,9 +13,6 @@ import android.widget.Toast;
 import com.example.nikeshop.data.local.AppDatabase;
 import com.example.nikeshop.data.local.dao.UserDao;
 import com.example.nikeshop.data.local.entity.User;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.loginButton);
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "nike_database").allowMainThreadQueries().build();
+                AppDatabase.class, "nike_db").allowMainThreadQueries().build();
         UserDao userDao = db.userDao();
 
         loginButton.setOnClickListener(v -> {

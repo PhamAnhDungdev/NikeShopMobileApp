@@ -22,7 +22,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_password);
+        setContentView(R.layout.activity_reset);
 
         newPasswordInput = findViewById(R.id.newPasswordInput);
         confirmPasswordInput = findViewById(R.id.confirmPasswordInput);
@@ -32,7 +32,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         email = getIntent().getStringExtra("email");
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "nike_database").allowMainThreadQueries().build();
+                AppDatabase.class, "nike_db").allowMainThreadQueries().build();
         UserDao userDao = db.userDao();
 
         resetButton.setOnClickListener(v -> {
