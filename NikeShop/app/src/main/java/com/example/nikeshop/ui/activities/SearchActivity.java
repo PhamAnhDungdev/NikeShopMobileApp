@@ -1,9 +1,12 @@
 package com.example.nikeshop.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -13,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.nikeshop.adapters.ProductSuggestionAdapter;
 import com.example.nikeshop.R;
 import com.example.nikeshop.ui.ViewModels.ProductViewModel;
-
-import java.util.ArrayList;
 
 public class SearchActivity extends BottomMenuActivity {
     private EditText etSearch;
@@ -26,6 +27,10 @@ public class SearchActivity extends BottomMenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        View topNavBar = findViewById(R.id.top_navbar);
+        View btnBack = topNavBar.findViewById(R.id.btn_back);
+        ImageView btnCart = topNavBar.findViewById(R.id.btn_cart);
 
         etSearch = findViewById(R.id.etSearch);
         rvSuggestions = findViewById(R.id.rvSuggestions);
@@ -58,6 +63,23 @@ public class SearchActivity extends BottomMenuActivity {
 
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void afterTextChanged(Editable s) {}
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchActivity.this, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
         });
     }
 

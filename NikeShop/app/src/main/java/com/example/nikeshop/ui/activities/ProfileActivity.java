@@ -3,6 +3,7 @@ package com.example.nikeshop.ui.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -26,6 +27,9 @@ public class ProfileActivity extends BottomMenuActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        View topNavBar = findViewById(R.id.top_navbar);
+        View btnBack = topNavBar.findViewById(R.id.btn_back);
 
         SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
 
@@ -69,6 +73,16 @@ public class ProfileActivity extends BottomMenuActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
         });
     }
 }

@@ -37,6 +37,17 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE); // ✅ chỉ gọi 1 lần ở đây
+
+        boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
+        if (isLoggedIn) {
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -44,35 +55,17 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        // Thêm sự kiện chuyển hướng sang SignUp khi click vào signUpLink
-        TextView signUpLink = findViewById(R.id.signUpLink);
-        signUpLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUp.class);
-                startActivity(intent);
-            }
-        });
-        // Thêm sự kiện chuyển hướng sang AccountRecovery khi click vào forgotPasswordLink
-        TextView forgotPasswordLink = findViewById(R.id.forgotPasswordLink);
-        forgotPasswordLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, AccountRecovery.class);
-                startActivity(intent);
-            }
-        });
-        sendTestNotification();
 
-        // Thêm sự kiện chuyển hướng sang ActivityHome khi click vào skipNow
+        TextView signUpLink = findViewById(R.id.signUpLink);
+        signUpLink.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignUp.class)));
+
+        TextView forgotPasswordLink = findViewById(R.id.forgotPasswordLink);
+        forgotPasswordLink.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, AccountRecovery.class)));
+
         TextView skipNow = findViewById(R.id.skipNow);
-        skipNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        skipNow.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
         });
 
         EditText emailInput = findViewById(R.id.emailInput);
@@ -96,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             User user = userDao.loginUser(email, password);
 
             if (user != null) {
-                SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                // ✅ tái sử dụng prefs đã tạo ở đầu
                 prefs.edit()
                         .putBoolean("is_logged_in", true)
                         .putInt("user_id", user.getId())
@@ -106,15 +99,17 @@ public class LoginActivity extends AppCompatActivity {
                         .apply();
 
                 Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 finish();
             } else {
                 Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
             }
         });
 
+        sendTestNotification(); // có thể giữ nguyên hoặc bỏ nếu không cần
+
     }
+
 
     private String hashPassword(String password) {
         try {
