@@ -2,7 +2,9 @@ package com.example.nikeshop.ui.activities;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 // Thêm vào đầu file
@@ -78,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.loginButton);
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "nike_db").allowMainThreadQueries().build();
+                AppDatabase.class, "nike_shop_db").allowMainThreadQueries().build();
         UserDao userDao = db.userDao();
 
         loginButton.setOnClickListener(v -> {
@@ -90,10 +92,19 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            String hashedInput = hashPassword(password);
-            User user = userDao.loginUser(email, hashedInput);
+            //String hashedInput = hashPassword(password);
+            User user = userDao.loginUser(email, password);
 
             if (user != null) {
+                SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                prefs.edit()
+                        .putBoolean("is_logged_in", true)
+                        .putInt("user_id", user.getId())
+                        .putString("user_email", user.getEmail())
+                        .putString("user_name", user.getUsername())
+                        .putBoolean("is_admin", user.isAdmin())
+                        .apply();
+
                 Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);

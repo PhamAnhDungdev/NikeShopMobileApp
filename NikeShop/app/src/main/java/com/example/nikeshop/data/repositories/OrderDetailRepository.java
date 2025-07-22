@@ -1,16 +1,13 @@
 package com.example.nikeshop.data.repositories;
 
 import androidx.lifecycle.LiveData;
-
 import com.example.nikeshop.data.local.dao.OrderDetailDao;
 import com.example.nikeshop.data.local.entity.OrderDetail;
-
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class OrderDetailRepository {
-
     private final OrderDetailDao orderDetailDao;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
@@ -24,6 +21,11 @@ public class OrderDetailRepository {
 
     public LiveData<List<OrderDetail>> getByOrderId(int orderId) {
         return orderDetailDao.getByOrderId(orderId);
+    }
+
+    // Synchronous method for ViewModel
+    public List<OrderDetail> getByOrderIdSync(int orderId) {
+        return orderDetailDao.getByOrderIdSync(orderId);
     }
 
     public void insert(OrderDetail detail) {
