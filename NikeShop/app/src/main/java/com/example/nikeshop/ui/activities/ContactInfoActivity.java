@@ -1,5 +1,7 @@
 package com.example.nikeshop.ui.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,24 +10,23 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.lifecycle.ViewModelProvider;
 import com.example.nikeshop.R;
-
+import com.example.nikeshop.data.local.entity.User;
+import com.example.nikeshop.ui.ViewModels.UserViewModel;
+import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
 public class ContactInfoActivity extends AppCompatActivity {
-
     private ImageButton btnBack, btnSave;
     private EditText etFirstName, etLastName, etEmail, etMobile;
-
     private boolean isDataChanged = false;
+    private UserViewModel userViewModel;
+    private User currentUser; // Thêm biến để lưu user hiện tại
 
-    // Email validation pattern
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
     );
-
-    // Phone validation pattern
     private static final Pattern PHONE_PATTERN = Pattern.compile("^[0-9]{10,15}$");
 
     @Override
@@ -33,6 +34,7 @@ public class ContactInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_info);
 
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         initViews();
         setupClickListeners();
         setupTextWatchers();
@@ -90,53 +92,54 @@ public class ContactInfoActivity extends AppCompatActivity {
     }
 
     private void loadContactInfo() {
-        // Load saved contact info from SharedPreferences
-        String firstName = getSharedPreferences("contact_prefs", MODE_PRIVATE)
-                .getString("first_name", "Aaron");
-        String lastName = getSharedPreferences("contact_prefs", MODE_PRIVATE)
-                .getString("last_name", "Paul");
-        String email = getSharedPreferences("contact_prefs", MODE_PRIVATE)
-                .getString("email", "Pravy@gmail.com");
-        String mobile = getSharedPreferences("contact_prefs", MODE_PRIVATE)
-                .getString("mobile", "8828828828");
+        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+        if (!prefs.getBoolean("is_logged_in", false)) {
+            startActivity(new Intent(ContactInfoActivity.this, LoginActivity.class));
+            finish();
+            return;
+        }
 
-        etFirstName.setText(firstName);
-        etLastName.setText(lastName);
-        etEmail.setText(email);
-        etMobile.setText(mobile);
+        int userId = getSharedPreferences("user_session", MODE_PRIVATE)
+                .getInt("user_id", -1);
 
-        isDataChanged = false;
-        validateForm();
+        userViewModel.getUserById(userId).observe(this, user -> {
+            if (user != null) {
+                currentUser = user; // Lưu user hiện tại
+                etFirstName.setText(user.getUsername());
+                etLastName.setText(""); // Nếu có trường lastName trong User entity thì dùng user.getLastName()
+                etEmail.setText(user.getEmail());
+                etMobile.setText(user.getPhone());
+                isDataChanged = false;
+                validateForm();
+            } else {
+                Toast.makeText(this, "User not found!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void validateForm() {
         boolean isValid = true;
 
-        // Validate first name
         String firstName = etFirstName.getText().toString().trim();
         if (firstName.length() < 2) {
             isValid = false;
         }
 
-        // Validate last name
         String lastName = etLastName.getText().toString().trim();
         if (lastName.length() < 2) {
             isValid = false;
         }
 
-        // Validate email
         String email = etEmail.getText().toString().trim();
         if (!EMAIL_PATTERN.matcher(email).matches()) {
             isValid = false;
         }
 
-        // Validate mobile
         String mobile = etMobile.getText().toString().trim();
         if (!PHONE_PATTERN.matcher(mobile).matches()) {
             isValid = false;
         }
 
-        // Update save button state
         btnSave.setEnabled(isValid && isDataChanged);
         btnSave.setAlpha(isValid && isDataChanged ? 1.0f : 0.5f);
     }
@@ -147,25 +150,39 @@ public class ContactInfoActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String mobile = etMobile.getText().toString().trim();
 
-        // Final validation
         if (!validateContactDetails(firstName, lastName, email, mobile)) {
             return;
         }
 
-        // Save to SharedPreferences
-        getSharedPreferences("contact_prefs", MODE_PRIVATE)
-                .edit()
-                .putString("first_name", firstName)
-                .putString("last_name", lastName)
-                .putString("email", email)
-                .putString("mobile", mobile)
-                .apply();
+        if (currentUser != null) {
+            // Cập nhật thông tin user
+            currentUser.setUsername(firstName + lastName); // Hoặc setFirstName nếu có
+            currentUser.setEmail(email);
+            currentUser.setPhone(mobile);
+            // Nếu có trường lastName thì: currentUser.setLastName(lastName);
 
-        isDataChanged = false;
-        Toast.makeText(this, "Contact info saved successfully!", Toast.LENGTH_SHORT).show();
+            // Cập nhật vào database
+            Executors.newSingleThreadExecutor().execute(() -> {
+                userViewModel.update(currentUser);
 
-        // Optionally finish activity
-        finish();
+                runOnUiThread(() -> {
+                    getSharedPreferences("user_session", MODE_PRIVATE)
+                            .edit()
+                            .putBoolean("is_logged_in", true)
+                            .putInt("user_id", currentUser.getId())
+                            .putString("user_name", currentUser.getUsername())
+                            .putString("user_email", currentUser.getEmail())
+                            .putBoolean("is_admin", currentUser.isAdmin())
+                            .apply();
+
+                    isDataChanged = false;
+                    Toast.makeText(this, "Contact info updated successfully!", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+            });
+        } else {
+            Toast.makeText(this, "Error: User data not loaded", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private boolean validateContactDetails(String firstName, String lastName, String email, String mobile) {

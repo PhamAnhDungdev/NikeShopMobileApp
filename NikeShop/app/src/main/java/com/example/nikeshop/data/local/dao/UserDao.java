@@ -24,6 +24,9 @@ public interface UserDao {
     @Query("SELECT * FROM users")
     LiveData<List<User>> getAllUsers();
 
+    @Query("SELECT * FROM users WHERE id = :userId")
+    LiveData<User> getUserByIdLive(int userId);
+
     @Query("SELECT * FROM users WHERE email = :email LIMIT 1")
     User getUserByEmail(String email);
 
@@ -33,7 +36,11 @@ public interface UserDao {
     @Update
     void updateUser(User user);
 
-
     @Query("SELECT COUNT(*) FROM users")
     int countUsers();
+
+    @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
+    User getUserById(int id);
+
+
 }
