@@ -14,7 +14,9 @@ import com.example.nikeshop.R;
 import com.example.nikeshop.data.local.dao.ReviewDao;
 import com.example.nikeshop.data.local.entity.Review;
 import com.example.nikeshop.data.repositories.ReviewRepository;
-import com.example.nikeshop.ui.viewmodel.ReviewViewModel;
+import com.example.nikeshop.ui.ViewModels.ReviewViewModel;
+import com.example.nikeshop.ui.ViewModels.ReviewViewModelProductDetail;
+
 
 import java.util.List;
 
@@ -47,8 +49,8 @@ public class FeedbackActivity extends BottomMenuActivity {
                 // Setup ViewModel
                 ReviewDao reviewDao = com.example.nikeshop.data.local.AppDatabase.getInstance(getApplicationContext()).reviewDao();
                 ReviewRepository reviewRepository = new ReviewRepository(reviewDao);
-                ReviewViewModel reviewViewModel = new ViewModelProvider(this, new ReviewViewModel.Factory(reviewRepository)).get(ReviewViewModel.class);
-                reviewViewModel.getReviewsByProductId(productId).observe(this, reviews -> {
+                ReviewViewModelProductDetail reviewViewModelProductDetail = new ViewModelProvider(this, new ReviewViewModelProductDetail.Factory(reviewRepository)).get(ReviewViewModelProductDetail.class);
+                reviewViewModelProductDetail.getReviewsByProductId(productId).observe(this, reviews -> {
                     commentsLayout.removeAllViews();
                     if (reviews != null && !reviews.isEmpty()) {
                         for (Review review : reviews) {

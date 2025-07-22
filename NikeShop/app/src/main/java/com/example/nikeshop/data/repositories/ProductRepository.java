@@ -35,6 +35,11 @@ public class ProductRepository {
         return productDao.getProductsByNameAndCategory(keyword, categoryId);
     }
 
+    // Synchronous method for ViewModel
+    public Product getProductById(int productId) {
+        return productDao.getProductById(productId);
+    }
+
     public LiveData<List<Product>> getProductsByNameOrDescription(String query) {
         return productDao.getProductsByNameOrDescription(query);
     }

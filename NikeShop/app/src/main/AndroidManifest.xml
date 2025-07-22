@@ -28,6 +28,12 @@
             android:name=".ui.activities.ProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.activities.OrderDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.RatingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.FavouriteActivity"
             android:exported="false" />
         <activity
