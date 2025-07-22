@@ -83,7 +83,7 @@ public class CartActivity extends AppCompatActivity {
             double total = 0;
             android.widget.LinearLayout layoutPriceDetails = findViewById(R.id.layout_price_details);
             layoutPriceDetails.removeAllViews();
-            for (com.example.nikeshop.data.local.model.CartWithProduct cart : carts) {
+            for (com.example.nikeshop.data.local.modelDto.CartWithProduct cart : carts) {
                 total += cart.totalPrice;
                 // Thêm dòng tên sản phẩm + tổng tiền
                 android.widget.LinearLayout row = new android.widget.LinearLayout(this);

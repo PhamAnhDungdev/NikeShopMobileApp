@@ -1,4 +1,4 @@
-package com.example.nikeshop.data.local.model;
+package com.example.nikeshop.data.local.modelDto;
 
 public class CartWithProduct {
     public int cartId;

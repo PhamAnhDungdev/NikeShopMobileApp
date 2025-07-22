@@ -1,7 +1,7 @@
 
 
 package com.example.nikeshop.ui.ViewModels;
-import com.example.nikeshop.data.local.model.CartWithProduct;
+import com.example.nikeshop.data.local.modelDto.CartWithProduct;
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

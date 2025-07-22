@@ -1,6 +1,6 @@
 
 package com.example.nikeshop.data.repositories;
-import com.example.nikeshop.data.local.model.CartWithProduct;
+import com.example.nikeshop.data.local.modelDto.CartWithProduct;
 import android.content.Context;
 import androidx.room.Room;
 import com.example.nikeshop.data.local.AppDatabase;

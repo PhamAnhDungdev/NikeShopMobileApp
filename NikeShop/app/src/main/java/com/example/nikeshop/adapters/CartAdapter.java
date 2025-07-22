@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.nikeshop.R;
-import com.example.nikeshop.data.local.model.CartWithProduct;
+import com.example.nikeshop.data.local.modelDto.CartWithProduct;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
