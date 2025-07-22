@@ -79,8 +79,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }
             }
         });
-
-        ImageButton btnBack = findViewById(R.id.btn_back);
+        View topNavBar = findViewById(R.id.top_navbar);
+        View btnBack = topNavBar.findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +90,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-        ImageView btnCart = findViewById(R.id.btn_cart);
+
+
+        ImageView btnCart = topNavBar.findViewById(R.id.btn_cart);
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

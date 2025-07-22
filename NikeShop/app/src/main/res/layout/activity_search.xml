@@ -15,7 +15,9 @@
         android:padding="16dp"
         android:layout_alignParentTop="true">
 
-        <include layout="@layout/top_navbar_with_cart" />
+        <include
+            android:id="@+id/top_navbar"
+            layout="@layout/top_navbar_with_cart" />
 
         <!-- Search Box -->
         <LinearLayout

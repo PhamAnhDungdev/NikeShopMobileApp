@@ -22,7 +22,7 @@ import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class Seeder {
-    private static final boolean FORCE_RESEED = true; // False khong reset // True reset
+    private static final boolean FORCE_RESEED = false; // False khong reset // True reset
 
     // Custom Date Deserializer
     private static class DateDeserializer implements JsonDeserializer<Date> {
