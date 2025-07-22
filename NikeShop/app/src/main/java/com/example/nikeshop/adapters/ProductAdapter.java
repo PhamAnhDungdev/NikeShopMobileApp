@@ -24,6 +24,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         void onProductClick(Product product);
     }
 
+    private com.example.nikeshop.ui.ViewModels.CartViewModel cartViewModel;
+    private com.example.nikeshop.ui.ViewModels.WishlistViewModel wishlistViewModel;
+
+    public void setCartViewModel(com.example.nikeshop.ui.ViewModels.CartViewModel cartViewModel) {
+        this.cartViewModel = cartViewModel;
+    }
+    public void setWishlistViewModel(com.example.nikeshop.ui.ViewModels.WishlistViewModel wishlistViewModel) {
+        this.wishlistViewModel = wishlistViewModel;
+    }
+
     public ProductAdapter(Context context, List<Product> products, OnProductClickListener listener) {
         this.context = context;
         this.products = products;
@@ -63,6 +73,49 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             holder.imgProduct.setImageResource(R.drawable.shoes1);
         }
         holder.itemView.setOnClickListener(v -> listener.onProductClick(product));
+
+        // Xử lý click nút cộng
+        ImageView btnAddToCart = holder.itemView.findViewById(R.id.btn_add_to_cart);
+        btnAddToCart.setOnClickListener(v -> {
+            android.content.SharedPreferences prefs = context.getSharedPreferences("user_session", Context.MODE_PRIVATE);
+            boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
+            if (!isLoggedIn) {
+                android.content.Intent intent = new android.content.Intent(context, com.example.nikeshop.ui.activities.LoginActivity.class);
+                intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            } else {
+                if (cartViewModel != null) {
+                    cartViewModel.addToCart(product.getId(), 1);
+                    android.widget.Toast.makeText(context, "Đã thêm sản phẩm vào giỏ hàng!", android.widget.Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // Xử lý click icon yêu thích
+        ImageView btnFavourite = holder.itemView.findViewById(R.id.btn_favourite);
+        btnFavourite.setOnClickListener(v -> {
+            android.content.SharedPreferences prefs = context.getSharedPreferences("user_session", Context.MODE_PRIVATE);
+            boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
+            if (!isLoggedIn) {
+                android.content.Intent intent = new android.content.Intent(context, com.example.nikeshop.ui.activities.LoginActivity.class);
+                intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            } else {
+                if (wishlistViewModel == null) {
+                    wishlistViewModel = new androidx.lifecycle.ViewModelProvider((androidx.fragment.app.FragmentActivity) context).get(com.example.nikeshop.ui.ViewModels.WishlistViewModel.class);
+                }
+                wishlistViewModel.addToWishlist(product.getId(), new com.example.nikeshop.ui.ViewModels.WishlistViewModel.AddToWishlistListener() {
+                    @Override
+                    public void onSuccess() {
+                        android.widget.Toast.makeText(context, "Đã thêm sản phẩm vào danh sách yêu thích!", android.widget.Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onExists() {
+                        android.widget.Toast.makeText(context, "Sản phẩm đã có trong danh sách yêu thích!", android.widget.Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -80,6 +133,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             tvName = itemView.findViewById(R.id.tv_product_name);
             tvPrice = itemView.findViewById(R.id.tv_product_price);
             tvDesc = itemView.findViewById(R.id.tv_product_desc);
+            // btn_favourite đã được bind trong onBindViewHolder
         }
     }
 }
