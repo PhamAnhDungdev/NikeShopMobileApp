@@ -33,7 +33,10 @@ public class SearchActivity extends BottomMenuActivity {
         // Adapter
         adapter = new ProductSuggestionAdapter(product -> {
             Toast.makeText(this, "Selected: " + product.getName(), Toast.LENGTH_SHORT).show();
-            // TODO: Navigate to detail if needed
+            // Chuyển sang ProductDetailActivity
+            android.content.Intent intent = new android.content.Intent(this, ProductDetailActivity.class);
+            intent.putExtra("product_id", product.getId());
+            startActivity(intent);
         });
 
         rvSuggestions.setAdapter(adapter);

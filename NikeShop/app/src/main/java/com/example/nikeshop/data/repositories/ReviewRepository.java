@@ -15,6 +15,7 @@ public class ReviewRepository {
         this.reviewDao = reviewDao;
     }
 
+
     public LiveData<List<Review>> getAllReviews() {
         return reviewDao.getAllReviews();
     }
@@ -86,5 +87,8 @@ public class ReviewRepository {
     public interface OnReviewUpdatedListener {
         void onSuccess();
         void onError(String error);
+    }
+    public LiveData<List<Review>> getReviewsByProductId(int productId) {
+        return reviewDao.getReviewsByProductId(productId);
     }
 }

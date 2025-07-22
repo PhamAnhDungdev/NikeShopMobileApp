@@ -38,4 +38,9 @@ public interface UserDao {
 
     @Query("SELECT COUNT(*) FROM users")
     int countUsers();
+
+    @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
+    User getUserById(int id);
+
+
 }
