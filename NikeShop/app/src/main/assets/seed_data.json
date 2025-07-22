@@ -23,13 +23,8 @@
       "createdAt": "2025-07-20T10:10:28.312734",
       "updatedAt": "2025-07-20T10:10:28.312734",
       "deletedAt": null
-    },
-    {
-      "name": "Giày Sandal",
-      "createdAt": "2025-07-20T10:10:28.312734",
-      "updatedAt": "2025-07-20T10:10:28.312734",
-      "deletedAt": null
     }
+
   ],
   "users": [
     {
@@ -88,7 +83,7 @@
       "price": 300.0,
       "size": "42",
       "stockQuantity": 12,
-      "imageUrl": "https://img.com/max97",
+      "imageUrl": "https://static.nike.com/a/images/t_default/6a3671b8-f115-44f6-9ab6-3798d55210eb/custom-nike-air-max-97-shoes-by-you.png",
       "categoryId": 1,
       "brand": "Nike",
       "color": "White",
@@ -104,7 +99,7 @@
       "price": 250.0,
       "size": "41",
       "stockQuantity": 20,
-      "imageUrl": "https://img.com/zoomx",
+      "imageUrl": "https://bizweb.dktcdn.net/100/347/092/products/nike-zoomx-invincible-run-3-black-white-dr2615-001-01-1.jpg?v=1701665002793",
       "categoryId": 2,
       "brand": "Nike",
       "color": "Black",
@@ -120,7 +115,7 @@
       "price": 350.0,
       "size": "44",
       "stockQuantity": 5,
-      "imageUrl": "https://img.com/lebron",
+      "imageUrl": "https://bizweb.dktcdn.net/thumb/1024x1024/100/340/361/products/7-ca927720-4396-463a-a096-a032ff71800a.jpg?v=1722053309053",
       "categoryId": 3,
       "brand": "Nike",
       "color": "Red",
@@ -136,7 +131,7 @@
       "price": 50.0,
       "size": "40",
       "stockQuantity": 30,
-      "imageUrl": "https://img.com/slide",
+      "imageUrl": "https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/34cfe13c-4944-47f8-8778-9819dc45f1f7/NIKE+VICTORI+ONE+SLIDE.png",
       "categoryId": 4,
       "brand": "Nike",
       "color": "Blue",
@@ -152,8 +147,8 @@
       "price": 80.0,
       "size": "41",
       "stockQuantity": 25,
-      "imageUrl": "https://img.com/sandal",
-      "categoryId": 5,
+      "imageUrl": "https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/2bacfb05-ddc3-4341-9215-5d0f26d6e573/NIKE+CALM+SANDAL.png",
+      "categoryId": 4,
       "brand": "Nike",
       "color": "Brown",
       "material": "Leather",
