@@ -1,6 +1,9 @@
 package com.example.nikeshop.ui.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,27 +20,54 @@ public class ProfileActivity extends BottomMenuActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+
+        if (!prefs.getBoolean("is_logged_in", false)) {
+            // Nếu chưa đăng nhập thì chuyển về LoginActivity
+            startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+            finish();
+            return;
+        }
+
+        String userName = prefs.getString("user_name", "Guest");
+        String mail = prefs.getString("user_email", "No contact");
+        TextView name = findViewById(R.id.tvName);
+        TextView email = findViewById(R.id.tvLocation);
+        name.setText(userName);
+        email.setText(mail);
+
+        // ✅ Setup bottom menu
         setupBottomMenu(R.id.nav_profile);
 
-        // Bắt sự kiện click cho các mục
+        // ✅ Các sự kiện click
         findViewById(R.id.btnEditProfile).setOnClickListener(v ->
-            startActivity(new android.content.Intent(this, ContactInfoActivity.class)));
+                startActivity(new Intent(this, ContactInfoActivity.class)));
+
         findViewById(R.id.llMyOrders).setOnClickListener(v ->
-            startActivity(new android.content.Intent(this, MyOrdersActivity.class)));
+                startActivity(new Intent(this, MyOrdersActivity.class)));
+
         findViewById(R.id.llMyCards).setOnClickListener(v ->
-            startActivity(new android.content.Intent(this, MyCardsActivity.class)));
+                startActivity(new Intent(this, MyCardsActivity.class)));
+
         findViewById(R.id.llAddress).setOnClickListener(v ->
-            startActivity(new android.content.Intent(this, AddressActivity.class)));
+                startActivity(new Intent(this, AddressActivity.class)));
+
         findViewById(R.id.llHelpCenter).setOnClickListener(v ->
-            startActivity(new android.content.Intent(this, HelpActivity.class)));
+                startActivity(new Intent(this, HelpActivity.class)));
+
         findViewById(R.id.llLogout).setOnClickListener(v -> {
-            android.content.Intent intent = new android.content.Intent(this, LoginActivity.class);
-            intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            // Xóa session
+            prefs.edit().clear().apply();
+            // Chuyển về LoginActivity và xóa stack
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
     }
