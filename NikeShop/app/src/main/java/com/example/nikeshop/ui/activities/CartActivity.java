@@ -27,7 +27,10 @@ public class CartActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        ImageButton btnBack = findViewById(R.id.btn_back);
+
+        View topNavBar = findViewById(R.id.top_navbar);
+        View btnBack = topNavBar.findViewById(R.id.btn_back);
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

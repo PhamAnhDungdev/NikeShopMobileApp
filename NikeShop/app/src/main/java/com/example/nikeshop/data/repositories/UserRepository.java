@@ -33,4 +33,12 @@ public class UserRepository {
     public void delete(User user) {
         Executors.newSingleThreadExecutor().execute(() -> userDao.deleteUser(user));
     }
+
+    public void update(User user) {
+        Executors.newSingleThreadExecutor().execute(() -> userDao.updateUser(user));
+    }
+    public LiveData<User> getUserByIdLive(int userId) {
+        return userDao.getUserByIdLive(userId);
+    }
+
 }
