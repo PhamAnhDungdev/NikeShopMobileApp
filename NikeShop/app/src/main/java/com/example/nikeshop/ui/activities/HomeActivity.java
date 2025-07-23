@@ -2,6 +2,7 @@ package com.example.nikeshop.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -53,6 +54,11 @@ public class HomeActivity extends BottomMenuActivity {
         productAdapter = new com.example.nikeshop.ui.adapters.ProductAdapter(this, null, product -> {
             openProductDetail(product.getId());
         });
+        // Truyền CartViewModel và WishlistViewModel vào ProductAdapter
+        com.example.nikeshop.ui.ViewModels.CartViewModel cartViewModel = new androidx.lifecycle.ViewModelProvider(this).get(com.example.nikeshop.ui.ViewModels.CartViewModel.class);
+        com.example.nikeshop.ui.ViewModels.WishlistViewModel wishlistViewModel = new androidx.lifecycle.ViewModelProvider(this).get(com.example.nikeshop.ui.ViewModels.WishlistViewModel.class);
+        productAdapter.setCartViewModel(cartViewModel);
+        productAdapter.setWishlistViewModel(wishlistViewModel);
         rvProducts.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(this, 2));
         rvProducts.setAdapter(productAdapter);
 
@@ -63,12 +69,23 @@ public class HomeActivity extends BottomMenuActivity {
         });
         // Sự kiện click cho icon Cart
         ImageView btnCart = findViewById(R.id.btn_cart);
-        if (btnCart != null) {
-            btnCart.setOnClickListener(v -> {
-                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
-                startActivity(intent);
-            });
-        }
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.content.SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
+                if (!isLoggedIn) {
+                    android.widget.Toast.makeText(HomeActivity.this, "Bạn cần đăng nhập để xem giỏ hàng!", android.widget.Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish(); // Đảm bảo không chạy tiếp code thêm vào giỏ hàng
+                    return;
+                } else {
+                    Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void openProductDetail(int productId) {

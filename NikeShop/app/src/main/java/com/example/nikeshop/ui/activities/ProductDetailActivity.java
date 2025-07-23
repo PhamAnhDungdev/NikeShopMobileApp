@@ -96,8 +96,18 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
-                startActivity(intent);
+                android.content.SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
+                if (!isLoggedIn) {
+                    android.widget.Toast.makeText(ProductDetailActivity.this, "Bạn cần đăng nhập để xem giỏ hàng!", android.widget.Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ProductDetailActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                       finish(); // Đảm bảo không chạy tiếp code thêm vào giỏ hàng
+                    return;
+                } else {
+                    Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         // View Comments button
@@ -110,6 +120,62 @@ public class ProductDetailActivity extends AppCompatActivity {
                     Intent intent = new Intent(ProductDetailActivity.this, FeedbackActivity.class);
                     intent.putExtra("product_id", currentProduct.getId()); // Lấy id thực tế từ DB
                     startActivity(intent);
+                }
+            }
+        });
+        // Xử lý nút Add to Cart (theo XML là TextView)
+        android.widget.TextView btnAddToCart = findViewById(R.id.btn_add_to_cart);
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.content.SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
+                if (!isLoggedIn) {
+                    android.widget.Toast.makeText(ProductDetailActivity.this, "Bạn cần đăng nhập để mua hàng!", android.widget.Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ProductDetailActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+                if (currentProduct != null) {
+                    android.widget.TextView tvQuantity = findViewById(R.id.tv_quantity);
+                    int quantity = 1;
+                    try {
+                        quantity = Integer.parseInt(tvQuantity.getText().toString());
+                    } catch (Exception e) {}
+                    // Thêm vào giỏ hàng qua ViewModel (giả sử đã có CartViewModel)
+                    com.example.nikeshop.ui.ViewModels.CartViewModel cartViewModel = new androidx.lifecycle.ViewModelProvider(ProductDetailActivity.this).get(com.example.nikeshop.ui.ViewModels.CartViewModel.class);
+                    cartViewModel.addToCart(currentProduct.getId(), quantity);
+                    android.widget.Toast.makeText(ProductDetailActivity.this, "Đã thêm sản phẩm vào giỏ hàng!", android.widget.Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // Xử lý nút Favourites (theo XML là TextView)
+        android.widget.TextView btnFavourite = findViewById(R.id.btn_favourite);
+        btnFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.content.SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
+                if (!isLoggedIn) {
+                    android.widget.Toast.makeText(ProductDetailActivity.this, "Bạn cần đăng nhập để thêm vào yêu thích!", android.widget.Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ProductDetailActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return;
+                }
+                if (currentProduct != null) {
+                    com.example.nikeshop.ui.ViewModels.WishlistViewModel wishlistViewModel = new androidx.lifecycle.ViewModelProvider(ProductDetailActivity.this).get(com.example.nikeshop.ui.ViewModels.WishlistViewModel.class);
+                    wishlistViewModel.addToWishlist(currentProduct.getId(), new com.example.nikeshop.ui.ViewModels.WishlistViewModel.AddToWishlistListener() {
+                        @Override
+                        public void onSuccess() {
+                            android.widget.Toast.makeText(ProductDetailActivity.this, "Đã thêm sản phẩm vào danh sách yêu thích!", android.widget.Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onExists() {
+                            android.widget.Toast.makeText(ProductDetailActivity.this, "Sản phẩm đã có trong danh sách yêu thích!", android.widget.Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });

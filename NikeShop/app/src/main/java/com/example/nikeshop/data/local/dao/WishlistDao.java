@@ -12,15 +12,19 @@ import java.util.List;
 
 @Dao
 public interface WishlistDao {
+// Thêm 1 item
+    @Insert
+    long insert(Wishlist wishlist);
+
     @Insert
     List<Long> insertAll(List<Wishlist> wishlists);
 
     @Query("SELECT COUNT(*) FROM wishlists")
     int countWishlists();
 
-    // Thêm 1 item
-    @Insert
-    long insert(Wishlist wishlist);
+    @Query("SELECT COUNT(*) FROM wishlists WHERE user_id = :userId AND product_id = :productId")
+    int exists(int userId, int productId);
+
 
     // Lấy wishlist theo userId
     @Query("SELECT * FROM wishlists WHERE user_id = :userId")
