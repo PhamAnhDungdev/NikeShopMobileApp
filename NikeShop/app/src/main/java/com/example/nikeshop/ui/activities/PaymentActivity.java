@@ -1,6 +1,7 @@
 package com.example.nikeshop.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +19,11 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.nikeshop.R;
 import com.example.nikeshop.data.local.modelDto.ProductOrderDto;
+import com.example.nikeshop.ui.ViewModels.OrderViewModel;
 
 import java.util.ArrayList;
 
@@ -44,9 +48,6 @@ public class PaymentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         cartItems = intent.getParcelableArrayListExtra("cart_items");
         totalAmount = intent.getDoubleExtra("total_amount", 0.0);
-
-        Log.d("PaymentActivity", "cartItems: " + cartItems);
-        Log.d("PaymentActivity", "totalAmount: " + totalAmount);
 
         // Hiển thị danh sách sản phẩm + tổng tiền
         LinearLayout layoutProductItems = findViewById(R.id.layout_product_items);
@@ -114,7 +115,7 @@ public class PaymentActivity extends AppCompatActivity {
         ImageView checkCard = findViewById(R.id.check_card);
         ImageView checkCOD = findViewById(R.id.check_cod);
 
-    // Hàm xử lý thay đổi lựa chọn
+        // Hàm xử lý thay đổi lựa chọn
         View.OnClickListener onMethodSelected = v -> {
             // Reset icon về màu xám
             checkCard.setColorFilter(ContextCompat.getColor(this, R.color.gray));
@@ -124,13 +125,18 @@ public class PaymentActivity extends AppCompatActivity {
             if (v == paymentCard) {
                 selectedPaymentMethod = "Credit/Debit card";
                 checkCard.setColorFilter(ContextCompat.getColor(this, R.color.orange));
+
+                // 👉 Chuyển qua ScanQRActivity
+                Intent intent2 = new Intent(PaymentActivity.this, ScanQRActivity.class);
+                intent2.putExtra("total_amount", totalAmount); // Gửi tổng tiền nếu cần
+                startActivity(intent2);
             } else if (v == paymentCOD) {
                 selectedPaymentMethod = "Cash On Delivery";
                 checkCOD.setColorFilter(ContextCompat.getColor(this, R.color.orange));
             }
         };
 
-    // 🔥 GÁN LISTENER CHO CÁC PHƯƠNG THỨC
+        // 🔥 GÁN LISTENER CHO CÁC PHƯƠNG THỨC
         paymentCard.setOnClickListener(onMethodSelected);
         paymentCOD.setOnClickListener(onMethodSelected);
 
@@ -148,16 +154,43 @@ public class PaymentActivity extends AppCompatActivity {
                 }
             });
         }
+
+        OrderViewModel orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
         // Sự kiện nút Place Order
         TextView btnCheckout = findViewById(R.id.btn_checkout);
         if (btnCheckout != null) {
-            btnCheckout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(PaymentActivity.this, OrderPlaceActivity.class);
-                    startActivity(intent);
-                    finish();
+            btnCheckout.setOnClickListener(v -> {
+                if (cartItems == null || cartItems.isEmpty()) {
+                    Toast.makeText(this, "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                if (selectedPaymentMethod == null || selectedPaymentMethod.isEmpty()) {
+                    Toast.makeText(this, "Vui lòng chọn phương thức thanh toán!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                int userId = prefs.getInt("user_id", -1);
+                if (userId == -1) {
+                    Toast.makeText(this, "Vui lòng đăng nhập!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                orderViewModel.placeOrder(
+                        userId,
+                        totalAmount,
+                        selectedPaymentMethod,
+                        cartItems,
+                        () -> runOnUiThread(() -> {
+                            Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(this, OrderPlaceActivity.class));
+                            finish();
+                        }),
+                        e -> runOnUiThread(() -> {
+                            Toast.makeText(this, "Lỗi đặt hàng: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        })
+                );
             });
         }
     }

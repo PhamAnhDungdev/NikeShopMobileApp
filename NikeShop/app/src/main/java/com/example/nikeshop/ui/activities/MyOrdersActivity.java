@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.nikeshop.R;
 import com.example.nikeshop.adapters.OrdersAdapter;
 import com.example.nikeshop.data.local.AppDatabase;
+import com.example.nikeshop.data.local.dao.CartDao;
 import com.example.nikeshop.data.local.dao.OrderDao;
+import com.example.nikeshop.data.local.dao.OrderDetailDao;
 import com.example.nikeshop.data.local.entity.Order;
 import com.example.nikeshop.data.repositories.OrderRepository;
 import com.example.nikeshop.ui.ViewModels.OrderViewModel;
@@ -48,7 +50,9 @@ public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter
 
         // Tạo ViewModel qua Factory (nếu muốn truyền Repository vào ViewModel)
         OrderDao orderDao = AppDatabase.getInstance(getApplicationContext()).orderDao();
-        OrderRepository repository = new OrderRepository(orderDao);
+        OrderDetailDao orderDetailDao = AppDatabase.getInstance(getApplicationContext()).orderDetailDao();
+        CartDao cartDao = AppDatabase.getInstance(getApplicationContext()).cartDao();
+        OrderRepository repository = new OrderRepository(orderDao, orderDetailDao, cartDao);
         orderViewModel = new ViewModelProvider(
                 this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())

@@ -7,7 +7,7 @@
 
     <!-- Back Button -->
     <LinearLayout
-        android:id="@+id/btnBack"
+        android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"

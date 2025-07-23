@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.nikeshop.adapters.OrderDetailAdapter;
 import com.example.nikeshop.data.local.AppDatabase;
+import com.example.nikeshop.data.local.dao.CartDao;
 import com.example.nikeshop.data.local.dao.OrderDao;
 import com.example.nikeshop.data.local.dao.OrderDetailDao;
 import com.example.nikeshop.data.local.dao.ProductDao;
@@ -37,9 +38,10 @@ public class OrderDetailViewModel extends AndroidViewModel {
         AppDatabase database = AppDatabase.getInstance(application);
         OrderDao orderDao = database.orderDao();
         OrderDetailDao orderDetailDao = database.orderDetailDao();
+        CartDao cartDao = database.cartDao();
         ProductDao productDao = database.productDao();
 
-        orderRepository = new OrderRepository(orderDao);
+        orderRepository = new OrderRepository(orderDao, orderDetailDao, cartDao);
         orderDetailRepository = new OrderDetailRepository(orderDetailDao);
         productRepository = new ProductRepository(productDao);
     }
