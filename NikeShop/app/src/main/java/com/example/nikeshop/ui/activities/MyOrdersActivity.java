@@ -1,6 +1,7 @@
 package com.example.nikeshop.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -70,7 +71,17 @@ public class MyOrdersActivity extends AppCompatActivity implements OrdersAdapter
     }
 
     private void observeOrders() {
-        orderViewModel.getAllOrders().observe(this, orders -> {
+        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+
+        if (!prefs.getBoolean("is_logged_in", false)) {
+            // Nếu chưa đăng nhập thì chuyển về LoginActivity
+            startActivity(new Intent(MyOrdersActivity.this, LoginActivity.class));
+            finish();
+            return;
+        }
+
+        int userID = prefs.getInt("user_id", -1);
+        orderViewModel.getOrdersByUser(userID).observe(this, orders -> {
             ordersAdapter.updateOrders(orders);
         });
     }

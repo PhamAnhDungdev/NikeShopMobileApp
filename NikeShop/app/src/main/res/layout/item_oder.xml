@@ -94,8 +94,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="X1"
-                android:textSize="14sp"
-                android:textColor="#666666" />
+                android:textColor="#666666"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -127,7 +127,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="1 Item , Total:"
+            android:text="Total:"
             android:textSize="14sp"
             android:textColor="#666666" />
 
