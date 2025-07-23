@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.nikeshop.R;
 import com.example.nikeshop.data.local.modelDto.ProductOrderDto;
 import com.example.nikeshop.ui.ViewModels.OrderViewModel;
+import com.example.nikeshop.utils.Notifications;
 
 import java.util.ArrayList;
 
@@ -190,6 +191,11 @@ public class PaymentActivity extends AppCompatActivity {
                         e -> runOnUiThread(() -> {
                             Toast.makeText(this, "Lỗi đặt hàng: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         })
+                );
+                Notifications.showOrderNotification(
+                        this,
+                        "Order Successful",
+                        "Your order has been placed!"
                 );
             });
         }
