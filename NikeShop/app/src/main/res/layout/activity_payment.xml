@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
-    <!-- Content -->
     <ScrollView
         android:id="@+id/content_container"
         android:layout_width="match_parent"
@@ -18,10 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <!-- Navbar -->
-            <include layout="@layout/top_navbar_without_cart" />
+            <include
+                android:id="@+id/top_navbar"
+                layout="@layout/top_navbar_without_cart" />
 
             <!-- Title -->
             <TextView
@@ -41,7 +42,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Credit/Debit -->
                 <LinearLayout
                     android:id="@+id/payment_card"
                     android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Credit/Debit card"
+                        android:text="Banking"
                         android:textSize="16sp"
                         android:textColor="#000000" />
 
@@ -71,42 +71,11 @@
                         app:tint="#AAAAAA" />
                 </LinearLayout>
 
-                <!-- Google Pay -->
-                <LinearLayout
-                    android:id="@+id/payment_google_pay"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/edit_box_bg"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:layout_marginBottom="12dp"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Google Pay"
-                        android:textSize="16sp"
-                        android:textColor="#000000" />
-
-                    <ImageView
-                        android:id="@+id/check_google_pay"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_check"
-                        app:tint="#AAAAAA" />
-                </LinearLayout>
-
-                <!-- Cash on Delivery -->
                 <LinearLayout
                     android:id="@+id/payment_cod"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:background="@drawable/add_to_cart_bg"
+                    android:background="@drawable/edit_box_bg"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
@@ -120,7 +89,7 @@
                         android:layout_weight="1"
                         android:text="Cash On Delivery"
                         android:textSize="16sp"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#000000" />
 
                     <ImageView
                         android:id="@+id/check_cod"
@@ -142,6 +111,7 @@
                 app:cardBackgroundColor="#FFF">
 
                 <LinearLayout
+                    android:id="@+id/layout_price_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -159,53 +129,22 @@
                         android:textSize="20sp"
                         android:layout_marginBottom="12dp" />
 
-                    <!-- Product Items -->
+                    <!-- Danh sách sản phẩm sẽ được addView() vào đây -->
                     <LinearLayout
+                        android:id="@+id/layout_product_items"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="6dp">
+                        android:orientation="vertical"
+                        android:layout_marginBottom="8dp" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Nike Air Bloom"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$144.99"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="6dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Nike Air Gloom"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$444.99"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
+                    <!-- Divider -->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#DDDDDD"
                         android:layout_marginVertical="8dp" />
 
+                    <!-- Tổng tiền -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -220,14 +159,15 @@
                             android:textSize="17sp" />
 
                         <TextView
+                            android:id="@+id/tv_cart_total"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$589.98"
+                            android:text="$0.00"
                             android:textStyle="bold"
                             android:textSize="17sp" />
                     </LinearLayout>
 
-                    <!-- Checkout Button -->
+                    <!-- Place Order Button -->
                     <TextView
                         android:id="@+id/btn_checkout"
                         android:layout_width="match_parent"
@@ -255,5 +195,4 @@
         app:itemIconTint="@color/bottom_nav_selector"
         app:itemTextColor="@color/bottom_nav_selector"
         app:menu="@menu/bottom_nav_menu" />
-
 </RelativeLayout>

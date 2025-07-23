@@ -17,4 +17,8 @@
     <!-- Status colors -->
     <color name="success">#4CAF50</color>
     <color name="error">#F44336</color>
+
+    <!--    Payment method-->
+    <color name="orange">#FF6600</color>
+    <color name="gray">#AAAAAA</color>
 </resources>
