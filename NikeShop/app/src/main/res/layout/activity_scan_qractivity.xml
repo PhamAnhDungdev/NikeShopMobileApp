@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:layout_marginTop="20dp"
+    android:background="#FAFAFA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <include
+            android:id="@+id/top_navbar"
+            layout="@layout/top_navbar_without_cart" />
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SCAN QR CHECKOUT"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Tổng tiền -->
+        <TextView
+            android:id="@+id/tvTotalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total amount: 0 VND"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#D32F2F"
+            android:padding="12dp"
+            android:background="#FFF3E0"
+            android:layout_marginBottom="20dp" />
+
+        <!-- QR Code -->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="20dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="QR Code"
+            android:background="@drawable/qr_border" />
+
+        <!-- Card chứa thông tin ngân hàng -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/card_background"
+            android:elevation="4dp">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PHAM ANH DUNG"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#212121" />
+
+            <TextView
+                android:id="@+id/tvAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="19010203888"
+                android:textSize="15sp"
+                android:textColor="#424242"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MB BANK"
+                android:textSize="14sp"
+                android:textColor="#616161"
+                android:textStyle="italic"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- Hướng dẫn -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please transfer the correct amount and content.\nWe will confirm after receiving."
+            android:textSize="13sp"
+            android:textColor="#212121"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Button -->
+        <Button
+            android:id="@+id/btnConfirmPayment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I have transferred the money"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/primary_orange"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_button" />
+
+    </LinearLayout>
+</ScrollView>

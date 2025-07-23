@@ -14,6 +14,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.nikeshop.R;
 import com.example.nikeshop.adapters.CartAdapter;
+import com.example.nikeshop.data.local.modelDto.CartWithProduct;
+import com.example.nikeshop.data.local.modelDto.ProductOrderDto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -27,7 +32,7 @@ public class CartActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        CartAdapter cartAdapter = new CartAdapter(this, new java.util.ArrayList<>());
         View topNavBar = findViewById(R.id.top_navbar);
         View btnBack = topNavBar.findViewById(R.id.btn_back);
 
@@ -44,7 +49,33 @@ public class CartActivity extends AppCompatActivity {
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Lấy thông tin từ cartAdapter
+                List<CartWithProduct> originalCartList = cartAdapter.getCartList();
+                ArrayList<ProductOrderDto> orderList = new ArrayList<>();
+
+                for (CartWithProduct cart : originalCartList) {
+                    ProductOrderDto dto = new ProductOrderDto();
+                    dto.cartId = cart.cartId;
+                    dto.userId = cart.userId;
+                    dto.productId = cart.productId;
+                    dto.quantity = cart.quantity;
+                    dto.productName = cart.productName;
+                    dto.productImageUrl = cart.productImageUrl;
+                    dto.productPrice = cart.productPrice;
+                    dto.totalPrice = cart.totalPrice;
+                    orderList.add(dto);
+                }
+
+                // Tính tổng tiền
+                double total = 0;
+                for (ProductOrderDto dto : orderList) {
+                    total += dto.totalPrice;
+                }
+
+                // Gửi qua PaymentActivity
                 Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
+                intent.putParcelableArrayListExtra("cart_items", orderList);
+                intent.putExtra("total_amount", total);
                 startActivity(intent);
             }
         });
@@ -62,7 +93,6 @@ public class CartActivity extends AppCompatActivity {
 
         // Hiển thị danh sách sản phẩm giỏ hàng lên RecyclerView
         androidx.recyclerview.widget.RecyclerView recyclerView = findViewById(R.id.recycler_cart_items);
-        CartAdapter cartAdapter = new CartAdapter(this, new java.util.ArrayList<>());
         recyclerView.setAdapter(cartAdapter);
         recyclerView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
 

@@ -62,13 +62,13 @@
                     android:textStyle="bold"
                     android:textSize="21sp"
                     android:layout_weight="1" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Change"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:textColor="#222" />
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Change"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textColor="#222" />-->
             </LinearLayout>
             <TextView
                 android:id="@+id/tv_shipping_address"

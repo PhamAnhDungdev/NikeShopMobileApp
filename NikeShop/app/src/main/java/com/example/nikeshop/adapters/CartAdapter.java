@@ -38,6 +38,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         notifyDataSetChanged();
     }
 
+    public List<CartWithProduct> getCartList() {
+        return cartList;
+    }
+
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
