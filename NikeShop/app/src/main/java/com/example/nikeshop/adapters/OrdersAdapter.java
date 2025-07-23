@@ -102,17 +102,16 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
             // Dữ liệu không có => bỏ dòng này
             tvPaidDate.setVisibility(View.GONE);
 
-            // Không có tên sản phẩm, category => dùng placeholder hoặc ẩn
             tvProductName.setText("Nike Product");
             tvProductCategory.setText("Category");
-            tvProductPrice.setText(currencyFormat.format(order.getTotalPrice())); // giả định 1 sản phẩm duy nhất
+            tvProductPrice.setText(currencyFormat.format(order.getTotalPrice()));
 
             tvTotalPrice.setText(currencyFormat.format(order.getTotalPrice()));
-            tvProductQuantity.setText("X1"); // chưa có quantity => giả định 1
-            tvOrderStatus.setText(order.getStatus());
-            tvItemCount.setText("1 Item , Total:");
 
-            // Ảnh sản phẩm không có => placeholder
+            tvProductQuantity.setText("");
+            tvOrderStatus.setText(order.getStatus());
+            tvItemCount.setText("Total:");
+
             ivProductImage.setImageResource(R.drawable.placeholder_shoe);
 
             setStatusBackground(order.getStatus());

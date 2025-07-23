@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.lifecycle.ViewModelProvider;
 import com.example.nikeshop.R;
+import com.example.nikeshop.ui.ViewModels.UserViewModel;
+import com.example.nikeshop.data.local.entity.User;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -21,25 +23,25 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class AddressActivity extends AppCompatActivity implements OnMapReadyCallback{
-
+public class AddressActivity extends AppCompatActivity implements OnMapReadyCallback {
     private ImageView btnBack, btnSearchAddress;
     private EditText etAddressMain, etAddressCity;
     private TextInputEditText etFloorNumber, etPostalCode;
     private Button btnSave;
     private ProgressBar mapLoading;
-
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
     private Geocoder geocoder;
+    private LatLng currentLocation;
 
-    // Default location (New York City)
-    private LatLng currentLocation = new LatLng(40.7128, -74.0060);
+    // User management
+    private UserViewModel userViewModel;
+    private User currentUser;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +49,14 @@ public class AddressActivity extends AppCompatActivity implements OnMapReadyCall
         setContentView(R.layout.activity_address);
 
         initViews();
+        initViewModel();
+        getUserIdFromSession();
         setupMap();
         setupClickListeners();
         setupTextWatchers();
 
         geocoder = new Geocoder(this, Locale.getDefault());
-        loadCurrentAddress();
+        loadUserAddress();
     }
 
     private void initViews() {
@@ -66,19 +70,110 @@ public class AddressActivity extends AppCompatActivity implements OnMapReadyCall
         mapLoading = findViewById(R.id.map_loading);
     }
 
+    private void initViewModel() {
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+    }
+
+    private void getUserIdFromSession() {
+        // Get user ID from session/SharedPreferences
+        userId = getSharedPreferences("user_session", MODE_PRIVATE)
+                .getInt("user_id", -1);
+
+        if (userId == -1) {
+            Toast.makeText(this, "User session not found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+    }
+
+    private void loadUserAddress() {
+        if (userId == -1) return;
+
+        mapLoading.setVisibility(View.VISIBLE);
+
+        userViewModel.getUserById(userId).observe(this, user -> {
+            mapLoading.setVisibility(View.GONE);
+
+            if (user != null) {
+                currentUser = user;
+                parseAndLoadAddress(user.getAddress());
+            } else {
+                Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+    }
+
+    private void parseAndLoadAddress(String address) {
+        if (address == null || address.isEmpty()) {
+            // Set default location if no address
+            currentLocation = new LatLng(21.0285, 105.8542); // Hanoi default
+            if (mMap != null) {
+                updateMapLocation(currentLocation, "Default Location");
+            }
+            return;
+        }
+
+        // Parse address format: "Đống Đa-Hà Nội"
+        String[] addressParts = address.split("-");
+
+        if (addressParts.length >= 2) {
+            String city = addressParts[0].trim(); // "Đống Đa"
+            String mainAddress = addressParts[1].trim(); // "Hà Nội"
+
+            etAddressCity.setText(city);
+            etAddressMain.setText(mainAddress);
+
+            // Search and update map with the parsed address
+            searchAndUpdateMapFromUserAddress(address);
+        } else {
+            // If format is different, put entire address in main field
+            etAddressMain.setText(address);
+            searchAndUpdateMapFromUserAddress(address);
+        }
+    }
+
+    private void searchAndUpdateMapFromUserAddress(String address) {
+        new Thread(() -> {
+            try {
+                List<Address> addresses = geocoder.getFromLocationName(address + ", Vietnam", 1);
+                runOnUiThread(() -> {
+                    if (addresses != null && !addresses.isEmpty()) {
+                        Address location = addresses.get(0);
+                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        currentLocation = latLng;
+                        updateMapLocation(latLng, address);
+
+                        // Update postal code if available
+                        if (location.getPostalCode() != null && etPostalCode.getText().toString().isEmpty()) {
+                            etPostalCode.setText(location.getPostalCode());
+                        }
+                    } else {
+                        // Default to Hanoi if address not found
+                        currentLocation = new LatLng(21.0285, 105.8542);
+                        updateMapLocation(currentLocation, "Default Location");
+                    }
+                });
+            } catch (IOException e) {
+                runOnUiThread(() -> {
+                    currentLocation = new LatLng(21.0285, 105.8542);
+                    updateMapLocation(currentLocation, "Default Location");
+                });
+            }
+        }).start();
+    }
+
     private void setupMap() {
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_fragment);
         if (mapFragment != null) {
-            mapFragment.getMapAsync((OnMapReadyCallback) this);
+            mapFragment.getMapAsync(this);
         }
     }
 
     private void setupClickListeners() {
         btnBack.setOnClickListener(v -> onBackPressed());
-
         btnSearchAddress.setOnClickListener(v -> searchAndUpdateMap());
-
         btnSave.setOnClickListener(v -> saveAddress());
     }
 
@@ -92,9 +187,8 @@ public class AddressActivity extends AppCompatActivity implements OnMapReadyCall
 
             @Override
             public void afterTextChanged(Editable s) {
-                // Auto-update map after user stops typing (with delay)
                 etAddressMain.removeCallbacks(updateMapRunnable);
-                etAddressMain.postDelayed(updateMapRunnable, 1500); // 1.5 second delay
+                etAddressMain.postDelayed(updateMapRunnable, 1500);
             }
         };
 
@@ -112,15 +206,14 @@ public class AddressActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Configure map
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setMapToolbarEnabled(false);
 
-        // Set initial location
-        updateMapLocation(currentLocation, "Current Location");
+        // Set initial location if available
+        if (currentLocation != null) {
+            updateMapLocation(currentLocation, "Current Location");
+        }
 
-        // Allow user to tap on map to select location
         mMap.setOnMapClickListener(latLng -> {
             currentLocation = latLng;
             updateMapLocation(latLng, "Selected Location");
@@ -136,7 +229,7 @@ public class AddressActivity extends AppCompatActivity implements OnMapReadyCall
             return;
         }
 
-        String fullAddress = mainAddress + ", " + city;
+        String fullAddress = city + ", " + mainAddress + ", Vietnam";
         geocodeAddress(fullAddress);
     }
 
@@ -146,17 +239,14 @@ public class AddressActivity extends AppCompatActivity implements OnMapReadyCall
         new Thread(() -> {
             try {
                 List<Address> addresses = geocoder.getFromLocationName(address, 1);
-
                 runOnUiThread(() -> {
                     mapLoading.setVisibility(View.GONE);
-
                     if (addresses != null && !addresses.isEmpty()) {
                         Address location = addresses.get(0);
                         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                         currentLocation = latLng;
                         updateMapLocation(latLng, address);
 
-                        // Update postal code if available
                         if (location.getPostalCode() != null && etPostalCode.getText().toString().isEmpty()) {
                             etPostalCode.setText(location.getPostalCode());
                         }
@@ -164,7 +254,6 @@ public class AddressActivity extends AppCompatActivity implements OnMapReadyCall
                         Toast.makeText(this, "Address not found", Toast.LENGTH_SHORT).show();
                     }
                 });
-
             } catch (IOException e) {
                 runOnUiThread(() -> {
                     mapLoading.setVisibility(View.GONE);
@@ -179,30 +268,29 @@ public class AddressActivity extends AppCompatActivity implements OnMapReadyCall
             try {
                 List<Address> addresses = geocoder.getFromLocation(
                         latLng.latitude, latLng.longitude, 1);
-
                 runOnUiThread(() -> {
                     if (addresses != null && !addresses.isEmpty()) {
                         Address address = addresses.get(0);
 
-                        // Update address fields
-                        String addressLine = address.getAddressLine(0);
-                        if (addressLine != null) {
-                            String[] parts = addressLine.split(",");
-                            if (parts.length > 0) {
-                                etAddressMain.setText(parts[0].trim());
-                            }
-                            if (parts.length > 1) {
-                                etAddressCity.setText(parts[1].trim());
-                            }
+                        // Update address fields based on Vietnamese address format
+                        String locality = address.getLocality(); // City/Province
+                        String subLocality = address.getSubLocality(); // District
+                        String thoroughfare = address.getThoroughfare(); // Street
+
+                        if (locality != null) {
+                            etAddressMain.setText(locality);
+                        }
+                        if (subLocality != null) {
+                            etAddressCity.setText(subLocality);
+                        } else if (thoroughfare != null) {
+                            etAddressCity.setText(thoroughfare);
                         }
 
-                        // Update postal code
                         if (address.getPostalCode() != null) {
                             etPostalCode.setText(address.getPostalCode());
                         }
                     }
                 });
-
             } catch (IOException e) {
                 runOnUiThread(() ->
                         Toast.makeText(this, "Error getting address details", Toast.LENGTH_SHORT).show());
@@ -218,26 +306,6 @@ public class AddressActivity extends AppCompatActivity implements OnMapReadyCall
                     .title(title));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         }
-    }
-
-    private void loadCurrentAddress() {
-        // Load saved data
-        String savedMainAddress = getSharedPreferences("address_prefs", MODE_PRIVATE)
-                .getString("main_address", "NYC Street No.23 Block 1");
-        String savedCity = getSharedPreferences("address_prefs", MODE_PRIVATE)
-                .getString("city", "New York City");
-        String savedFloor = getSharedPreferences("address_prefs", MODE_PRIVATE)
-                .getString("floor_number", "");
-        String savedPostal = getSharedPreferences("address_prefs", MODE_PRIVATE)
-                .getString("postal_code", "");
-
-        etAddressMain.setText(savedMainAddress);
-        etAddressCity.setText(savedCity);
-        etFloorNumber.setText(savedFloor);
-        etPostalCode.setText(savedPostal);
-
-        // Update map with saved address
-        searchAndUpdateMap();
     }
 
     private void saveAddress() {
@@ -259,19 +327,43 @@ public class AddressActivity extends AppCompatActivity implements OnMapReadyCall
             return;
         }
 
-        // Save to SharedPreferences
-        getSharedPreferences("address_prefs", MODE_PRIVATE)
-                .edit()
-                .putString("main_address", mainAddress)
-                .putString("city", city)
-                .putString("floor_number", floorNumber)
-                .putString("postal_code", postalCode)
-                .putFloat("latitude", (float) currentLocation.latitude)
-                .putFloat("longitude", (float) currentLocation.longitude)
-                .apply();
+        if (currentUser == null) {
+            Toast.makeText(this, "User data not loaded", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        Toast.makeText(this, "Address saved successfully!", Toast.LENGTH_SHORT).show();
-        finish();
+        // Format address as "City-MainAddress" (e.g., "Đống Đa-Hà Nội")
+        String formattedAddress = city + "-" + mainAddress;
+
+        // Update user object
+        currentUser.setAddress(formattedAddress);
+
+        // Show loading state
+        btnSave.setEnabled(false);
+        btnSave.setText("Saving...");
+
+        // Update user in database using background thread
+        new Thread(() -> {
+            try {
+                userViewModel.update(currentUser);
+
+                // Update UI on main thread
+                runOnUiThread(() -> {
+                    btnSave.setEnabled(true);
+                    btnSave.setText("Save");
+
+                    Toast.makeText(this, "Address saved successfully!", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    btnSave.setEnabled(true);
+                    btnSave.setText("Save");
+                    Toast.makeText(this, "Failed to save address: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        }).start();
     }
 
     @Override

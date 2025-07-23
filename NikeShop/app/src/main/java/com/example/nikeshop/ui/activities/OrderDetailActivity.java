@@ -68,10 +68,6 @@ public class OrderDetailActivity extends AppCompatActivity implements OrderDetai
         tvPlacedDate = findViewById(R.id.tv_placed_date);
         tvSubtotal = findViewById(R.id.tv_subtotal);
         rvOrderDetails = findViewById(R.id.rv_order_details);
-
-        // Thêm progress bar và empty message nếu có trong layout
-        // progressBar = findViewById(R.id.progress_bar);
-        // tvEmptyMessage = findViewById(R.id.tv_empty_message);
     }
 
     private void setupRecyclerView() {
@@ -137,6 +133,7 @@ public class OrderDetailActivity extends AppCompatActivity implements OrderDetai
         intent.putExtra("PRODUCT_ID", product.getId());
         intent.putExtra("PRODUCT_NAME", product.getName());
         intent.putExtra("ORDER_ID", orderId);
+        intent.putExtra("PRODUCT_IMAGE_URL", product.getImageUrl());
         startActivity(intent);
     }
 }

@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.nikeshop.R;
 import com.example.nikeshop.data.local.entity.OrderDetail;
 import com.example.nikeshop.data.local.entity.Product;
@@ -85,7 +87,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
                 // Sử dụng brand thay vì category, hoặc có thể hiển thị "Category ID: " + categoryId
                 tvProductCategory.setText(product.getBrand() != null ? product.getBrand() : "Brand N/A");
                 // Load product image here if you have image loading library like Glide or Picasso
-                // Glide.with(itemView.getContext()).load(product.getImageUrl()).into(ivProductImage);
+                 Glide.with(itemView.getContext()).load(product.getImageUrl()).into(ivProductImage);
             }
 
             tvProductPrice.setText(String.format("$%.2f", orderDetail.getPrice()));
