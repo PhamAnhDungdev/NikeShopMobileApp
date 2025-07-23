@@ -3,17 +3,16 @@ package com.example.nikeshop.ui.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.lifecycle.LiveData;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nikeshop.NikeShopApp;
 import com.example.nikeshop.R;
 import com.example.nikeshop.adapters.FavouriteProductAdapter;
 import com.example.nikeshop.data.local.entity.Product;
@@ -24,11 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FavouriteActivity extends BottomMenuActivity {
+
     private RecyclerView rvFavourites;
     private FavouriteProductAdapter adapter;
     private WishlistViewModel viewModel;
-
-    private static final int CURRENT_USER_ID = 2; // TODO: replace with actual user session ID
+    private List<Product> productList = new ArrayList<>();
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,39 +41,59 @@ public class FavouriteActivity extends BottomMenuActivity {
         View btnBack = topNavBar.findViewById(R.id.btn_back);
         ImageView btnCart = topNavBar.findViewById(R.id.btn_cart);
 
+        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+        userId = prefs.getInt("user_id", -1);
+        if (userId == -1) {
+            Toast.makeText(this, "Bạn cần đăng nhập!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         rvFavourites = findViewById(R.id.rvFavourites);
         CartViewModel cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
-        adapter = new FavouriteProductAdapter(new ArrayList<>(), this, cartViewModel);
+        viewModel = new ViewModelProvider(this).get(WishlistViewModel.class);
 
+        adapter = new FavouriteProductAdapter(productList, this, cartViewModel);
         rvFavourites.setLayoutManager(new LinearLayoutManager(this));
         rvFavourites.setAdapter(adapter);
 
-        viewModel = new ViewModelProvider(this).get(WishlistViewModel.class);
-
-        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
-        viewModel.getWishlistProducts(prefs.getInt("user_id", -1)).observe(this, products -> {
-            Log.d("DEBUG_WISHLIST", "Fetched wishlist products: " + products.size());
-            for (Product p : products) {
-                Log.d("DEBUG_WISHLIST", p.getName());
-            }
-            adapter.setProducts(products);
+        // Load danh sách yêu thích
+        viewModel.getWishlistProducts(userId).observe(this, products -> {
+            productList.clear();
+            productList.addAll(products);
+            adapter.setProducts(productList);
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FavouriteActivity.this, HomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                finish();
-            }
+        // Nút quay về
+        btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(FavouriteActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
         });
-        btnCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FavouriteActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
+
+        // Nút giỏ hàng
+        btnCart.setOnClickListener(v -> {
+            Intent intent = new Intent(FavouriteActivity.this, CartActivity.class);
+            startActivity(intent);
+        });
+
+        // Xử lý sự kiện xóa yêu thích
+        adapter.setOnDeleteClickListener((position, product) -> {
+            new AlertDialog.Builder(FavouriteActivity.this)
+                    .setTitle("Xác nhận xoá")
+                    .setMessage("Bạn có chắc chắn muốn xoá sản phẩm này khỏi yêu thích?")
+                    .setPositiveButton("Xoá", (dialog, which) -> {
+                        viewModel.removeFromWishlist(userId, product.getId());
+
+                        productList.remove(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeChanged(position, productList.size());
+
+                        Toast.makeText(FavouriteActivity.this, product.getName() + " đã xoá khỏi yêu thích!", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Huỷ", null)
+                    .show();
         });
     }
 }
