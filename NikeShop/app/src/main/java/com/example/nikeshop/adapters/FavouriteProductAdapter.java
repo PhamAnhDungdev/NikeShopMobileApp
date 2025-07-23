@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.nikeshop.R;
 import com.example.nikeshop.data.local.entity.Product;
 import com.example.nikeshop.ui.ViewModels.CartViewModel;
+import com.example.nikeshop.utils.Util;
 
 import java.util.List;
 
@@ -23,9 +24,18 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
 
     private List<Product> productList;
     private final Context context;
-
     private final CartViewModel cartViewModel;
-    private static final int CURRENT_USER_ID = 2;
+
+    public interface OnDeleteClickListener {
+        void onDeleteClick(int position, Product product);
+    }
+
+    private OnDeleteClickListener onDeleteClickListener;
+
+    public void setOnDeleteClickListener(OnDeleteClickListener listener) {
+        this.onDeleteClickListener = listener;
+    }
+
     public FavouriteProductAdapter(List<Product> productList, Context context, CartViewModel cartViewModel) {
         this.productList = productList;
         this.context = context;
@@ -52,7 +62,6 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
         holder.tvProductType.setText(product.getDescription());
         holder.tvProductPrice.setText("$" + product.getPrice());
 
-        // Load image (URL hoặc local resource tạm)
         if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
             Glide.with(context)
                     .load(product.getImageUrl())
@@ -63,8 +72,17 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
         }
 
         holder.btnAddToCart.setOnClickListener(v -> {
-            cartViewModel.addToCart(CURRENT_USER_ID, product.getId(), 1);
+            cartViewModel.addToCart(product.getId(), 1);
             Toast.makeText(context, product.getName() + " added to cart!", Toast.LENGTH_SHORT).show();
+        });
+
+        holder.btnUnfavorite.setOnClickListener(v -> {
+            if (onDeleteClickListener != null) {
+                int pos = holder.getAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION) {
+                    onDeleteClickListener.onDeleteClick(pos, product);
+                }
+            }
         });
     }
 
@@ -76,7 +94,7 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
     static class FavouriteViewHolder extends RecyclerView.ViewHolder {
         ImageView imgProduct;
         TextView tvProductName, tvProductType, tvProductPrice;
-        ImageButton btnAddToCart;
+        ImageButton btnAddToCart, btnUnfavorite;
 
         public FavouriteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +103,7 @@ public class FavouriteProductAdapter extends RecyclerView.Adapter<FavouriteProdu
             tvProductType = itemView.findViewById(R.id.tvProductType);
             tvProductPrice = itemView.findViewById(R.id.tvProductPrice);
             btnAddToCart = itemView.findViewById(R.id.btnAddToCart);
+            btnUnfavorite = itemView.findViewById(R.id.btnUnfavorite);
         }
     }
 }
