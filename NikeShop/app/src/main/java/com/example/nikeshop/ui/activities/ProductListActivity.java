@@ -50,6 +50,11 @@ public class ProductListActivity extends BottomMenuActivity {
             intent.putExtra("product_id", product.getId());
             startActivity(intent);
         });
+        // Truyền CartViewModel và WishlistViewModel vào ProductAdapter để xử lý addToCart và yêu thích
+        com.example.nikeshop.ui.ViewModels.CartViewModel cartViewModel = new androidx.lifecycle.ViewModelProvider(this).get(com.example.nikeshop.ui.ViewModels.CartViewModel.class);
+        com.example.nikeshop.ui.ViewModels.WishlistViewModel wishlistViewModel = new androidx.lifecycle.ViewModelProvider(this).get(com.example.nikeshop.ui.ViewModels.WishlistViewModel.class);
+        productAdapter.setCartViewModel(cartViewModel);
+        productAdapter.setWishlistViewModel(wishlistViewModel);
         rvProducts.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(this, 2));
         rvProducts.setAdapter(productAdapter);
 
@@ -66,12 +71,23 @@ public class ProductListActivity extends BottomMenuActivity {
         }
 
         ImageView btnCart = findViewById(R.id.btn_cart);
-        if (btnCart != null) {
-            btnCart.setOnClickListener(v -> {
-                Intent intent = new Intent(ProductListActivity.this, CartActivity.class);
-                startActivity(intent);
-            });
-        }
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.content.SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
+                if (!isLoggedIn) {
+                    android.widget.Toast.makeText(ProductListActivity.this, "Bạn cần đăng nhập để xem giỏ hàng!", android.widget.Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ProductListActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish(); // Đảm bảo không chạy tiếp code thêm vào giỏ hàng
+                    return;
+                } else {
+                    Intent intent = new Intent(ProductListActivity.this, CartActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
         setupBottomMenu(R.id.nav_home);
     }
