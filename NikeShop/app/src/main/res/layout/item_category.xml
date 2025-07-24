@@ -1,0 +1,41 @@
+<!-- res/layout/item_category.xml -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_category_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tên danh mục"
+            style="@style/TextBody" />
+
+        <ImageButton
+            android:id="@+id/btn_edit_category"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_edit"
+            android:backgroundTint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_delete_category"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_delete"
+            android:backgroundTint="@color/white" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

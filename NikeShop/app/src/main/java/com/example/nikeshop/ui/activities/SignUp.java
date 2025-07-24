@@ -14,11 +14,18 @@ import androidx.room.Room;
 
 import com.example.nikeshop.R;
 import com.example.nikeshop.data.local.AppDatabase;
+import com.example.nikeshop.data.local.dao.CategoryDao;
+import com.example.nikeshop.data.local.dao.OrderDao;
+import com.example.nikeshop.data.local.dao.ProductDao;
 import com.example.nikeshop.data.local.dao.UserDao;
+import com.example.nikeshop.data.local.entity.Category;
+import com.example.nikeshop.data.local.entity.Order;
+import com.example.nikeshop.data.local.entity.Product;
 import com.example.nikeshop.data.local.entity.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 public class SignUp extends AppCompatActivity {
 
@@ -33,6 +40,8 @@ public class SignUp extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        CheckBox checkboxAdmin = findViewById(R.id.checkbox_admin);
 
         // Ánh xạ View
         EditText nameInput = findViewById(R.id.nameInput);
@@ -86,18 +95,121 @@ public class SignUp extends AppCompatActivity {
                 return;
             }
 
+            boolean isAdmin = checkboxAdmin.isChecked();
+
             // Lưu user
             User user = new User();
             user.setName(name);
             user.setEmail(email);
             user.setPasswordHash(hashPassword(password));
+            user.setAdmin(isAdmin);
 
             userDao.insertUser(user);
+
+            if (user.isAdmin()) {
+                seedSampleData(db);
+            }
 
             showToast("Account created successfully!");
             startActivity(new Intent(SignUp.this, LoginActivity.class));
             finish();
         });
+    }
+
+    private void seedSampleData(AppDatabase db) {
+
+
+        OrderDao orderDao = db.orderDao();
+        CategoryDao categoryDao = db.categoryDao();
+        ProductDao productDao = db.productDao();
+
+
+        // Thêm đơn hàng
+        orderDao.insert(new Order(1, new Date(), 250000, "pending", "COD", new Date(), null, null));
+
+
+        if (categoryDao.getAllNow().isEmpty()) {
+            categoryDao.insert(new Category("Giày thể thao", new Date(), new Date(), null));
+            categoryDao.insert(new Category("Giày chạy bộ", new Date(), new Date(), null));
+            categoryDao.insert(new Category("Giày đá bóng", new Date(), new Date(), null));
+            categoryDao.insert(new Category("Giày tập gym", new Date(), new Date(), null));
+            categoryDao.insert(new Category("Giày thời trang", new Date(), new Date(), null));
+        }
+
+        if (productDao.getAllNow().isEmpty()) {
+
+        productDao.insert(new Product(
+                "Nike Air Zoom Pegasus 39",
+                "Giày chạy bộ với đệm Zoom Air êm ái, nhẹ và bền.",
+                3200000,
+                "42",
+                10,
+                "https://runningstore.vn/wp-content/uploads/2022/07/87825e12da3a1864412b.jpg",
+                2, // Giày chạy bộ
+                "Nike",
+                "Đen/Trắng",
+                "Vải Mesh",
+                "NKPGS39",
+                new Date(), new Date(), null
+        ));
+
+        productDao.insert(new Product(
+                "Adidas Predator Accuracy.3 FG",
+                "Giày đá bóng sân cỏ tự nhiên với thiết kế vân 3D giúp kiểm soát bóng tốt hơn.",
+                2400000,
+                "43",
+                5,
+                "https://sneakerdaily.vn/wp-content/uploads/2024/08/Giay-adidas-Predator-Accuracy.3-Low-FG-Heatspawn-Pack-GW4601.jpg",
+                3, // Giày đá bóng
+                "Adidas",
+                "Trắng/Đỏ",
+                "Synthetic",
+                "ADPRED3",
+                new Date(), new Date(), null
+        ));
+
+        productDao.insert(new Product(
+                "Nike Metcon 8",
+                "Giày tập gym siêu bền, hỗ trợ nâng tạ và cardio, đế phẳng tăng độ ổn định.",
+                2900000,
+                "41",
+                12,
+                "https://kallos.co/cdn/shop/files/8-amp-_-_-ldD3jNqM_61bf3297-3433-43b0-a9f4-afbca48c7217.jpg?v=1692835580&width=1080",                                                  4, // Giày tập gym
+                "Nike",
+                "Xám/Đen",
+                "Vải tổng hợp",
+                "NKMC8",
+                new Date(), new Date(), null
+        ));
+
+        productDao.insert(new Product(
+                "Converse Chuck Taylor All Star",
+                "Giày thời trang cổ điển, dễ phối đồ, phù hợp đi học, đi chơi.",
+                1500000,
+                "40",
+                20,
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjKTtIAAo93BTqIdVLoJ79CYRA9bHc26sTEg&s",                                                  5, // Giày thời trang
+                "Converse",
+                "Trắng",
+                "Canvas",
+                "CVCHUCK1",
+                new Date(), new Date(), null
+        ));
+
+        productDao.insert(new Product(
+                "Puma Velocity Nitro 2",
+                "Giày chạy nhẹ, độ nảy cao nhờ đệm Nitro độc quyền.",
+                2700000,
+                "42",
+                8,
+                "https://bizweb.dktcdn.net/thumb/1024x1024/100/399/577/products/image-1687945845771.png",                                                  2, // Giày chạy bộ
+                "Puma",
+                "Xanh navy",
+                "Vải lưới",
+                "PMVLN2",
+                new Date(), new Date(), null
+        ));
+        }
     }
 
     private void setupEyeToggle(ImageView eyeIcon, EditText passwordField) {

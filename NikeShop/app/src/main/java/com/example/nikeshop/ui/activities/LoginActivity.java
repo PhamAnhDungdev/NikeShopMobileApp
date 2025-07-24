@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
             String hashedInput = hashPassword(password);
             User user = userDao.loginUser(email, hashedInput);
+            Log.d("LoginDebug", "Hashed input = " + hashedInput);
 
             if (user != null) {
                 // ✅ tái sử dụng prefs đã tạo ở đầu
@@ -99,9 +100,17 @@ public class LoginActivity extends AppCompatActivity {
                         .apply();
 
                 Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                Intent intent;
+                if (user.isAdmin()) {
+                    intent = new Intent(LoginActivity.this, DashboardActivity.class); // activity cho admin
+                } else {
+                    intent = new Intent(LoginActivity.this, HomeActivity.class); // activity cho người dùng thường
+                }
+
+                startActivity(intent);
                 finish();
-            } else {
+            }
+            else {
                 Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
             }
         });

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/background_light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Tên sản phẩm -->
+        <EditText
+            android:id="@+id/et_product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên sản phẩm"
+            android:inputType="textCapSentences"
+            style="@style/TextBody"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Mô tả -->
+        <EditText
+            android:id="@+id/et_product_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mô tả"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            style="@style/TextBody"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Giá -->
+        <EditText
+            android:id="@+id/et_product_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Giá (VND)"
+            android:inputType="numberDecimal"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Size -->
+        <EditText
+            android:id="@+id/et_product_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Size"
+            android:inputType="text"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Số lượng -->
+        <EditText
+            android:id="@+id/et_product_stock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số lượng trong kho"
+            android:inputType="number"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- URL ảnh -->
+        <EditText
+            android:id="@+id/et_product_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="URL ảnh sản phẩm"
+            android:inputType="textUri"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/spinner_bg" />
+
+
+        <!-- Brand -->
+        <EditText
+            android:id="@+id/et_product_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Thương hiệu"
+            android:inputType="text"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Màu sắc -->
+        <EditText
+            android:id="@+id/et_product_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Màu sắc"
+            android:inputType="text"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Chất liệu -->
+        <EditText
+            android:id="@+id/et_product_material"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Chất liệu"
+            android:inputType="text"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- SKU -->
+        <EditText
+            android:id="@+id/et_product_sku"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="SKU"
+            android:inputType="text"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Nút lưu -->
+        <Button
+            android:id="@+id/btn_save_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lưu sản phẩm"
+            style="@style/ButtonPrimary"
+            android:layout_marginBottom="24dp"/>
+
+    </LinearLayout>
+</ScrollView>
