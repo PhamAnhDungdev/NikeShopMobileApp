@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,22 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nikeshop.R;
 import com.example.nikeshop.data.local.entity.Category;
+
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
-    private List<Category> categories;
-    private final Context context;
-    private final OnCategoryClickListener listener;
+public class CategoryManageAdapter extends RecyclerView.Adapter<CategoryManageAdapter.CategoryViewHolder> {
 
-    // Trong CategoryAdapter.java
-    public interface OnCategoryClickListener {
-        default void onEdit(Category category) {}
-        default void onDelete(Category category) {}
-        void onCategoryClick(Category category);
+    private final Context context;
+    private List<Category> categories;
+    private final OnCategoryActionListener listener;
+
+    public interface OnCategoryActionListener {
+        void onEdit(Category category);
+        void onDelete(Category category);
+        void onCategoryClick(Category category); // Optional
     }
 
-
-    public CategoryAdapter(Context context, List<Category> categories, OnCategoryClickListener listener) {
+    public CategoryManageAdapter(Context context, List<Category> categories, OnCategoryActionListener listener) {
         this.context = context;
         this.categories = categories;
         this.listener = listener;
@@ -41,7 +41,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_category_card, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_category, parent, false); // ⚠️ Dùng layout đúng
         return new CategoryViewHolder(view);
     }
 
@@ -49,23 +49,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         Category category = categories.get(position);
         holder.tvName.setText(category.getName());
-        // Gán ảnh cứng cho 4 category
-        int imageResId = R.drawable.ic_sneakers;
-        switch (position) {
-            case 0:
-                imageResId = R.drawable.ic_sneakers;
-                break;
-            case 1:
-                imageResId = R.drawable.ic_runners;
-                break;
-            case 2:
-                imageResId = R.drawable.ic_casuals;
-                break;
-            case 3:
-                imageResId = R.drawable.ic_jordans;
-                break;
-        }
-        holder.imgCategory.setImageResource(imageResId);
+
+        holder.btnEdit.setOnClickListener(v -> listener.onEdit(category));
+        holder.btnDelete.setOnClickListener(v -> listener.onDelete(category));
         holder.itemView.setOnClickListener(v -> listener.onCategoryClick(category));
     }
 
@@ -75,12 +61,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     static class CategoryViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgCategory;
         TextView tvName;
+        ImageButton btnEdit, btnDelete;
+
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgCategory = itemView.findViewById(R.id.img_category);
             tvName = itemView.findViewById(R.id.tv_category_name);
+            btnEdit = itemView.findViewById(R.id.btn_edit_category);
+            btnDelete = itemView.findViewById(R.id.btn_delete_category);
         }
     }
 }

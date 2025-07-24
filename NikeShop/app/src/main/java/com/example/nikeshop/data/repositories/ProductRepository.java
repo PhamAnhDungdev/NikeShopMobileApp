@@ -1,7 +1,10 @@
 package com.example.nikeshop.data.repositories;
 
+import android.app.Application;
+
 import androidx.lifecycle.LiveData;
 
+import com.example.nikeshop.data.local.AppDatabase;
 import com.example.nikeshop.data.local.dao.ProductDao;
 import com.example.nikeshop.data.local.entity.Product;
 
@@ -19,6 +22,7 @@ public class ProductRepository {
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
+
     public LiveData<List<Product>> getAllProducts() {
         return productDao.getAllProducts();
     }
@@ -35,7 +39,6 @@ public class ProductRepository {
         return productDao.getProductsByNameAndCategory(keyword, categoryId);
     }
 
-    // Synchronous method for ViewModel
     public Product getProductById(int productId) {
         return productDao.getProductById(productId);
     }
@@ -44,11 +47,32 @@ public class ProductRepository {
         return productDao.getProductsByNameOrDescription(query);
     }
 
-    public void insertProduct(Product product) {
+    public void insert(Product product) {
         executorService.execute(() -> productDao.insertProduct(product));
     }
 
-    public void deleteProduct(Product product) {
+    public void update(Product product) {
+        executorService.execute(() -> {
+            productDao.deleteProduct(product); // Xoá cũ
+            productDao.insertProduct(product); // Thêm mới lại như update đơn giản
+        });
+    }
+
+    public void delete(Product product) {
         executorService.execute(() -> productDao.deleteProduct(product));
+    }
+
+    public LiveData<List<Product>> search(String query) {
+        return productDao.getProductsByNameOrDescription(query);
+    }
+
+    public LiveData<List<Product>> getByCategory(int categoryId) {
+        return productDao.getProductsByCategory(categoryId);
+    }
+
+    public void insertProduct(Product product) {
+    }
+
+    public void deleteProduct(Product product) {
     }
 }

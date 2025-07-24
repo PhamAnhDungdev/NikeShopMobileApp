@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,21 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nikeshop.Models.CategoryViewModel;
 import com.example.nikeshop.R;
-import com.example.nikeshop.adapters.CategoryAdapter;
+import com.example.nikeshop.adapters.CategoryManageAdapter;
 import com.example.nikeshop.data.local.entity.Category;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class CategoryManagementActivity extends AppCompatActivity implements CategoryAdapter.OnCategoryActionListener {
+public class CategoryManagementActivity extends AppCompatActivity implements CategoryManageAdapter.OnCategoryActionListener {
 
     private RecyclerView recyclerView;
     private EditText etSearch;
     private Button btnAdd;
     private ImageButton btnBack;
 
-    private CategoryAdapter adapter;
+    private CategoryManageAdapter adapter;
     private List<Category> categoryList = new ArrayList<>();
     private CategoryViewModel categoryViewModel;
 
@@ -45,14 +45,14 @@ public class CategoryManagementActivity extends AppCompatActivity implements Cat
         btnBack = findViewById(R.id.btn_back);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CategoryAdapter(this, categoryList, this);
+        adapter = new CategoryManageAdapter(this, categoryList, this);
         recyclerView.setAdapter(adapter);
 
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         categoryViewModel.getAllCategories().observe(this, categories -> {
             categoryList.clear();
             categoryList.addAll(categories);
-            adapter.notifyDataSetChanged();
+            adapter.setCategories(categoryList);
         });
 
         btnAdd.setOnClickListener(v -> openAddEditCategory(null));
@@ -68,8 +68,7 @@ public class CategoryManagementActivity extends AppCompatActivity implements Cat
                         filtered.add(c);
                     }
                 }
-                adapter = new CategoryAdapter(CategoryManagementActivity.this, filtered, CategoryManagementActivity.this);
-                recyclerView.setAdapter(adapter);
+                adapter.setCategories(filtered);
             }
             @Override public void afterTextChanged(Editable s) {}
         });
@@ -96,5 +95,10 @@ public class CategoryManagementActivity extends AppCompatActivity implements Cat
                 .setPositiveButton("Xoá", (dialog, which) -> categoryViewModel.delete(category))
                 .setNegativeButton("Hủy", null)
                 .show();
+    }
+
+    @Override
+    public void onCategoryClick(Category category) {
+        openAddEditCategory(category);
     }
 }

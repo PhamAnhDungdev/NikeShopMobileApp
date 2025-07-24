@@ -7,33 +7,43 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
+import com.example.nikeshop.Models.OrderDisplayItem;
 import com.example.nikeshop.R;
-import com.example.nikeshop.models.Order;
+
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class OrdersHistoryAdapter extends RecyclerView.Adapter<OrdersHistoryAdapter.OrderViewHolder> {
 
-    private Context context;
-    private List<Order> orderList;
+    private final Context context;
+    private List<OrderDisplayItem> orderList;
     private OnOrderClickListener clickListener;
 
     public interface OnOrderClickListener {
-        void onOrderClick(Order order);
+        void onOrderClick(OrderDisplayItem order);
     }
 
     public void setOnOrderClickListener(OnOrderClickListener listener) {
         this.clickListener = listener;
     }
 
-    public OrdersHistoryAdapter(Context context, List<Order> orderList) {
+    public OrdersHistoryAdapter(Context context, List<OrderDisplayItem> orderList) {
         this.context = context;
         this.orderList = orderList;
+    }
+
+    public void updateOrders(List<OrderDisplayItem> newOrders) {
+        this.orderList = newOrders;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -45,18 +55,13 @@ public class OrdersHistoryAdapter extends RecyclerView.Adapter<OrdersHistoryAdap
 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        Order order = orderList.get(position);
+        OrderDisplayItem order = orderList.get(position);
         holder.bind(order);
     }
 
     @Override
     public int getItemCount() {
         return orderList.size();
-    }
-
-    public void updateOrders(List<Order> newOrders) {
-        this.orderList = newOrders;
-        notifyDataSetChanged();
     }
 
     class OrderViewHolder extends RecyclerView.ViewHolder {
@@ -91,35 +96,28 @@ public class OrdersHistoryAdapter extends RecyclerView.Adapter<OrdersHistoryAdap
             });
         }
 
-        public void bind(Order order) {
-            tvOrderNumber.setText("Order " + order.getOrderNumber());
-            tvPlacedDate.setText("Placed on " + order.getPlacedDate());
-            tvPaidDate.setText("Paid on " + order.getPaidDate());
+        public void bind(OrderDisplayItem order) {
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+            tvOrderNumber.setText("Order #" + order.getOrderId());
+            tvPlacedDate.setText("Placed on " + dateFormat.format(order.getPlacedDate()));
+            tvPaidDate.setVisibility(View.GONE); // no paid date in OrderDisplayItem
+
             tvProductName.setText(order.getProductName());
             tvProductCategory.setText(order.getProductCategory());
-
-            NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
-            tvProductPrice.setText(formatter.format(order.getProductPrice()));
-            tvTotalPrice.setText(formatter.format(order.getTotalPrice()));
-
-            tvProductQuantity.setText("X" + order.getQuantity());
+            tvProductPrice.setText(currencyFormat.format(order.getProductPrice()));
+            tvTotalPrice.setText(currencyFormat.format(order.getTotalPrice()));
+            tvProductQuantity.setText("x" + order.getQuantity());
             tvOrderStatus.setText(order.getStatus());
-            tvItemCount.setText(order.getQuantity() + " Item , Total:");
+            tvItemCount.setText(order.getQuantity() + " item(s), Total:");
 
-            setProductImage(order.getProductImage());
+            Glide.with(context)
+                    .load(order.getProductImage())
+                    .placeholder(R.drawable.placeholder_shoe)
+                    .into(ivProductImage);
+
             setStatusBackground(order.getStatus());
-        }
-
-        private void setProductImage(String imageName) {
-            switch (imageName) {
-                case "nike_air_1":
-                case "nike_air_444":
-                    ivProductImage.setImageResource(R.drawable.nike_air_444);
-                    break;
-                default:
-                    ivProductImage.setImageResource(R.drawable.placeholder_shoe);
-                    break;
-            }
         }
 
         private void setStatusBackground(String status) {

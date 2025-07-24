@@ -1,6 +1,7 @@
 package com.example.nikeshop.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     private ProductViewModel productViewModel;
     private OrderViewModel orderViewModel;
+    private Button btnManageCategories;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,10 @@ public class DashboardActivity extends AppCompatActivity {
 
         btnManageProducts = findViewById(R.id.btn_manage_products);
         btnManageOrders = findViewById(R.id.btn_manage_orders);
-        btnManageCustomers = findViewById(R.id.btn_manage_customers);
+//        btnManageCustomers = findViewById(R.id.btn_manage_customers);
+
+        btnManageCategories = findViewById(R.id.btn_manage_categories);
+
 
         // ViewModels
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
@@ -63,17 +69,33 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ProductManagementActivity.class))
         );
 
+        Button btnTopSale = findViewById(R.id.btn_view_topsale);
+        btnTopSale.setOnClickListener(v ->
+                startActivity(new Intent(this, TopSellingActivity.class))
+        );
+
+
         btnManageOrders.setOnClickListener(v ->
                 startActivity(new Intent(this, OrderManagementActivity.class))
         );
 
-        btnManageCustomers.setOnClickListener(v ->
-                Toast.makeText(this, "Chức năng sắp ra mắt!", Toast.LENGTH_SHORT).show()
+        btnManageCategories.setOnClickListener(v ->
+                startActivity(new Intent(this, CategoryManagementActivity.class))
         );
 
-        Button btnCreateOrder = findViewById(R.id.btn_create_order);
-        btnCreateOrder.setOnClickListener(v ->
-                Toast.makeText(this, "Admin không thể tạo đơn hàng", Toast.LENGTH_SHORT).show()
-        );
+        findViewById(R.id.llLogout).setOnClickListener(v -> {
+            // Xóa session
+            SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+            prefs.edit().clear().apply();
+            // Chuyển về LoginActivity và xóa stack
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
+
+//        btnManageCustomers.setOnClickListener(v ->
+//                Toast.makeText(this, "Chức năng sắp ra mắt!", Toast.LENGTH_SHORT).show()
+//        );
+
     }
 }

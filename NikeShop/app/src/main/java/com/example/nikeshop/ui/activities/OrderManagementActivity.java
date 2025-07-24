@@ -15,58 +15,51 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nikeshop.Models.OrderDisplayItem;
 import com.example.nikeshop.Models.OrderViewModel;
 import com.example.nikeshop.R;
-
-import com.example.nikeshop.adapters.OrdersAdapter;
-import com.example.nikeshop.data.local.entity.Order;
-
+import com.example.nikeshop.adapters.OrderDisplayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderManagementActivity extends AppCompatActivity implements OrdersAdapter.OnOrderActionListener {
+public class OrderManagementActivity extends AppCompatActivity implements OrderDisplayAdapter.OnOrderClickListener {
 
     private EditText etSearch;
     private RecyclerView recyclerOrders;
     private ImageButton btnBack;
 
     private OrderViewModel orderViewModel;
-    private OrdersAdapter ordersAdapter;
-    private List<Order> currentOrders = new ArrayList<>();
-
+    private OrderDisplayAdapter ordersAdapter;
+    private List<OrderDisplayItem> currentOrders = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_management);
 
-        // Khớp với layout XML
         etSearch = findViewById(R.id.et_order_search);
         recyclerOrders = findViewById(R.id.recycler_orders);
         btnBack = findViewById(R.id.btn_back_orders);
 
-        // Khởi tạo adapter với danh sách rỗng
-        ordersAdapter = new OrdersAdapter(this, currentOrders);
-        ordersAdapter.setOnOrderActionListener(this);
+        ordersAdapter = new OrderDisplayAdapter(this, currentOrders);
+        ordersAdapter.setOnOrderClickListener(this);
         recyclerOrders.setLayoutManager(new LinearLayoutManager(this));
         recyclerOrders.setAdapter(ordersAdapter);
 
-        // ViewModel
         orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
-        orderViewModel.getAllOrders().observe(this, orders -> {
+        orderViewModel.getOrderDisplayItems().observe(this, orders -> {
             currentOrders = orders;
             ordersAdapter.updateOrders(currentOrders);
         });
 
-        // Tìm kiếm đơn hàng
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                orderViewModel.search(s.toString()).observe(OrderManagementActivity.this, filtered -> {
+                orderViewModel.searchDisplayItems(s.toString()).observe(OrderManagementActivity.this, filtered -> {
                     ordersAdapter.updateOrders(filtered);
                 });
             }
@@ -75,7 +68,6 @@ public class OrderManagementActivity extends AppCompatActivity implements Orders
             public void afterTextChanged(Editable s) {}
         });
 
-        // Quay lại
         btnBack.setOnClickListener(v -> onBackPressed());
 
         Button btnAll = findViewById(R.id.btn_all_orders);
@@ -83,52 +75,27 @@ public class OrderManagementActivity extends AppCompatActivity implements Orders
         Button btnProcessing = findViewById(R.id.btn_processing_orders);
         Button btnCompleted = findViewById(R.id.btn_completed_orders);
 
-        btnAll.setOnClickListener(v -> orderViewModel.getAllOrders().observe(this, orders -> {
+        btnAll.setOnClickListener(v -> orderViewModel.getOrderDisplayItems().observe(this, orders -> {
             ordersAdapter.updateOrders(orders);
         }));
 
-        btnPending.setOnClickListener(v -> orderViewModel.getOrdersByStatus("pending").observe(this, orders -> {
+        btnPending.setOnClickListener(v -> orderViewModel.getDisplayItemsByStatus("pending").observe(this, orders -> {
             ordersAdapter.updateOrders(orders);
         }));
 
-        btnProcessing.setOnClickListener(v -> orderViewModel.getOrdersByStatus("processing").observe(this, orders -> {
+        btnProcessing.setOnClickListener(v -> orderViewModel.getDisplayItemsByStatus("processing").observe(this, orders -> {
             ordersAdapter.updateOrders(orders);
         }));
 
-        btnCompleted.setOnClickListener(v -> orderViewModel.getOrdersByStatus("completed").observe(this, orders -> {
+        btnCompleted.setOnClickListener(v -> orderViewModel.getDisplayItemsByStatus("completed").observe(this, orders -> {
             ordersAdapter.updateOrders(orders);
         }));
-
     }
 
     @Override
-    public void onView(Order order) {
+    public void onOrderClick(OrderDisplayItem order) {
         Intent intent = new Intent(this, OrderDetailActivity.class);
-        intent.putExtra("order_id", order.getId());
+        intent.putExtra("order_id", order.getOrderId());
         startActivity(intent);
     }
-
-
-    @Override
-    public void onView(com.example.nikeshop.models.Order order) {
-
-    }
-
-    @Override
-    public void onDelete(com.example.nikeshop.models.Order order) {
-
-    }
-
-    @Override
-    public void onDelete(Order order) {
-        String[] statuses = {"pending", "processing", "completed"};
-        new AlertDialog.Builder(this)
-                .setTitle("Cập nhật trạng thái")
-                .setItems(statuses, (dialog, which) -> {
-                    order.setStatus(statuses[which]);
-                    orderViewModel.update(order);
-                    Toast.makeText(this, "Đã cập nhật trạng thái", Toast.LENGTH_SHORT).show();
-                }).show();
-    }
-
 }

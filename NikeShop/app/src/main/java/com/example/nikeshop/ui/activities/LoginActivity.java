@@ -90,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("LoginDebug", "Hashed input = " + hashedInput);
 
             if (user != null) {
-                // ✅ tái sử dụng prefs đã tạo ở đầu
                 prefs.edit()
                         .putBoolean("is_logged_in", true)
                         .putInt("user_id", user.getId())

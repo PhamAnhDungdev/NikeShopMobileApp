@@ -16,10 +16,10 @@ public class CategoryViewModel extends AndroidViewModel {
 
     public CategoryViewModel(@NonNull Application application) {
         super(application);
-        AppDatabase db = NikeShopApp.getDatabase();
-        categoryRepository = new CategoryRepository(db.categoryDao());
+        categoryRepository = new CategoryRepository(application); // ✅ dùng application
         allCategories = categoryRepository.getAllCategories();
     }
+
 
     public LiveData<List<Category>> getAllCategories() {
         return allCategories;

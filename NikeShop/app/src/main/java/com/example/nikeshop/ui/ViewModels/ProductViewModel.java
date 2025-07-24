@@ -59,12 +59,12 @@ public class ProductViewModel extends AndroidViewModel {
         return productRepository.getProductsByNameOrDescription(query);
     }
 
-    public void insertProduct(Product product) {
-        productRepository.insertProduct(product);
-    }
-
-    public void deleteProduct(Product product) {
-        productRepository.deleteProduct(product);
-    }
+//    public void insertProduct(Product product) {
+//        productRepository.insertProduct(product);
+//    }
+//
+//    public void deleteProduct(Product product) {
+//        productRepository.deleteProduct(product);
+//    }
 }
 

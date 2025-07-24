@@ -48,7 +48,7 @@
                 android:id="@+id/tv_product_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="100,000 VND"
+                android:text="100,000 $"
                 style="@style/TextHeadingSmall"
                 android:textColor="@color/primary_orange"
                 android:layout_marginTop="@dimen/margin_small" />
