@@ -85,8 +85,8 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            //String hashedInput = hashPassword(password);
-            User user = userDao.loginUser(email, password);
+            String hashedInput = hashPassword(password);
+            User user = userDao.loginUser(email, hashedInput);
 
             if (user != null) {
                 // ✅ tái sử dụng prefs đã tạo ở đầu
