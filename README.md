@@ -86,6 +86,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-- Email: your.email@example.com
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Name](https://linkedin.com/in/yourprofile)
+- Email: dungpa.works@gmail.com
+- GitHub: [@PhamAnhDungdev](https://github.com/PhamAnhDungdev)
+- LinkedIn: [Phạm Anh Dũng](https://linkedin.com/in/PhamAnhDungdev)
