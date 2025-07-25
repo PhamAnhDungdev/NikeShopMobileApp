@@ -70,7 +70,7 @@ public class OrderDetailViewModel extends AndroidViewModel {
         executor.execute(() -> {
             try {
                 // Load thông tin order
-                Order order = orderRepository.getOrderById(orderId);
+                Order order = orderRepository.getOrderByIdSync(orderId);
                 currentOrder.postValue(order);
 
                 // Load order details với products

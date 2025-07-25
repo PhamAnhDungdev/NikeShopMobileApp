@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_small"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_medium"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/img_customer_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_person"
+            android:background="@drawable/circle_bg_gray" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/margin_medium">
+
+            <TextView
+                android:id="@+id/tv_customer_name_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nguyễn Văn A"
+                style="@style/TextTitleBold" />
+
+            <TextView
+                android:id="@+id/tv_customer_phone_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0123456789"
+                style="@style/TextBody2"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tv_customer_orders_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="5 đơn hàng"
+                style="@style/TextBody3"
+                android:textColor="@color/primary_orange"
+                android:layout_marginTop="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btn_call_customer"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_phone"
+                android:background="@color/white"
+                android:layout_marginBottom="@dimen/margin_small" />
+
+            <ImageButton
+                android:id="@+id/btn_view_customer_orders"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_list"
+                android:backgroundTint="@color/white"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

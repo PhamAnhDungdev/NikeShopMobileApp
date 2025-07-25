@@ -14,11 +14,18 @@ import androidx.room.Room;
 
 import com.example.nikeshop.R;
 import com.example.nikeshop.data.local.AppDatabase;
+import com.example.nikeshop.data.local.dao.CategoryDao;
+import com.example.nikeshop.data.local.dao.OrderDao;
+import com.example.nikeshop.data.local.dao.ProductDao;
 import com.example.nikeshop.data.local.dao.UserDao;
+import com.example.nikeshop.data.local.entity.Category;
+import com.example.nikeshop.data.local.entity.Order;
+import com.example.nikeshop.data.local.entity.Product;
 import com.example.nikeshop.data.local.entity.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 public class SignUp extends AppCompatActivity {
 
@@ -33,6 +40,8 @@ public class SignUp extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        CheckBox checkboxAdmin = findViewById(R.id.checkbox_admin);
 
         // Ánh xạ View
         EditText nameInput = findViewById(R.id.nameInput);
@@ -86,11 +95,14 @@ public class SignUp extends AppCompatActivity {
                 return;
             }
 
+            boolean isAdmin = checkboxAdmin.isChecked();
+
             // Lưu user
             User user = new User();
             user.setName(name);
             user.setEmail(email);
             user.setPasswordHash(hashPassword(password));
+            user.setAdmin(isAdmin);
 
             userDao.insertUser(user);
 
@@ -99,6 +111,7 @@ public class SignUp extends AppCompatActivity {
             finish();
         });
     }
+
 
     private void setupEyeToggle(ImageView eyeIcon, EditText passwordField) {
         eyeIcon.setOnClickListener(new View.OnClickListener() {

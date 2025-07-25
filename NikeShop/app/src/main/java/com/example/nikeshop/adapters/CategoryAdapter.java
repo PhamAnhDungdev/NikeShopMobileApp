@@ -19,9 +19,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private final Context context;
     private final OnCategoryClickListener listener;
 
+    // Trong CategoryAdapter.java
     public interface OnCategoryClickListener {
+        default void onEdit(Category category) {}
+        default void onDelete(Category category) {}
         void onCategoryClick(Category category);
     }
+
 
     public CategoryAdapter(Context context, List<Category> categories, OnCategoryClickListener listener) {
         this.context = context;

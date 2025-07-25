@@ -22,6 +22,26 @@
             android:name=".ui.activities.FeedbackActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.activities.DashboardActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.activities.OrderManagementActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".ui.activities.AddEditCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.CategoryManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.AddEditProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ProductManagementActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activities.OrderPlaceActivity"
             android:exported="false" />
         <activity
@@ -66,6 +86,9 @@
             android:name=".ui.activities.AccountRecovery"
             android:exported="false" />
         <activity
+            android:name=".ui.activities.TopSellingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="false" />
         <activity
@@ -76,10 +99,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activities.AddressActivity"
             android:exported="false" />

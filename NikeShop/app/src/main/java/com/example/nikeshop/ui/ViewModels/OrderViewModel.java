@@ -43,15 +43,12 @@ public class OrderViewModel extends AndroidViewModel {
         return orderRepository.getOrdersByStatus(status);
     }
 
-    public void insertOrder(Order order) {
-        orderRepository.insertOrder(order);
-    }
+//    public void insert(Order order) {
+//        orderRepository.insertOrder(order);
+//    }
+//
+//    public void delete(Order order) {
+//        orderRepository.deleteOrder(order);
+//    }
 
-    public void deleteOrder(Order order) {
-        orderRepository.deleteOrder(order);
-    }
-
-    public void deleteAllOrders() {
-        orderRepository.deleteAllOrders();
-    }
 }

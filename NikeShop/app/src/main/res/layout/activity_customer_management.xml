@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_light">
+
+    <!-- Toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_medium"
+        android:background="@color/white"
+        android:elevation="4dp">
+
+        <ImageButton
+            android:id="@+id/btn_back_customers"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_arrow_back"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Quản lý Khách hàng"
+            style="@style/TextHeadingSmall"
+            android:layout_marginStart="@dimen/margin_medium" />
+
+        <Button
+            android:id="@+id/btn_add_customer"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="+ Thêm"
+            style="@style/ButtonPrimary" />
+
+    </LinearLayout>
+
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/et_search_customer"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/margin_medium"
+        android:hint="Tìm kiếm khách hàng..."
+        android:background="@drawable/edittext_bg"
+        android:padding="@dimen/margin_medium"
+        style="@style/TextBody"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/margin_small" />
+
+    <!-- Customer List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_customers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_small" />
+
+</LinearLayout>

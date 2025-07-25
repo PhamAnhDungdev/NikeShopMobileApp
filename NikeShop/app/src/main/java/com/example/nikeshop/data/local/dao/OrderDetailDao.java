@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.example.nikeshop.data.local.entity.OrderDetail;
+import com.example.nikeshop.data.local.modelDto.TopSellingProductDto;
 
 import java.util.List;
 
@@ -37,4 +38,13 @@ public interface OrderDetailDao {
 
     @Query("DELETE FROM order_details")
     void deleteAll();
+
+    @Query("SELECT product_id AS productId, SUM(quantity) AS totalSold " +
+            "FROM order_details " +
+            "WHERE deleted_at IS NULL " +
+            "GROUP BY product_id " +
+            "ORDER BY totalSold DESC " +
+            "LIMIT :limit")
+    List<TopSellingProductDto> getTopSellingProducts(int limit);
+
 }
