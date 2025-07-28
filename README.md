@@ -44,7 +44,7 @@ com.example.nikeshop
 
 ### 1. Clone project
 \`\`\`bash
-git clone https://github.com/yourusername/nikeshop.git
+git clone https://github.com/PhamAnhDungdev/nikeshopmobileapp.git
 \`\`\`
 
 ### 2. Mở trong Android Studio
